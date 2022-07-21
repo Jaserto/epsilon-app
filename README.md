@@ -5,7 +5,7 @@
 
  <h1 align="center"><b>Epsilon</b></h1>
   <p align="center">
-  Registra tu entrenamiento.
+ HEALTH & FITNESS NOTES.
     <br />
  
 
