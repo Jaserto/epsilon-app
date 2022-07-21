@@ -1,4 +1,4 @@
-![](assets/logo.png)
+![](assets/logo2.png)
 
  <h1 align="center"><b>Epsilon</b></h1>
   <p align="center">
