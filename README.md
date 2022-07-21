@@ -1,7 +1,5 @@
-
-![Epsilon](assets/images/logo2.png)
-
 <div>
+ <img align="center" src="assets/images/logo2.png" width="90">
  <h1 align="center"><b>Epsilon</b></h1>
   <p align="center">
   Registra tu entrenamiento.
