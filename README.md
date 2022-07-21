@@ -5,11 +5,11 @@
 
  <h1 align="center"><b>Epsilon</b></h1>
   <p align="center">
- HEALTH & FITNESS NOTES.
+ Health & Fitness notes.
     <br />
  
 
-*Epsilon* es una app hecha en **ReactNative** para hacer seguimiento de los entrenamientos. Consiste en registrar tus datos y tu entrenamiento, y la app se encargará de mostrar la progresión en los ejercicios que hayas registrado. Se mostrará en diferentes gráficos y formas, segmentando por grupo muscular, volumen, e intensidad. 
+**Epsilon*** es una app hecha en *ReactNative* para hacer seguimiento de los entrenamientos. Consiste en registrar tus datos y tu entrenamiento, y la app se encargará de mostrar la progresión en los ejercicios que hayas registrado. Se mostrará en diferentes gráficos y formas, segmentando por grupo muscular, volumen, e intensidad. 
 
 También permite el cáculo de diferentes metricas: cálculo del RM, velocidad, etc.
 
