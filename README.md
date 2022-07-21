@@ -1,6 +1,6 @@
 <div style="display:flex; align-items:center;">
 ![Epsilon](assets/images/logo2.png)
- <img src="assets/images/logo2.png" width="150">
+ <img src="assets/images/logo2.png" width="50">
 <div>
  <h1 align="center"><b>Epsilon</b></h1>
   <p align="center">
