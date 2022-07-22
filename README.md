@@ -1,6 +1,6 @@
 <div>
  <p align="center">
-  <img align="center" src="assets/images/logo2.png" width="90">
+  <img align="center" src="assets/images/logo2.png" width="70">
 </p>
 
  <h1 align="center"><b>Epsilon</b></h1>
