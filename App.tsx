@@ -10,12 +10,8 @@ import React from 'react';
 
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
-  Text,
-  useColorScheme,
-  View,
+  Text
 } from 'react-native';
 
 
@@ -23,7 +19,7 @@ import {
 const App = () => {
   return (
     <SafeAreaView style={{backgroundColor:'red', display:'flex', flex:1, height:70, width:70}}>
-      <Text>Hola</Text>
+      <Text>En construcción...</Text>
     </SafeAreaView>
   );
 };
