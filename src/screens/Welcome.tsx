@@ -40,7 +40,7 @@ const Welcome = () => {
           style={styles.boton}
           onPress={() => navigation.navigate('Signup' as never)}
         >
-          <Text style={{color: '#242424', fontSize: 16}}>EMPIEZA YA</Text>
+          <Text style={{color: '#242424', fontSize: 16, fontWeight:'bold'}}>Empieza ya</Text>
         </Pressable>
        
        {/*  <Text
@@ -59,13 +59,13 @@ export default Welcome;
 
 const styles = StyleSheet.create({
   boton: {
-    height: 40,
-    width: '65%',
-    borderRadius: 30,
+    height: 33,
+    width: '45%',
+    borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '12%',
-    backgroundColor:'white',
+    backgroundColor:'#FFEA75',
     
   },
   topContainer: {
