@@ -7,20 +7,24 @@
  */
 
 import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import { StackNavigator } from './src/navigator/StackNavigator';
 
 import {
-  SafeAreaView,
-  StyleSheet,
-  Text
+  StyleSheet
 } from 'react-native';
 
 
 
 const App = () => {
   return (
-    <SafeAreaView style={{backgroundColor:'red', display:'flex', flex:1, height:70, width:70}}>
-      <Text>En construcción...</Text>
-    </SafeAreaView>
+    <NavigationContainer>
+
+       <StackNavigator /> 
+
+   {/*   <MenuLateral /> */}
+
+  </NavigationContainer>
   );
 };
 
