@@ -19,12 +19,13 @@ const Welcome = () => {
           source={require('../assets/images/logo2.png')}
         />
       </View>
+      
       <View style={{display:'flex', alignItems:'center', marginBottom:20}}>
-
-      <Text style={{color:'white', marginBottom:20}}>HEALTH & FITNESS NOTES.</Text>
+      <Text style={styles.title}>EPSILON</Text> 
+      <Text style={{color:'white', margin:20}}>HEALTH & FITNESS NOTES.</Text>
       <View
         style={{
-          width:'90%',
+          width:'80%',
           borderBottomColor: 'white',
           borderBottomWidth: StyleSheet.hairlineWidth,
         }}
@@ -32,9 +33,8 @@ const Welcome = () => {
       </View>
       
       <View style={styles.bottomContainer}>
-       {/*  <Text style={styles.title}>Chanfy</Text> */}
         <Text style={styles.description}>
-          Registra tus entrenamientos{'\n'}y progresa como nunca antes!
+          ¡Registra tus entrenamientos{'\n'}y progresa como nunca antes!
         </Text>
         <Pressable
           style={styles.boton}
@@ -72,11 +72,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    marginTop:100,
+    marginTop:80,
     width: '25%',
     resizeMode: 'contain'
   },
-  //title: { ...fonts.header1, ...{ marginTop: '25%' } },
+  title: {
+    color:'white',
+    fontSize:17
+   },
   description: {
    // ...fonts.body1Light,
     ...{ marginTop: '4%', textAlign: 'center', color: 'white' },
