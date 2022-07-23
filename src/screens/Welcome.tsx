@@ -10,35 +10,46 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Welcome = () => {
   const navigation = useNavigation();
 
-
   return (
-    <View style={{ height: '100%', backgroundColor:'#DB3F3F' }}>
+    <View style={{ height: '100%', backgroundColor:'#181818' }}>
          <StatusBar hidden={true} />
       <View style={styles.topContainer}>
         <Image
           style={styles.logo}
-          source={require('../assets/images/logo.png')}
+          source={require('../assets/images/logo2.png')}
         />
       </View>
+      <View style={{display:'flex', alignItems:'center', marginBottom:20}}>
+
+      <Text style={{color:'white', marginBottom:20}}>HEALTH & FITNESS NOTES.</Text>
+      <View
+        style={{
+          width:'90%',
+          borderBottomColor: 'white',
+          borderBottomWidth: StyleSheet.hairlineWidth,
+        }}
+      />
+      </View>
+      
       <View style={styles.bottomContainer}>
        {/*  <Text style={styles.title}>Chanfy</Text> */}
         <Text style={styles.description}>
-          Regsitra tus entrenamientos{'\n'}y progresa como nunca antes!
+          Registra tus entrenamientos{'\n'}y progresa como nunca antes!
         </Text>
         <Pressable
           style={styles.boton}
           onPress={() => navigation.navigate('Signup' as never)}
         >
-          <Text style={{color: '#DB3F3F', fontSize: 16}}>EMPIEZA YA</Text>
+          <Text style={{color: '#242424', fontSize: 16}}>EMPIEZA YA</Text>
         </Pressable>
        
-        <Text
+       {/*  <Text
           style={styles.description2}
           onPress={() => navigation.navigate('Signin' as never)}
         >
           ¿Ya tienes una cuenta?{' '}
           <Text style={{ fontWeight: 'bold' }}>Iniciar sesión</Text>
-        </Text>
+        </Text> */}
       </View>
     </View>
   );
@@ -70,10 +81,8 @@ const styles = StyleSheet.create({
   },
   logo: {
     marginTop:100,
-    width: '55%',
-    height: '70%',
-    resizeMode: 'contain',
-    tintColor:'white'
+    width: '25%',
+    resizeMode: 'contain'
   },
   //title: { ...fonts.header1, ...{ marginTop: '25%' } },
   description: {

@@ -51,19 +51,7 @@ background-image: linear-gradient(315deg, #42378f 0%, #f53844 74%); */
           let iconImage: string =  '';
           switch( route.name ) {
               case 'Welcome':
-                  iconImage = require("../assets/logo2.png")
-              break;
-             /*  case 'Explorar':  
-                  iconImage = require("../assets/explorar1.png")
-              break;   */  
-              case 'Perfil':  
-                  iconImage = require("../assets/perfil.png")
-              break;
-              case 'Subelo': 
-                  iconImage = require("../assets/subelo.png")
-              break;
-              case 'Favoritos':
-                  iconImage = require("../assets/favoritos.png")
+                  iconImage = require("../assets/images/logo2.png")
               break;
 
           }
