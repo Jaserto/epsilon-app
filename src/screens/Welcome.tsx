@@ -38,18 +38,10 @@ const Welcome = () => {
         </Text>
         <Pressable
           style={styles.boton}
-          onPress={() => navigation.navigate('Signup' as never)}
+          onPress={() => navigation.navigate('Inicio' as never)}
         >
           <Text style={{color: '#242424', fontSize: 16, fontWeight:'bold'}}>Empieza ya</Text>
         </Pressable>
-       
-       {/*  <Text
-          style={styles.description2}
-          onPress={() => navigation.navigate('Signin' as never)}
-        >
-          ¿Ya tienes una cuenta?{' '}
-          <Text style={{ fontWeight: 'bold' }}>Iniciar sesión</Text>
-        </Text> */}
       </View>
     </View>
   );
