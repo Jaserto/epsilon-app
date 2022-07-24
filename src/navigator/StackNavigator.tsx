@@ -15,7 +15,10 @@ export const StackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false}}>
         <>
             <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
-            <Stack.Screen name="Inicio" component={InicioScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Inicio" component={Tabs} options={{ headerShown: false }} />
+            <Stack.Screen name="Settings" component={Tabs} options={{ headerShown: false }} />
+            <Stack.Screen name="Analysis" component={Tabs} options={{ headerShown: false }} />
+            <Stack.Screen name="Profile" component={Tabs} options={{ headerShown: false }} />
         </>
     </Stack.Navigator>
   );

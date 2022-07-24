@@ -5,9 +5,13 @@ import { Text, Image, StyleSheet } from 'react-native'
 import LinearGradient from "react-native-linear-gradient";
 import Welcome from '../screens/Welcome';
 import { InicioScreen } from '../screens/InicioScreen';
+import { SettingsScreen } from '../screens/SettingsScreen';
+import { AnalysisScreen } from '../screens/AnalysisScreen';
+import { ProfileScreen } from '../screens/ProfileScreen';
+import Svg, { Circle, Path, Polyline } from 'react-native-svg'
+
 
 const Tab = createBottomTabNavigator();
-
 
 
 export const Tabs = () => {
@@ -16,20 +20,18 @@ export const Tabs = () => {
         <Tab.Navigator
             initialRouteName="Inicio"
             screenOptions={({ route }: any) => ({
-                tabBarActiveTintColor: 'white',
-                tabBarInactiveTintColor: '#D0D0D0',
+                tabBarActiveTintColor: '#6B6B6B',
+                tabBarInactiveTintColor: '#6B6B6B',
                 fontSize: 17,
                 tabBarShowLabel: false,
                 tabBarStyle: {
-                    marginHorizontal: 17,
                     paddingHorizontal: 10,
-                    borderRadius: 10,
-                    bottom: 10,
+                    bottom: 0,
                     height: 45,
                     // Remove border top on both android & ios
                     borderTopWidth: 0,
                     borderTopColor: "transparent",
-                    backgroundColor: "#46456f",
+                    backgroundColor: '#181818',
                     /*  background-color: #42378f;
              background-image: linear-gradient(315deg, #42378f 0%, #f53844 74%); */
                     shadowColor: '#000',
@@ -39,20 +41,15 @@ export const Tabs = () => {
                         height: 10
                     }
                 },
-                tabBarBackground: () => (
-                    <LinearGradient colors={['#DB3F3F', '#F71735']} style={{ bottom: 5, height: 50, borderRadius: 10 }} />
-                ),
                 tabBarIcon: ({ color, focused }) => {
-                    let iconName: string = '';
                     let iconImage: string = '';
                     switch (route.name) {
-                        case 'Welcome':
-                            iconImage = require("../assets/images/logo2.png")
-                            break;
                         case 'Inicio':
-                            iconImage = require("../assets/images/logo2.png")
+                            iconImage = require("../assets/images/inicio.png")
                             break;
-
+                        case 'Settings':
+                            iconImage = require("../assets/images/inicio.png")
+                            break;
                     }
                     return <Image
                         source={iconImage}
@@ -62,17 +59,64 @@ export const Tabs = () => {
                     />
                 }
             })}
-        /*     tabBarOptions={{
-                showIcon:true,
-                pressColor: 'cyan',
-                style:{ 
-                    backgroundColor: 'red'
-                },
-                 */
         >
-
-            <Tab.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
-            <Tab.Screen name="Welcome" component={InicioScreen} options={{ headerShown: false }} />
+            <Tab.Screen name="Inicio" component={InicioScreen} options={{ headerShown: false }} />
+           
+            <Tab.Screen name="Analysis" component={AnalysisScreen}
+                options={{
+                    headerShown: false,
+                    tabBarIcon: ({ color }) => (
+                        <Svg
+                            width={28}
+                            height={28}
+                            viewBox="0 0 28 28"
+                            fill="none"
+                            stroke="white"
+                            strokeWidth={2}
+                            strokeLinecap="round"
+                            strokeLinejoin="round">
+                            <Polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></Polyline>
+                        </Svg>
+                    )
+                }} 
+            />
+             <Tab.Screen name="Settings" component={SettingsScreen}
+             options={{
+                headerShown: false,
+                tabBarIcon: ({ color }) => (
+                    <Svg
+                        width={26}
+                        height={26}
+                        viewBox="0 0 26 26"
+                        fill="none"
+                        stroke="white"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round">
+                        <Circle cx="12" cy="12" r="3" />
+                        <Path  d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                    </Svg>
+                )
+            }} 
+            />
+            <Tab.Screen name="Profile" component={ProfileScreen} 
+            options={{ 
+                headerShown: false,
+                tabBarIcon: ({ color }) => (
+                    <Svg
+                        width={28}
+                        height={28}
+                        viewBox="0 0 28 28"
+                        fill="none"
+                        stroke="white"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round">
+                        <Path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <Circle cx="12" cy="7" r="4" />
+                    </Svg>
+                )
+            }} />
 
 
 
@@ -81,7 +125,7 @@ export const Tabs = () => {
 }
 const styles = StyleSheet.create({
     imagen: {
-        width: 17,
+        width: 20,
         height: 17,
     },
     color22: {

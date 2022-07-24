@@ -10,7 +10,7 @@ import { customAlphabet } from 'nanoid/non-secure';
 const { width, height } = Dimensions.get("window");
 
 
-export const InicioScreen = ({ navigation }: any) => {
+export const AnalysisScreen = ({ navigation }: any) => {
 
 
     const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
@@ -169,6 +169,7 @@ export const InicioScreen = ({ navigation }: any) => {
                             strokeLinejoin="round">
                             <Path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
                             <Path d="M13.73 21a2 2 0 0 1-3.46 0" />
+
                         </Svg>
                     </TouchableOpacity>
                 </View>
@@ -228,6 +229,39 @@ const styles = StyleSheet.create({
         width: width,
         padding: 15
     },
+    imageProd: {
+        width: 33,
+        height: 33,
+
+    },
+    contendorFechaNombre: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    cardFecha: {
+        display: 'flex',
+        alignItems: 'center',
+        maxWidth: '40%',
+        height: 110,
+    },
+
+    textContentFecha: {
+        marginBottom: 10,
+        backgroundColor: '#fff',
+        shadowColor: '#ccc',
+        flexDirection: 'row',
+        flex: 2,
+        borderRadius: 7,
+        justifyContent: 'space-between'
+    },
+    textHeader: {
+        fontSize: 30,
+        marginBottom: 15
+    },
+    cardText: {
+        fontSize: 10,
+    },
     h3: {
         fontSize: 17,
         marginBottom: 18,
@@ -256,6 +290,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    searchBox: {
+        flexDirection: "row",
+        backgroundColor: '#fff',
+        alignSelf: 'center',
+        width: '85%',
+        borderRadius: 20,
+        padding: 6,
+        paddingHorizontal: 14,
+        marginBottom: 15,
+        marginTop: 10,
+        shadowColor: '#ccc',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.5,
+        shadowRadius: 5,
+
+    },
     cardImage: {
         flex: 3,
         width: "100%",
@@ -263,10 +313,66 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         borderBottomRightRadius: 25
     },
+    textContent: {
+        flex: 2,
+        padding: 10,
+    },
+    cardtitle: {
+        fontSize: 12,
+        // marginTop: 5,
+        fontWeight: "bold",
+    },
+    cardDescription: {
+        fontSize: 12,
+        color: "#444",
+    },
+    scrollView: {
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        paddingVertical: 10,
+    },
+    marker: {
+        backgroundColor: '#23324F',
+        padding: 0,
+        borderRadius: 5,
+    },
+    text: {
+        fontSize: 12,
+        color: 'white'
+    },
     button: {
         alignItems: 'center',
         marginTop: 5
     },
+    signIn: {
+        width: '80%',
+        padding: 5,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    textSign: {
+        fontSize: 14,
+        fontWeight: 'bold'
+    },
+    chipsIcon: {
+        marginRight: 5,
+    },
+    chipsItem: {
+        flexDirection: "row",
+        backgroundColor: '#fff',
+        borderRadius: 20,
+        padding: 5,
+        paddingHorizontal: 20,
+        marginHorizontal: 10,
+        height: 30,
+        shadowColor: '#ccc',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.5,
+        shadowRadius: 5,
+        elevation: 10,
+    }
 
 })
 
