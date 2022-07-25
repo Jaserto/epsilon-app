@@ -56,6 +56,14 @@ export const ProfileScreen = ({ navigation }: any) => {
                 paddingRight: Platform.OS === 'android' ? 0 : 0
             }} style={styles.view}>
             <Text style={styles.h3}>Perfil</Text>
+            <View>
+                <Text style={{color:'white'}}>Javier</Text>
+                <Text style={{color:'white'}}>234 entrenamientos registrados</Text>
+                <Text style={{color:'white'}}>GRAFICA WORKOUTS POR SEMANA</Text>
+                <Text style={{color:'white'}}>GRAFICA BEST </Text>
+                <Text style={{color:'white'}}>Rest Timer</Text>
+                
+            </View>
         </ScrollView>
 
 
