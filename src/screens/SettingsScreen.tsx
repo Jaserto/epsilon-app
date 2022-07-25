@@ -59,7 +59,15 @@ export const SettingsScreen = ({ navigation }: any) => {
             contentContainerStyle={{
                 paddingRight: Platform.OS === 'android' ? 0 : 0
             }} style={styles.view}>
-           
+            <Text style={styles.h3}>Ajustes</Text>
+            <View>
+                <Text style={{color:'white'}}></Text>
+                <Text style={{color:'white'}}>Objetivos</Text>
+                <Text style={{color:'white'}}>METRICAS</Text>
+                <Text style={{color:'white'}}>altura peso, maximos </Text>
+                <Text style={{color:'white'}}>Kg o lb</Text>
+                
+            </View>
 
         </ScrollView>
 
