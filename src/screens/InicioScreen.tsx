@@ -17,50 +17,51 @@ export const InicioScreen = ({ navigation }: any) => {
 
     const data = [
         {
-            id: nanoid(),
+            id: 9,
             dia: 20,
             mes: 7,
             exercise: 'Barbell Squat',
             series: [
                 {
-                    id: nanoid(),
+                    id: 12304,
                     reps: 5,
                     weight: 90
                 },
                 {
-                    id: nanoid(),
+                    id: 12305,
                     reps: 5,
                     weight: 90
                 },
                 {
-                    id: nanoid(),
+                    id: 1234,
                     reps: 5,
                     weight: 90
                 }
             ]
         },
         {
-            id: nanoid(),
+            id: 1222,
             dia: 20,
             mes: 7,
             exercise: 'Bench Press',
             series: [
                 {
-                    id: nanoid(),
+                    id: 3444,
                     reps: 5,
                     weight: 80
                 },
                 {
-                    id: nanoid(),
+                    id: 334,
                     reps: 5,
                     weight: 80
                 },
                 {
-                    id: nanoid(),
+                    id: 1231,
                     reps: 5,
                     weight: 80
                 }
-            ]
+            ],
+            
         },
         {
             dia: 22,
@@ -68,17 +69,17 @@ export const InicioScreen = ({ navigation }: any) => {
             exercise: 'Barbell Squat',
             series: [
                 {
-                    id: nanoid(),
+                    id: 123059,
                     reps: 5,
                     weight: 90
                 },
                 {
-                    id: nanoid(),
+                    id: 12111,
                     reps: 5,
                     weight: 90
                 },
                 {
-                    id: nanoid(),
+                    id: 1211,
                     reps: 5,
                     weight: 90
                 }
@@ -90,7 +91,6 @@ export const InicioScreen = ({ navigation }: any) => {
 
 
     useEffect(() => {
-        console.log(nanoid())
     }, [])
 
     const refreshControl = () => {
@@ -102,8 +102,8 @@ export const InicioScreen = ({ navigation }: any) => {
 
         return (
             <RefreshControl
-                tintColor={"#DB3F3F"}
-                colors={["#DB3F3F"]}
+                tintColor={"##181818"}
+                colors={["#181818"]}
                 refreshing={isLoading}
                 onRefresh={onRefresh}
             />
@@ -181,9 +181,9 @@ export const InicioScreen = ({ navigation }: any) => {
                     calendarColor={'#181818'}
                     calendarHeaderStyle={{ color: 'white' }}
                     dateNumberStyle={{ color: 'white' }}
-                    dateNameStyle={{ color: 'white' }}
+                    dateNameStyle={{color: 'white'}}
                     iconContainer={{ flex: 0.1 }}
-                    iconStyle={{ backgroundColor: 'white', borderRadius: 4, padding: 9 }}
+                    iconStyle={{ tintColor: 'white'}}
                 />
             </View>
             <View style={{marginTop:10}}>
@@ -193,25 +193,30 @@ export const InicioScreen = ({ navigation }: any) => {
                 {   data.map((workout) => (
                         <View key={workout.id} 
                             style={{backgroundColor:'#FFEA75', width:'100%', 
-                            marginBottom:10, borderRadius:5, padding:8}}>
+                            marginBottom:10, borderRadius:5, paddingHorizontal:15, paddingVertical:6}}>
                             <Text style={{fontWeight:'bold', marginBottom:5}}>{workout.exercise}</Text>
-                            <View
+                           {/*  <View
                                 style={{
-                                width:'90%',
-                                borderBottomColor: 'black',
+                                width:'100%',
+                                borderBottomColor: '#181818',
                                 borderBottomWidth: StyleSheet.hairlineWidth,
                                 }}
-                            />
-                            <View style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-                               <Text>Día: {workout.dia}</Text> 
+                            /> */}
+                            <View style={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginTop:10}}>
+                               <Text>{workout.dia}</Text> 
                                <Text>{workout.series[0].weight} KG</Text> 
                                <Text>Reps:{workout.series[0].reps}</Text> 
+                               <View>
+                                <Image 
+                                     style={{ tintColor:'#181818', width: 32, height: 32, borderRadius: 50, marginRight: 12 }}
+                                     source={require('../assets/images/more.png')}
+                                />
+                                </View>
                             </View>
                         </View>
                     ))
                 }
             </View>
-
         </ScrollView>
 
 
