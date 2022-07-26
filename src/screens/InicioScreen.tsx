@@ -128,14 +128,10 @@ export const InicioScreen = ({ navigation }: any) => {
             contentContainerStyle={{
                 paddingRight: Platform.OS === 'android' ? 0 : 0
             }} style={styles.view}>
-            {/*  <Text style={styles.textHeader}>Inicio</Text>  */}
             <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent:'space-between'}}>
+             <Text style={{fontSize:18 , color:'white'}}>Inicio</Text> 
                 <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                    <Image
-                        style={{ width: 32, height: 32, borderRadius: 50, marginRight: 12 }}
-                        source={require('../assets/images/logo2.png')}
-                        />
-
+              
                 </View>
                 <View style={{display:'flex', flexDirection:'row', alignItems:'center',justifyContent:'space-between'}}>
                 <View style={{ display: 'flex', alignItems: 'center', marginRight:10}}>

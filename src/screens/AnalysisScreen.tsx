@@ -5,7 +5,9 @@ import * as Keychain from "react-native-keychain";
 import { Path, Svg, Circle, Line } from 'react-native-svg';
 import CalendarStrip from 'react-native-calendar-strip';
 import 'react-native-get-random-values'
-import { customAlphabet } from 'nanoid/non-secure';
+import { LineGraph } from 'react-native-graph'
+import { useColors } from '../hooks/useColors';
+import { generateRandomGraphData } from '../data/GraphData';
 
 const { width, height } = Dimensions.get("window");
 
@@ -13,13 +15,14 @@ const { width, height } = Dimensions.get("window");
 export const AnalysisScreen = ({ navigation }: any) => {
 
 
-    const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
-
+   // const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
+    const POINTS = 70
  
+    const [points, setPoints] = useState(() => generateRandomGraphData(POINTS))
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
-
+    const colors = useColors()
 
     useEffect(() => {
      
@@ -60,8 +63,20 @@ export const AnalysisScreen = ({ navigation }: any) => {
             contentContainerStyle={{
                 paddingRight: Platform.OS === 'android' ? 0 : 0
             }} style={styles.view}>
-           
-
+           <View>
+            <Text style={{color:'white', fontSize:25, fontWeight:'bold'}}>Analysis</Text>
+           </View>
+           <View>
+            <Text style={{color:'white'}}>Javier</Text>
+           </View>
+           <View>
+           <LineGraph
+               
+                animated={false}
+                color={colors.foreground}
+                points={points}
+                />
+           </View>
         </ScrollView>
 
 

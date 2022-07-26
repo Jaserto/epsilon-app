@@ -15,13 +15,13 @@ export const SettingsScreen = ({ navigation }: any) => {
 
     const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
 
-    
+
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
 
 
     useEffect(() => {
-   
+
     }, [])
 
     const refreshControl = () => {
@@ -60,13 +60,49 @@ export const SettingsScreen = ({ navigation }: any) => {
                 paddingRight: Platform.OS === 'android' ? 0 : 0
             }} style={styles.view}>
             <Text style={styles.h3}>Ajustes</Text>
-            <View>
-                <Text style={{color:'white'}}></Text>
-                <Text style={{color:'white'}}>Objetivos</Text>
-                <Text style={{color:'white'}}>METRICAS</Text>
-                <Text style={{color:'white'}}>altura peso, maximos </Text>
-                <Text style={{color:'white'}}>Kg o lb</Text>
-                
+            <View style={{ marginBottom: 10, display: 'flex' }}>
+                <View style={{ marginBottom: 10 }}>
+                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Perfil</Text>
+                    <Text style={{ color: 'white' }}>Editar</Text>
+                </View>
+                <View
+                    style={{
+                        width: '100%',
+                        borderBottomColor: 'white',
+                        borderBottomWidth: StyleSheet.hairlineWidth,
+                        marginBottom: 10
+                    }}
+                />
+                <View style={{ marginBottom: 10 }}>
+                    <Text style={{ color: 'white',fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Unidades y localización</Text>
+                    <Text style={{ color: 'white',marginBottom: 3  }}>Peso</Text>
+                    <Text style={{ color: 'white',marginBottom: 3  }}>Distancia</Text>
+                    <Text style={{ color: 'white',marginBottom: 3  }}>Primer día de la semana</Text>
+                    <Text style={{ color: 'white',marginBottom: 3  }}>Tamaño</Text>
+                </View>
+                <View style={{ marginBottom: 10 }}>
+                    <Text style={{ color: 'white',fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>General</Text>
+                    <Text style={{ color: 'white',marginBottom: 3  }}>Mantener la pantalla encendida durante el entrenamiento</Text>
+                    <Text style={{ color: 'white',marginBottom: 3  }}>Exportar datos</Text>
+                    <Text style={{ color: 'white',marginBottom: 3  }}>Tema</Text>
+                </View>
+                <View style={{ marginBottom: 10 }}>
+                    <Text style={{ color: 'white',fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Avanzado</Text>
+                    <Text style={{ color: 'white', marginBottom: 3  }}>Mantener la pantalla encendida durante el entrenamiento</Text>
+                    <Text style={{ color: 'white', marginBottom: 3  }}>Exportar datos</Text>
+                    <Text style={{ color: 'white', marginBottom: 3  }}>Tema</Text>
+                </View>
+                <View style={{ marginBottom: 10 }}>
+                    <Text style={{ color: 'white',fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Otros servicios</Text>
+                    <Text style={{ color: 'white', marginBottom: 3  }}>Google Fit</Text>
+                </View>
+                <View style={{ marginBottom: 10 }}>
+                    <Text style={{ color: 'white',fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Contacto y soporte</Text>
+                    <Text style={{ color: 'white', marginBottom: 3  }}>Informar sobre un problema</Text>
+                    <Text style={{ color: 'white', marginBottom: 3  }}>Twitter</Text>
+                    <Text style={{ color: 'white', marginBottom: 3  }}>Facebook</Text>
+                </View>
+
             </View>
 
         </ScrollView>
@@ -119,7 +155,7 @@ const styles = StyleSheet.create({
         fontSize: 10,
     },
     h3: {
-        fontSize: 17,
+        fontSize: 30,
         marginBottom: 18,
         color: 'white'
     },
