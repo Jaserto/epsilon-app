@@ -38,7 +38,7 @@ const Welcome = () => {
         </Text>
         <Pressable
           style={styles.boton}
-          onPress={() => navigation.navigate('Inicio' as never)}
+          onPress={() => navigation.navigate('InicioScreen' as never)}
         >
           <Text style={{color: '#242424', fontSize: 16, fontWeight:'bold'}}>Empieza ya</Text>
         </Pressable>

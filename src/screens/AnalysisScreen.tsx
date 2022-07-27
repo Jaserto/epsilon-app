@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Alert, Dimensions, Image, LogBox, Platform, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { Alert, Button, Dimensions, Image, LogBox, Platform, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import * as Keychain from "react-native-keychain";
 import { Path, Svg, Circle, Line } from 'react-native-svg';
@@ -8,6 +8,7 @@ import 'react-native-get-random-values'
 import { LineGraph } from 'react-native-graph'
 import { useColors } from '../hooks/useColors';
 import { generateRandomGraphData } from '../data/GraphData';
+import { hapticFeedback } from '../utils/HapticFeedback';
 
 const { width, height } = Dimensions.get("window");
 
@@ -19,7 +20,9 @@ export const AnalysisScreen = ({ navigation }: any) => {
     const POINTS = 70
  
     const [points, setPoints] = useState(() => generateRandomGraphData(POINTS))
-
+    const [enablePanGesture, setEnablePanGesture] = useState(true)
+    const [isAnimated, setIsAnimated] = useState(true)
+    const [enableFadeInEffect, setEnableFadeInEffect] = useState(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const colors = useColors()
@@ -45,7 +48,10 @@ export const AnalysisScreen = ({ navigation }: any) => {
         );
     };
 
-
+    const refreshData = useCallback(() => {
+        setPoints(generateRandomGraphData(POINTS))
+        hapticFeedback('impactLight')
+      }, [])
 
     return (
 
@@ -70,13 +76,15 @@ export const AnalysisScreen = ({ navigation }: any) => {
             <Text style={{color:'white'}}>Javier</Text>
            </View>
            <View>
-           <LineGraph
-               
-                animated={false}
-                color={colors.foreground}
-                points={points}
-                />
+           {/*  <LineGraph
+                            points={points}
+                            animated={true}
+                            color="#333333"
+                            enablePanGesture={true}
+                            selectionDotShadowColor="#333333"
+            /> */}
            </View>
+        
         </ScrollView>
 
 
@@ -84,7 +92,17 @@ export const AnalysisScreen = ({ navigation }: any) => {
     )
 }
 const styles = StyleSheet.create({
-
+    miniGraph: {
+        width: 40,
+        height: 35,
+        marginLeft: 5,
+      },
+      graph: {
+        alignSelf: 'center',
+        width: '100%',
+        aspectRatio: 1.4,
+        marginVertical: 20,
+      },
     view: {
         display: 'flex',
         flexDirection: 'column',

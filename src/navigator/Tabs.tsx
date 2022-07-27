@@ -47,9 +47,6 @@ export const Tabs = () => {
                         case 'Inicio':
                             iconImage = require("../assets/images/inicio.png")
                             break;
-                        case 'Settings':
-                            iconImage = require("../assets/images/inicio.png")
-                            break;
                     }
                     return <Image
                         source={iconImage}

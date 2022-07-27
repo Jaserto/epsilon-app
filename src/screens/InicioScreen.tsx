@@ -13,7 +13,6 @@ const { width, height } = Dimensions.get("window");
 export const InicioScreen = ({ navigation }: any) => {
 
 
-    const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
 
     const data = [
         {

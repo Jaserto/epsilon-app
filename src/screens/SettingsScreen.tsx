@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Alert, Dimensions, Image, LogBox, Platform, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { FlatList, ScrollView } from 'react-native-gesture-handler'
+import { FlatList, ScrollView, Switch } from 'react-native-gesture-handler'
 import * as Keychain from "react-native-keychain";
 import { Path, Svg, Circle, Line } from 'react-native-svg';
 import CalendarStrip from 'react-native-calendar-strip';
@@ -65,7 +65,37 @@ export const SettingsScreen = ({ navigation }: any) => {
                     <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Perfil</Text>
                     <Text style={{ color: 'white' }}>Editar</Text>
                 </View>
+              {/*   linea  -----------------------------------------------------------*/}
                 <View
+                    style={{
+                        width: '100%',
+                        borderBottomColor: 'white',
+                        borderBottomWidth: StyleSheet.hairlineWidth,
+                        marginBottom: 15
+                    }}
+                />
+                <View style={{ marginBottom: 10 }}>
+                    <Text style={{ color: 'white',fontSize: 16, fontWeight: 'bold', marginBottom: 12 }}>Unidades y localización</Text>
+                    <View style={styles.spacer}>
+                        <Text style={{ color: 'white',marginBottom: 10  }}>Peso</Text>
+                    </View>
+                    <View style={styles.spacer}>
+                        <Text style={{ color: 'white',marginBottom: 10  }}>Distancia</Text>
+                        <Switch
+                            trackColor={{ false: "#767577", true: "#81b0ff" }}
+                            ios_backgroundColor="#3e3e3e"
+                        />
+                    </View>
+                    <View style={styles.spacer}>
+                      <Text style={{ color: 'white',marginBottom: 10  }}>Primer día de la semana</Text>
+                    </View>
+                    <View style={styles.spacer}>
+                    <Text style={{ color: 'white',marginBottom: 10  }}>Tamaño</Text>
+                    </View>
+                </View>
+                   {/*   linea  -----------------------------------------------------------*/}
+                   
+                   <View
                     style={{
                         width: '100%',
                         borderBottomColor: 'white',
@@ -73,19 +103,34 @@ export const SettingsScreen = ({ navigation }: any) => {
                         marginBottom: 10
                     }}
                 />
-                <View style={{ marginBottom: 10 }}>
-                    <Text style={{ color: 'white',fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Unidades y localización</Text>
-                    <Text style={{ color: 'white',marginBottom: 3  }}>Peso</Text>
-                    <Text style={{ color: 'white',marginBottom: 3  }}>Distancia</Text>
-                    <Text style={{ color: 'white',marginBottom: 3  }}>Primer día de la semana</Text>
-                    <Text style={{ color: 'white',marginBottom: 3  }}>Tamaño</Text>
+
+<View style={{ marginBottom: 10 }}>
+                    <Text style={{ color: 'white',fontSize: 16, fontWeight: 'bold', marginBottom: 12 }}>General</Text>
+                    <View style={styles.spacer}>
+                        <Text style={{ color: 'white',marginBottom: 3  }}>Mantener la pantalla encendida durante el entrenamiento</Text>
+                    </View>
+                    <View style={styles.spacer}>
+                        <Text style={{ color: 'white',marginBottom: 3  }}>Exportar datos</Text>
+                        <Switch
+                            trackColor={{ false: "#767577", true: "#81b0ff" }}
+                            ios_backgroundColor="#3e3e3e"
+                        />
+                    </View>
+                    <View style={styles.spacer}>
+                         <Text style={{ color: 'white',marginBottom: 3  }}>Tema</Text>
+                    </View>
                 </View>
-                <View style={{ marginBottom: 10 }}>
-                    <Text style={{ color: 'white',fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>General</Text>
-                    <Text style={{ color: 'white',marginBottom: 3  }}>Mantener la pantalla encendida durante el entrenamiento</Text>
-                    <Text style={{ color: 'white',marginBottom: 3  }}>Exportar datos</Text>
-                    <Text style={{ color: 'white',marginBottom: 3  }}>Tema</Text>
-                </View>
+
+               
+                   {/*   linea  -----------------------------------------------------------*/}
+                   <View
+                    style={{
+                        width: '100%',
+                        borderBottomColor: 'white',
+                        borderBottomWidth: StyleSheet.hairlineWidth,
+                        marginBottom: 10
+                    }}
+                />
                 <View style={{ marginBottom: 10 }}>
                     <Text style={{ color: 'white',fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Avanzado</Text>
                     <Text style={{ color: 'white', marginBottom: 3  }}>Mantener la pantalla encendida durante el entrenamiento</Text>
@@ -138,21 +183,15 @@ const styles = StyleSheet.create({
         height: 110,
     },
 
-    textContentFecha: {
-        marginBottom: 10,
-        backgroundColor: '#fff',
-        shadowColor: '#ccc',
-        flexDirection: 'row',
-        flex: 2,
-        borderRadius: 7,
-        justifyContent: 'space-between'
+    spacer:{
+        marginBottom: 12,
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'space-between',
     },
     textHeader: {
         fontSize: 30,
         marginBottom: 15
-    },
-    cardText: {
-        fontSize: 10,
     },
     h3: {
         fontSize: 30,
