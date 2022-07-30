@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     view: {
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: '#181818',
+        backgroundColor: '#111111',
         height: height,
         width: width,
         padding: 15

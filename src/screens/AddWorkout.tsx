@@ -16,7 +16,7 @@ import { exercises } from '../utils/exercices/data';
 const { width, height } = Dimensions.get("window");
 
 
-export const AnalysisScreen = ({ navigation }: any) => {
+export const AddWorkoutScreen = ({ navigation }: any) => {
 
 
    // const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
@@ -73,25 +73,19 @@ export const AnalysisScreen = ({ navigation }: any) => {
                 paddingRight: Platform.OS === 'android' ? 0 : 0
             }} style={styles.view}>
            <View  style={{marginVertical:10}}>
-            <Text style={{color:'white', fontSize:25, fontWeight:'bold'}}>Ejercicios</Text>
+            <Text style={{color:'white', fontSize:25, fontWeight:'bold'}}>Añade un nuevo entrenamiento</Text>
            </View>
-          {exercises.map(({id, nombre, muscularGroup}) => (
-            <View key={id}>
-                <View style={{marginVertical:10, flexDirection:'row', alignItems:'center'}}>
-                    <View style={{width:33, height:33, borderRadius:100, backgroundColor:'gray', marginRight:10}}></View>
-                    <View>
-                        <Text style={{color:'white', fontWeight:'bold', fontSize:16}}>{nombre}</Text>
-                        <Text style={{color:'white', fontSize:14}}>{muscularGroup}</Text>
-                    </View>
 
-                </View>
-            </View>
-          ))}
            <View>
             
                
            </View>
-        
+            <TouchableOpacity>
+                <Text style={{color:'white'}}>Añadir ejercicio</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Text style={{color:'red'}}>Cancelar entrenamiento</Text>
+            </TouchableOpacity>
         </ScrollView>
 
 
@@ -110,7 +104,5 @@ const styles = StyleSheet.create({
   
   
 })
-
-
 
 

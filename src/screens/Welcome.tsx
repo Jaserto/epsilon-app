@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '12%',
-    backgroundColor:'#FFEA75',
+    backgroundColor:'white',
     
   },
   topContainer: {
