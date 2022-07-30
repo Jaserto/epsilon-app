@@ -32,7 +32,7 @@ export const Tabs = () => {
                     // Remove border top on both android & ios
                     borderTopWidth: 0,
                     borderTopColor: "transparent",
-                    backgroundColor: '#181818',
+                    backgroundColor: '#111111',
                     /*  background-color: #42378f;
              background-image: linear-gradient(315deg, #42378f 0%, #f53844 74%); */
                     shadowColor: '#000',
