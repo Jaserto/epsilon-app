@@ -1,16 +1,9 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Alert, Button, Dimensions, Image, LogBox, Platform, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
-import * as Keychain from "react-native-keychain";
-import { Path, Svg, Circle, Line } from 'react-native-svg';
-import CalendarStrip from 'react-native-calendar-strip';
+
 import 'react-native-get-random-values'
-import { LineGraph } from 'react-native-graph'
-import { useColors } from '../hooks/useColors';
-import { generateRandomGraphData } from '../data/GraphData';
-import { hapticFeedback } from '../utils/HapticFeedback';
-import { Canvas, RoundedRect } from '@shopify/react-native-skia';
-import { StatusBar, useWindowDimensions } from 'react-native';
+
 import { exercises } from '../utils/exercices/data';
 
 const { width, height } = Dimensions.get("window");
@@ -19,16 +12,7 @@ const { width, height } = Dimensions.get("window");
 export const AnalysisScreen = ({ navigation }: any) => {
 
 
-   // const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
-    const POINTS = 70
- 
-    const [points, setPoints] = useState(() => generateRandomGraphData(POINTS))
-    const [enablePanGesture, setEnablePanGesture] = useState(true)
-    const [isAnimated, setIsAnimated] = useState(true)
-    const [enableFadeInEffect, setEnableFadeInEffect] = useState(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
-
-    const colors = useColors()
 
     useEffect(() => {
      
@@ -51,10 +35,6 @@ export const AnalysisScreen = ({ navigation }: any) => {
         );
     };
 
-    const refreshData = useCallback(() => {
-        setPoints(generateRandomGraphData(POINTS))
-        hapticFeedback('impactLight')
-      }, [])
 
     return (
 

@@ -5,6 +5,7 @@ import { Path, Svg, Circle, Line, Polyline } from 'react-native-svg';
 import CalendarStrip from 'react-native-calendar-strip';
 import 'react-native-get-random-values'
 import LinearGradient from 'react-native-linear-gradient';
+import { Series } from '../utils/models/Series';
 
 const { width, height } = Dimensions.get("window");
 
@@ -160,7 +161,25 @@ export const InicioScreen = ({ navigation }: any) => {
         );
     };
 
+    const getExercises = (series: any) => {
+        console.log('------------------------------------')
+        console.log(series)
+        return series.map((exercise: Series, index:number) => (
+            <View key={exercise.id} style={{borderColor: 'purple',borderWidth:1, display:'flex',flexDirection:'column', marginTop:3,borderRadius:5, padding:3}}>
+                    <Text style={{ color: 'purple' }}>{exercise.reps} x {exercise.exercise}</Text>
+            </View>
 
+        ));
+    }
+    const getBestSeries = (series: any) => {
+        return series.map((exercise: Series, index:number) => (
+            <View key={exercise.id} style={{borderColor: 'purple',borderWidth:1, display:'flex',flexDirection:'column', marginTop:3, borderRadius:5, padding:3}}>
+                    <Text style={{ color: 'purple' }}>{exercise.weight}kg x {exercise.reps}</Text>
+            </View>
+
+        ));
+    }
+    
     return (
 
         <ScrollView
@@ -178,7 +197,7 @@ export const InicioScreen = ({ navigation }: any) => {
                 paddingRight: Platform.OS === 'android' ? 0 : 0
             }} style={styles.view}>
             <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Text style={{ fontSize: 24, color: 'white' }}>Inicio</Text>
+                <Text style={{ fontSize: 26, color: 'white', fontWeight:'bold' }}>Inicio</Text>
                 <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
 
                 </View>
@@ -236,7 +255,6 @@ export const InicioScreen = ({ navigation }: any) => {
             </View>
             <View>
                 {data.map((workout) => (
-
                     <View key={workout.id}
                         style={{
                             backgroundColor: '#FFFCEB', width: '100%',
@@ -264,7 +282,7 @@ export const InicioScreen = ({ navigation }: any) => {
                                     <Polyline points="12 6 12 12 16 14" />
                                 </Svg>
 
-                                <Text style={{ textAlign: 'center', marginLeft: 5 }}>{workout.tiempo}</Text>
+                                <Text style={{ textAlign: 'center', marginLeft: 5 , color:'#111111'}}>{workout.tiempo}</Text>
                             </View>
                             <View style={{ flex: 3, flexDirection: 'row', alignItems: 'center' }}>
                                 <Svg
@@ -280,7 +298,7 @@ export const InicioScreen = ({ navigation }: any) => {
                                     <Line x1="5" y1="12" x2="19" y2="12" />
                                     <Line x1="5" y1="12" x2="19" y2="12" />
                                 </Svg>
-                                <Text style={{ textAlign: 'center', marginLeft: 5 }}>{workout.totalWeight} Kg</Text>
+                                <Text style={{ textAlign: 'center', marginLeft: 5, color:'#111111'}}>{workout.totalWeight} Kg</Text>
                             </View>
                             <View style={{ flex: 3, flexDirection: 'row', alignItems: 'center' }}>
 
@@ -296,25 +314,23 @@ export const InicioScreen = ({ navigation }: any) => {
                                     <Polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
                                     <Polyline points="17 6 23 6 23 12" />
                                 </Svg>
-                                <Text style={{ textAlign: 'right', marginLeft: 5 }}>{workout.pr} PRs</Text>
+                                <Text style={{ textAlign: 'right', marginLeft: 5, color:'#111111' }}>{workout.pr} PRs</Text>
                             </View>
-
-
-
                         </View>
                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 10 }}>
-                            <Text style={{ fontWeight: 'bold', marginBottom: 5, color: '#111111' }}>Ejercicio</Text>
-                            <Text style={{ fontWeight: 'bold', marginBottom: 5, color: '#111111' }}>Mejor serie</Text>
-
+                            <Text style={{ fontWeight: 'bold', marginBottom: 2, color: '#111111' }}>Ejercicio</Text>
+                            <Text style={{ fontWeight: 'bold', marginBottom: 2, color: '#111111' }}>Mejor serie</Text>
                         </View>
                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginVertical: 4 }}>
-                            <View style={{ display: 'flex', flexDirection: 'row' }}>
-                                <Text style={{ marginRight: 6 }}>{workout.series[0].reps}x{workout.series[0].weight}</Text>
-                                <Text>{workout.series[0].exercise}</Text>
+                            <View style={{ display: 'flex', flexDirection: 'column' }}>
+                                {getExercises(workout.series)}
+                               {/*  <Text style={{ marginRight: 6 }}>{workout.series[0].reps}x{workout.series[0].weight}</Text>
+                                <Text>{workout.series[0].exercise}</Text> */}
                             </View>
-                            <View style={{ display: 'flex', flexDirection: 'row' }}>
-                                <Text style={{ marginRight: 6 }}>{workout.series[0].reps}x{workout.series[0].weight}</Text>
-                                <Text>{workout.series[0].exercise}</Text>
+                            <View style={{ display: 'flex', flexDirection: 'column' }}>
+                            {getBestSeries(workout.series)}
+                              {/*   <Text style={{ marginRight: 6 }}>{workout.series[0].reps}x{workout.series[0].weight}</Text>
+                                <Text>{workout.series[0].exercise}</Text> */}
                             </View>
                         </View>
                         <TouchableOpacity
@@ -327,11 +343,12 @@ export const InicioScreen = ({ navigation }: any) => {
                                     fecha: workout.dia,
                                     time: workout.tiempo,
                                     pr: workout.pr,
-                                    totalWieight: workout.totalWeight
+                                    totalWeight: workout.totalWeight,
+                                    series: workout.series
                                 })
                             }}
                         >
-                            <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.linearGradient}>
+                            <LinearGradient start={{x: 0.0, y: 0.25}} end={{x: 0.5, y: 1.0}} colors={['#673ab7', '#512da8']} style={styles.linearGradient}>
                                 <Text style={styles.buttonText}>
                                     Ver entrenamiento
                                 </Text>

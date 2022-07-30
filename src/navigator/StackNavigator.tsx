@@ -27,9 +27,6 @@ export const StackNavigator = () => {
             <Stack.Screen name="Analysis" component={AnalysisScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
-{/*             <Stack.Screen name="Wallet" component={Wallet} options={{ headerShown: false }} />
-            <Stack.Screen name="Graphs" component={Slider} options={{ headerShown: false }} />
-            <Stack.Screen name="GraphPage" component={GraphPage} options={{ headerShown: false }} /> */}
             <Stack.Screen name="AddWorkout" component={AddWorkoutScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Workout" component={WorkoutScreen} options={{ headerShown: false }} />
         </>
