@@ -8,6 +8,9 @@ import {InicioScreen} from '../screens/InicioScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { AnalysisScreen } from '../screens/AnalysisScreen';
+import { Wallet } from '../wallet/Wallet';
+import { Slider } from '../Graphs/Slider';
+import { GraphPage } from '../screens/GraphPage';
 
 
 const Stack = createNativeStackNavigator();
@@ -22,6 +25,9 @@ export const StackNavigator = () => {
             <Stack.Screen name="Analysis" component={AnalysisScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Wallet" component={Wallet} options={{ headerShown: false }} />
+            <Stack.Screen name="Graphs" component={Slider} options={{ headerShown: false }} />
+            <Stack.Screen name="GraphPage" component={GraphPage} options={{ headerShown: false }} />
         </>
     </Stack.Navigator>
   );

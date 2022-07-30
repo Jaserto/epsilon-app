@@ -9,6 +9,8 @@ import { LineGraph } from 'react-native-graph'
 import { useColors } from '../hooks/useColors';
 import { generateRandomGraphData } from '../data/GraphData';
 import { hapticFeedback } from '../utils/HapticFeedback';
+import { Canvas, RoundedRect } from '@shopify/react-native-skia';
+import { StatusBar, useWindowDimensions } from 'react-native';
 
 const { width, height } = Dimensions.get("window");
 
@@ -76,13 +78,24 @@ export const AnalysisScreen = ({ navigation }: any) => {
             <Text style={{color:'white'}}>Javier</Text>
            </View>
            <View>
-           {/*  <LineGraph
-                            points={points}
-                            animated={true}
-                            color="#333333"
-                            enablePanGesture={true}
-                            selectionDotShadowColor="#333333"
+          {/*  <LineGraph
+                style={styles.graph}
+                animated={isAnimated}
+                color="#6a7ee7"
+                points={points}
+                enableFadeInMask={enableFadeInEffect}
+                selectionDotShadowColor={colors.foreground}
             /> */}
+            
+                <Canvas >
+                    <RoundedRect
+                        x={0}
+                        y={0}
+                        width={100}
+                        height={100}
+                        color={'white'}
+                    />
+                </Canvas>
            </View>
         
         </ScrollView>

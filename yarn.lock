@@ -1283,6 +1283,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/eslint-plugin/-/eslint-plugin-1.2.0.tgz#7d6d789ae8edf73dc9bed1246cd48277edea8066"
   integrity sha512-o6aam+0Ug1xGK3ABYmBm0B1YuEKfM/5kaoZO0eHbZwSpw9UzDX4G5y4Nx/K20FHqUmJHkZmLvOUFYwN4N+HqKA==
 
+"@react-native-segmented-control/segmented-control@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@react-native-segmented-control/segmented-control/-/segmented-control-2.4.0.tgz#0a88f22ad2c0fe07ecc002ee1e5d62c55a3dd0ae"
+  integrity sha512-2s1AaT6xk/Do5s6u7ioCXucqesAt02NQlLKBOM28dJWI7PTH9o89x6AwsGHIeMkTe4nQ6iENiJKzO7Y3SGG9Ew==
+
 "@react-native/assets@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@react-native/assets/-/assets-1.0.0.tgz#c6f9bf63d274bafc8e970628de24986b30a55c8e"
@@ -1429,6 +1434,11 @@
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@types/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#1ee30d79544ca84d68d4b3cdb0af4f205663dd2d"
   integrity sha512-OCutwjDZ4aFS6PB1UZ988C4YgwlBHJd6wCeQqaLdmadZ/7e+w79+hbMUFC1QXDNCmdyoRfAFdm0RypzwR+Qpag==
+
+"@types/gaussian@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@types/gaussian/-/gaussian-1.2.0.tgz#8bb3e1a7cec9d17d901c2b5fb1892ad33daa783b"
+  integrity sha512-4rHzt7QTNDGGnlWGzgBc3S+W0fCwkENSfGhDYhUb/fM4vdP0o7fT8OCuQ8kqnVFu3MACGy9KOWG1ugcZuMIsXw==
 
 "@types/graceful-fs@^4.1.2":
   version "4.1.5"
@@ -5883,6 +5893,11 @@ react-native-linear-gradient@^2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.6.2.tgz#56598a76832724b2afa7889747635b5c80948f38"
   integrity sha512-Z8Xxvupsex+9BBFoSYS87bilNPWcRfRsGC0cpJk72Nxb5p2nEkGSBv73xZbEHnW2mUFvP+huYxrVvjZkr/gRjQ==
+
+react-native-pressable-scale@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-pressable-scale/-/react-native-pressable-scale-1.0.6.tgz#4a1c449dec813bc1d688a79600f0da4a2e7eafa8"
+  integrity sha512-rs8g2PBSpnxVI3hz2QqdT8kmau4aLJ8x7VcNII+YLQ5FgY7S+God0FeB7M9LVurHMoijraaqdB/XfhklcoBMCA==
 
 react-native-reanimated@^2.9.1:
   version "2.9.1"

@@ -9,6 +9,7 @@ import { SettingsScreen } from '../screens/SettingsScreen';
 import { AnalysisScreen } from '../screens/AnalysisScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import Svg, { Circle, Path, Polyline } from 'react-native-svg'
+import { Wallet } from '../wallet/Wallet';
 
 
 const Tab = createBottomTabNavigator();

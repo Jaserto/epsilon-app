@@ -63,6 +63,7 @@ export const InicioScreen = ({ navigation }: any) => {
             
         },
         {
+            id:46,
             dia: 22,
             mes: 7,
             exercise: 'Barbell Squat',
@@ -191,13 +192,6 @@ export const InicioScreen = ({ navigation }: any) => {
                             style={{backgroundColor:'#FFEA75', width:'100%', 
                             marginBottom:10, borderRadius:5, paddingHorizontal:15, paddingVertical:6}}>
                             <Text style={{fontWeight:'bold', marginBottom:5}}>{workout.exercise}</Text>
-                           {/*  <View
-                                style={{
-                                width:'100%',
-                                borderBottomColor: '#181818',
-                                borderBottomWidth: StyleSheet.hairlineWidth,
-                                }}
-                            /> */}
                             <View style={{display:'flex', flexDirection:'row', justifyContent:'space-between', marginTop:10}}>
                                <Text>{workout.dia}</Text> 
                                <Text>{workout.series[0].weight} KG</Text> 

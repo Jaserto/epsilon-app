@@ -62,10 +62,12 @@ export const SettingsScreen = ({ navigation }: any) => {
             <Text style={styles.h3}>Ajustes</Text>
             <View style={{ marginBottom: 10, display: 'flex' }}>
                 <View style={{ marginBottom: 10 }}>
-                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Perfil</Text>
-                    <Text style={{ color: 'white' }}>Editar</Text>
+                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 12 }}>Perfil</Text>
+                    <View style={styles.spacer}>
+                        <Text style={{ color: 'white', marginBottom: 10 }}>Editar</Text>
+                    </View>
                 </View>
-              {/*   linea  -----------------------------------------------------------*/}
+                {/*   linea  -----------------------------------------------------------*/}
                 <View
                     style={{
                         width: '100%',
@@ -75,27 +77,27 @@ export const SettingsScreen = ({ navigation }: any) => {
                     }}
                 />
                 <View style={{ marginBottom: 10 }}>
-                    <Text style={{ color: 'white',fontSize: 16, fontWeight: 'bold', marginBottom: 12 }}>Unidades y localización</Text>
+                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 12 }}>Unidades y localización</Text>
                     <View style={styles.spacer}>
-                        <Text style={{ color: 'white',marginBottom: 10  }}>Peso</Text>
+                        <Text style={{ color: 'white', marginBottom: 10 }}>Peso</Text>
                     </View>
                     <View style={styles.spacer}>
-                        <Text style={{ color: 'white',marginBottom: 10  }}>Distancia</Text>
+                        <Text style={{ color: 'white', marginBottom: 10 }}>Distancia</Text>
                         <Switch
                             trackColor={{ false: "#767577", true: "#81b0ff" }}
                             ios_backgroundColor="#3e3e3e"
                         />
                     </View>
                     <View style={styles.spacer}>
-                      <Text style={{ color: 'white',marginBottom: 10  }}>Primer día de la semana</Text>
+                        <Text style={{ color: 'white', marginBottom: 10 }}>Primer día de la semana</Text>
                     </View>
                     <View style={styles.spacer}>
-                    <Text style={{ color: 'white',marginBottom: 10  }}>Tamaño</Text>
+                        <Text style={{ color: 'white', marginBottom: 10 }}>Tamaño</Text>
                     </View>
                 </View>
-                   {/*   linea  -----------------------------------------------------------*/}
-                   
-                   <View
+                {/*   linea  -----------------------------------------------------------*/}
+
+                <View
                     style={{
                         width: '100%',
                         borderBottomColor: 'white',
@@ -104,26 +106,26 @@ export const SettingsScreen = ({ navigation }: any) => {
                     }}
                 />
 
-<View style={{ marginBottom: 10 }}>
-                    <Text style={{ color: 'white',fontSize: 16, fontWeight: 'bold', marginBottom: 12 }}>General</Text>
+                <View style={{ marginBottom: 10 }}>
+                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 12 }}>General</Text>
                     <View style={styles.spacer}>
-                        <Text style={{ color: 'white',marginBottom: 3  }}>Mantener la pantalla encendida durante el entrenamiento</Text>
+                        <Text style={{ color: 'white', marginBottom: 3 }}>Mantener la pantalla encendida durante el entrenamiento</Text>
                     </View>
                     <View style={styles.spacer}>
-                        <Text style={{ color: 'white',marginBottom: 3  }}>Exportar datos</Text>
+                        <Text style={{ color: 'white', marginBottom: 3 }}>Exportar datos</Text>
                         <Switch
                             trackColor={{ false: "#767577", true: "#81b0ff" }}
                             ios_backgroundColor="#3e3e3e"
                         />
                     </View>
                     <View style={styles.spacer}>
-                         <Text style={{ color: 'white',marginBottom: 3  }}>Tema</Text>
+                        <Text style={{ color: 'white', marginBottom: 3 }}>Tema</Text>
                     </View>
                 </View>
 
-               
-                   {/*   linea  -----------------------------------------------------------*/}
-                   <View
+
+                {/*   linea  -----------------------------------------------------------*/}
+                <View
                     style={{
                         width: '100%',
                         borderBottomColor: 'white',
@@ -132,20 +134,20 @@ export const SettingsScreen = ({ navigation }: any) => {
                     }}
                 />
                 <View style={{ marginBottom: 10 }}>
-                    <Text style={{ color: 'white',fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Avanzado</Text>
-                    <Text style={{ color: 'white', marginBottom: 3  }}>Mantener la pantalla encendida durante el entrenamiento</Text>
-                    <Text style={{ color: 'white', marginBottom: 3  }}>Exportar datos</Text>
-                    <Text style={{ color: 'white', marginBottom: 3  }}>Tema</Text>
+                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Avanzado</Text>
+                    <Text style={{ color: 'white', marginBottom: 3 }}>Mantener la pantalla encendida durante el entrenamiento</Text>
+                    <Text style={{ color: 'white', marginBottom: 3 }}>Exportar datos</Text>
+                    <Text style={{ color: 'white', marginBottom: 3 }}>Tema</Text>
                 </View>
                 <View style={{ marginBottom: 10 }}>
-                    <Text style={{ color: 'white',fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Otros servicios</Text>
-                    <Text style={{ color: 'white', marginBottom: 3  }}>Google Fit</Text>
+                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Otros servicios</Text>
+                    <Text style={{ color: 'white', marginBottom: 3 }}>Google Fit</Text>
                 </View>
                 <View style={{ marginBottom: 10 }}>
-                    <Text style={{ color: 'white',fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Contacto y soporte</Text>
-                    <Text style={{ color: 'white', marginBottom: 3  }}>Informar sobre un problema</Text>
-                    <Text style={{ color: 'white', marginBottom: 3  }}>Twitter</Text>
-                    <Text style={{ color: 'white', marginBottom: 3  }}>Facebook</Text>
+                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Contacto y soporte</Text>
+                    <Text style={{ color: 'white', marginBottom: 3 }}>Informar sobre un problema</Text>
+                    <Text style={{ color: 'white', marginBottom: 3 }}>Twitter</Text>
+                    <Text style={{ color: 'white', marginBottom: 3 }}>Facebook</Text>
                 </View>
 
             </View>
@@ -183,11 +185,11 @@ const styles = StyleSheet.create({
         height: 110,
     },
 
-    spacer:{
-        marginBottom: 12,
-        display:'flex',
-        flexDirection:'row',
-        justifyContent:'space-between',
+    spacer: {
+        marginBottom: 11,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     textHeader: {
         fontSize: 30,
