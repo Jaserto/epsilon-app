@@ -1,15 +1,13 @@
 import React from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Text, Image, StyleSheet } from 'react-native'
-import LinearGradient from "react-native-linear-gradient";
-import Welcome from '../screens/Welcome';
+import { Image, StyleSheet } from 'react-native'
 import { InicioScreen } from '../screens/InicioScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
 import { AnalysisScreen } from '../screens/AnalysisScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import Svg, { Circle, Path, Polyline } from 'react-native-svg'
-import { Wallet } from '../wallet/Wallet';
+
 
 
 const Tab = createBottomTabNavigator();
@@ -33,8 +31,6 @@ export const Tabs = () => {
                     borderTopWidth: 0,
                     borderTopColor: "transparent",
                     backgroundColor: '#111111',
-                    /*  background-color: #42378f;
-             background-image: linear-gradient(315deg, #42378f 0%, #f53844 74%); */
                     shadowColor: '#000',
                     shadowOpacity: 0.8,
                     shadowOffset: {

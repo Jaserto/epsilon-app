@@ -1,6 +1,6 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { Alert, Button, Dimensions, Image, LogBox, Platform, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { FlatList, ScrollView } from 'react-native-gesture-handler'
+import React, { useEffect, useState } from 'react'
+import { Alert, Dimensions, Platform, RefreshControl, StyleSheet, Text, View } from 'react-native'
+import {  ScrollView } from 'react-native-gesture-handler'
 
 import 'react-native-get-random-values'
 

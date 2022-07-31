@@ -43,8 +43,7 @@ export const WorkoutScreen = (props: any) => {
         console.log(series)
         return series.map((exercise: Series, index:number) => (
             <View key={exercise.id}>
-              
-                <Text style={{ color: 'white' }}>{index +1}   {exercise.weight} kg x {exercise.reps}</Text>
+                <Text style={{ color: 'white' }}>{index +1}  {exercise.weight} kg x {exercise.reps}</Text>
             </View>
 
         ));
@@ -126,6 +125,7 @@ export const WorkoutScreen = (props: any) => {
             </View>
             <View>
             <Text style={{ color: 'white' }}>{props.route.params.exercise}</Text>
+            
             {getExercises(props.route.params.series)}
             </View>
 

@@ -8,9 +8,6 @@ import {InicioScreen} from '../screens/InicioScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { AnalysisScreen } from '../screens/AnalysisScreen';
-import { Wallet } from '../wallet/Wallet';
-import { Slider } from '../Graphs/Slider';
-import { GraphPage } from '../screens/GraphPage';
 import { AddWorkoutScreen } from '../screens/AddWorkout';
 import { WorkoutScreen } from '../screens/WorkoutScreen';
 
