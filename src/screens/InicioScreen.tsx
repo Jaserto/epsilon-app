@@ -39,25 +39,33 @@ export const InicioScreen = ({ navigation }: any) => {
         );
     };
 
-    const getExercises = (series: any) => {
-        console.log('------------------------------------')
-        console.log(series)
-        return series.map((exercise: Series, index:number) => (
+     const getExercises = (exercises: any) => {
+       /*  console.log('------------------------------------')
+        console.log(exercises.series, 'series') */
+        return exercises.map((exercise: Series, index:number) => (
             <View key={exercise.id} style={{borderColor: 'purple',borderWidth:1, display:'flex',flexDirection:'column', marginTop:3,borderRadius:5, padding:3}}>
                     <Text style={{ color: 'purple' }}>{exercise.reps} x {exercise.exercise}</Text>
+                    <Text style={{ color: 'purple' }}>{exercise.series[0].reps} x {exercise.series[0].weight}kg</Text>
+               
+                    { exercise.series.map((serie:Series)=> {
+                        <View key={index} style={{backgroundColor:'red'}}>
+                            <Text style={{ color: 'purple' }}>{serie.reps} x</Text>
+                        </View>
+                    })}
             </View>
 
         ));
     }
+    
     const getBestSeries = (series: any) => {
         return series.map((exercise: Series, index:number) => (
             <View key={exercise.id} style={{borderColor: 'purple',borderWidth:1, display:'flex',flexDirection:'column', marginTop:3, borderRadius:5, padding:3}}>
                     <Text style={{ color: 'purple' }}>{exercise.weight}kg x {exercise.reps}</Text>
             </View>
 
-        ));
+        )); 
     }
-    
+   
     return (
 
         <ScrollView
@@ -202,12 +210,12 @@ export const InicioScreen = ({ navigation }: any) => {
                         </View>
                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginVertical: 4 }}>
                             <View style={{ display: 'flex', flexDirection: 'column' }}>
-                                {getExercises(workout.series)}
+                                {getExercises(workout.exercises)}
                                {/*  <Text style={{ marginRight: 6 }}>{workout.series[0].reps}x{workout.series[0].weight}</Text>
                                 <Text>{workout.series[0].exercise}</Text> */}
                             </View>
                             <View style={{ display: 'flex', flexDirection: 'column' }}>
-                            {getBestSeries(workout.series)}
+                          {/*   {getBestSeries(workout.series)} */}
                               {/*   <Text style={{ marginRight: 6 }}>{workout.series[0].reps}x{workout.series[0].weight}</Text>
                                 <Text>{workout.series[0].exercise}</Text> */}
                             </View>
@@ -223,7 +231,7 @@ export const InicioScreen = ({ navigation }: any) => {
                                     time: workout.tiempo,
                                     pr: workout.pr,
                                     totalWeight: workout.totalWeight,
-                                    series: workout.series
+                                    series: workout.exercises
                                 })
                             }}
                         >
@@ -243,7 +251,7 @@ export const InicioScreen = ({ navigation }: any) => {
 
 
     )
-}
+                        }
 const styles = StyleSheet.create({
     linearGradient: {
         marginVertical: 6,

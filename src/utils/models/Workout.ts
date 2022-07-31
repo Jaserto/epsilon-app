@@ -9,6 +9,6 @@ export interface Workout {
     pr:number,
     totalWeight: number,
     mes: number,
-    series: Array<Series>
+    exercises: Array<any>
 }
 

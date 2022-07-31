@@ -4,5 +4,6 @@ export interface Series {
     id: number,
     reps: number,
     exercise: Exercise,
-    weight: number
+    weight: number,
+    series: Array<any>
 }

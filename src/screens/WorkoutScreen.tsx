@@ -122,7 +122,7 @@ export const WorkoutScreen = (props: any) => {
             <View style={{ marginVertical: 20 }}>
 
                 <Text style={{ textAlign: 'center', marginLeft: 5, color: 'white' }}>{props.route.params.notes}</Text>
-            </View>
+            </View> 
             <View>
             <Text style={{ color: 'white' }}>{props.route.params.exercise}</Text>
             
