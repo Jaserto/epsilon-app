@@ -59,22 +59,13 @@ export const InicioScreen = ({ navigation }: any) => {
     }
     
     const getBestSeries = (exercises: any) => {
-        console.log(exercises)
-        const lastOfYears = Math.max(exercises.map((exercise:any) => exercise.series.weight));
- 
-       
- 
 
-    //    console.log(lastCerts)
         return exercises.map((exercise: any, index:number) => (
             <View key={exercise.id} style={{borderColor: 'purple',borderWidth:1, display:'flex',flexDirection:'column', marginTop:3, borderRadius:5, padding:3}}>
               
         
                    {
-                   <Text> {exercise.series.map((serie:any) => {
-                    console.log(serie.weight)
-                   return Math.max(serie.weight)
-                   })}</Text> 
+                   <Text style={{ color: 'purple' }}>{Math.max(...exercise.series.map((serie:any) => serie.weight))} kg x {exercise.series[0].reps} </Text> 
                    }
             </View>
 
@@ -226,13 +217,9 @@ export const InicioScreen = ({ navigation }: any) => {
                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginVertical: 4 }}>
                             <View style={{ display: 'flex', flexDirection: 'column' }}>
                                 {getExercises(workout.exercises)}
-                               {/*  <Text style={{ marginRight: 6 }}>{workout.series[0].reps}x{workout.series[0].weight}</Text>
-                                <Text>{workout.series[0].exercise}</Text> */}
                             </View>
                             <View style={{ display: 'flex', flexDirection: 'column' }}>
                             {getBestSeries(workout.exercises)}
-                              {/*   <Text style={{ marginRight: 6 }}>{workout.series[0].reps}x{workout.series[0].weight}</Text>
-                                <Text>{workout.series[0].exercise}</Text> */}
                             </View>
                         </View>
                         <TouchableOpacity

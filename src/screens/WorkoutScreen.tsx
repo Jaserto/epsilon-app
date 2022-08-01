@@ -43,6 +43,7 @@ export const WorkoutScreen = (props: any) => {
         console.log(series)
         return series.map((exercise: Series, index:number) => (
             <View key={exercise.id}>
+       
                 <Text style={{ color: 'white' }}>{index +1}  {exercise.weight} kg x {exercise.reps}</Text>
             </View>
 
@@ -124,11 +125,18 @@ export const WorkoutScreen = (props: any) => {
                 <Text style={{ textAlign: 'center', marginLeft: 5, color: 'white' }}>{props.route.params.notes}</Text>
             </View> 
             <View>
-            <Text style={{ color: 'white' }}>{props.route.params.exercise}</Text>
+            <Text style={{ color: 'white' }}>{props.route.params.exercises}</Text>
             
             {getExercises(props.route.params.series)}
             </View>
+            <TouchableOpacity
+          
+            >
+                <View  style={{backgroundColor:'blue', display:'flex', alignItems:'center', borderRadius:4, padding:3}}>
 
+                <Text style={{color:'white'}}>Realizar de nuevo</Text>
+                </View>
+            </TouchableOpacity>
         </ScrollView>
 
 
