@@ -5,5 +5,10 @@ export interface Series {
     reps: number,
     exercise: Exercise,
     weight: number,
-    series: Array<any>
+    series: Array<Serie>
+}
+
+interface Serie {
+    reps:number,
+    weight:number,
 }

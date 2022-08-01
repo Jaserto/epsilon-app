@@ -44,23 +44,38 @@ export const InicioScreen = ({ navigation }: any) => {
         console.log(exercises.series, 'series') */
         return exercises.map((exercise: Series, index:number) => (
             <View key={exercise.id} style={{borderColor: 'purple',borderWidth:1, display:'flex',flexDirection:'column', marginTop:3,borderRadius:5, padding:3}}>
-                    <Text style={{ color: 'purple' }}>{exercise.reps} x {exercise.exercise}</Text>
-                    <Text style={{ color: 'purple' }}>{exercise.series[0].reps} x {exercise.series[0].weight}kg</Text>
-               
-                    { exercise.series.map((serie:Series)=> {
-                        <View key={index} style={{backgroundColor:'red'}}>
-                            <Text style={{ color: 'purple' }}>{serie.reps} x</Text>
-                        </View>
-                    })}
+                    <Text style={{ color: 'purple' }}>{exercise.series.length} x {exercise.exercise}</Text>
+                 {/*    <View>
+                        {exercise.series.map((serie)=> (
+                            <View>
+                                <Text style={{ color: 'purple' }}>{serie.reps} x {serie.weight}kg</Text>
+                            </View>
+                        ))}
+                    </View> */}
+                  
             </View>
 
         ));
     }
     
-    const getBestSeries = (series: any) => {
-        return series.map((exercise: Series, index:number) => (
+    const getBestSeries = (exercises: any) => {
+        console.log(exercises)
+        const lastOfYears = Math.max(exercises.map((exercise:any) => exercise.series.weight));
+ 
+       
+ 
+
+    //    console.log(lastCerts)
+        return exercises.map((exercise: any, index:number) => (
             <View key={exercise.id} style={{borderColor: 'purple',borderWidth:1, display:'flex',flexDirection:'column', marginTop:3, borderRadius:5, padding:3}}>
-                    <Text style={{ color: 'purple' }}>{exercise.weight}kg x {exercise.reps}</Text>
+              
+        
+                   {
+                   <Text> {exercise.series.map((serie:any) => {
+                    console.log(serie.weight)
+                   return Math.max(serie.weight)
+                   })}</Text> 
+                   }
             </View>
 
         )); 
@@ -215,7 +230,7 @@ export const InicioScreen = ({ navigation }: any) => {
                                 <Text>{workout.series[0].exercise}</Text> */}
                             </View>
                             <View style={{ display: 'flex', flexDirection: 'column' }}>
-                          {/*   {getBestSeries(workout.series)} */}
+                            {getBestSeries(workout.exercises)}
                               {/*   <Text style={{ marginRight: 6 }}>{workout.series[0].reps}x{workout.series[0].weight}</Text>
                                 <Text>{workout.series[0].exercise}</Text> */}
                             </View>
