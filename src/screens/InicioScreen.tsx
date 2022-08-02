@@ -281,40 +281,7 @@ const styles = StyleSheet.create({
         fontSize: 17,
         marginBottom: 18,
         color: 'white'
-    },
-    card: {
-        // padding: 10,
-        backgroundColor: '#FFEA75',
-        elevation: 2,
-        borderRadius: 10,
-        marginRight: 10,
-        shadowColor: "#000",
-        shadowRadius: 10,
-        shadowOpacity: 0.8,
-
-        height: 200,
-        width: 200,
-        overflow: "hidden",
-    },
-    sendButton: {
-        backgroundColor: '#DB3F3F',
-        width: 45,
-        height: 35,
-        borderRadius: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    cardImage: {
-        flex: 3,
-        width: "100%",
-        height: "100%",
-        alignSelf: "center",
-        borderBottomRightRadius: 25
-    },
-    button: {
-        alignItems: 'center',
-        marginTop: 5
-    },
+    }
 
 })
 

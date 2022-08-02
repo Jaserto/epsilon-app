@@ -64,7 +64,7 @@ export const SettingsScreen = ({ navigation }: any) => {
                 <View style={{ marginBottom: 10 }}>
                     <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 12 }}>Perfil</Text>
                     <View style={styles.spacer}>
-                        <Text style={{ color: 'white', marginBottom: 10 }}>Editar</Text>
+                        <Text style={styles.text}>Editar</Text>
                     </View>
                 </View>
                 {/*   linea  -----------------------------------------------------------*/}
@@ -79,20 +79,20 @@ export const SettingsScreen = ({ navigation }: any) => {
                 <View style={{ marginBottom: 10 }}>
                     <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 12 }}>Unidades y localización</Text>
                     <View style={styles.spacer}>
-                        <Text style={{ color: 'white', marginBottom: 10 }}>Peso</Text>
+                        <Text style={styles.text}>Peso</Text>
                     </View>
                     <View style={styles.spacer}>
-                        <Text style={{ color: 'white', marginBottom: 10 }}>Distancia</Text>
+                        <Text style={styles.text}>Distancia</Text>
                         <Switch
                             trackColor={{ false: "#767577", true: "#81b0ff" }}
                             ios_backgroundColor="#3e3e3e"
                         />
                     </View>
                     <View style={styles.spacer}>
-                        <Text style={{ color: 'white', marginBottom: 10 }}>Primer día de la semana</Text>
+                        <Text style={styles.text}>Primer día de la semana</Text>
                     </View>
                     <View style={styles.spacer}>
-                        <Text style={{ color: 'white', marginBottom: 10 }}>Tamaño</Text>
+                        <Text style={styles.text}>Tamaño</Text>
                     </View>
                 </View>
                 {/*   linea  -----------------------------------------------------------*/}
@@ -109,17 +109,17 @@ export const SettingsScreen = ({ navigation }: any) => {
                 <View style={{ marginBottom: 10 }}>
                     <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 12 }}>General</Text>
                     <View style={styles.spacer}>
-                        <Text style={{ color: 'white', marginBottom: 3 }}>Mantener la pantalla encendida durante el entrenamiento</Text>
+                        <Text style={styles.text}>Mantener la pantalla encendida durante el entrenamiento</Text>
                     </View>
                     <View style={styles.spacer}>
-                        <Text style={{ color: 'white', marginBottom: 3 }}>Exportar datos</Text>
+                        <Text style={styles.text}>Exportar datos</Text>
                         <Switch
                             trackColor={{ false: "#767577", true: "#81b0ff" }}
                             ios_backgroundColor="#3e3e3e"
                         />
                     </View>
                     <View style={styles.spacer}>
-                        <Text style={{ color: 'white', marginBottom: 3 }}>Tema</Text>
+                        <Text style={{ color: 'white', marginBottom: 3,  fontSize:15 }}>Tema</Text>
                     </View>
                 </View>
 
@@ -135,19 +135,19 @@ export const SettingsScreen = ({ navigation }: any) => {
                 />
                 <View style={{ marginBottom: 10 }}>
                     <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Avanzado</Text>
-                    <Text style={{ color: 'white', marginBottom: 3 }}>Mantener la pantalla encendida durante el entrenamiento</Text>
-                    <Text style={{ color: 'white', marginBottom: 3 }}>Exportar datos</Text>
-                    <Text style={{ color: 'white', marginBottom: 3 }}>Tema</Text>
+                    <Text style={styles.text}>Mantener la pantalla encendida durante el entrenamiento</Text>
+                    <Text style={styles.text}>Exportar datos</Text>
+                    <Text style={styles.text}>Tema</Text>
                 </View>
                 <View style={{ marginBottom: 10 }}>
                     <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Otros servicios</Text>
-                    <Text style={{ color: 'white', marginBottom: 3 }}>Google Fit</Text>
+                    <Text style={styles.text}>Google Fit</Text>
                 </View>
                 <View style={{ marginBottom: 10 }}>
                     <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Contacto y soporte</Text>
-                    <Text style={{ color: 'white', marginBottom: 3 }}>Informar sobre un problema</Text>
-                    <Text style={{ color: 'white', marginBottom: 3 }}>Twitter</Text>
-                    <Text style={{ color: 'white', marginBottom: 3 }}>Facebook</Text>
+                    <Text style={styles.text}>Informar sobre un problema</Text>
+                    <Text style={styles.text}>Twitter</Text>
+                    <Text style={styles.text}>Facebook</Text>
                 </View>
 
             </View>
@@ -191,73 +191,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
-    textHeader: {
-        fontSize: 30,
-        marginBottom: 15
-    },
     h3: {
         fontSize: 30,
         marginBottom: 18,
         color: 'white'
-    },
-    card: {
-        // padding: 10,
-        backgroundColor: '#FFEA75',
-        elevation: 2,
-
-        borderRadius: 10,
-        marginRight: 10,
-        shadowColor: "#000",
-        shadowRadius: 10,
-        shadowOpacity: 0.8,
-
-        height: 200,
-        width: 200,
-        overflow: "hidden",
-    },
-    sendButton: {
-        backgroundColor: '#DB3F3F',
-        width: 45,
-        height: 35,
-        borderRadius: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    searchBox: {
-        flexDirection: "row",
-        backgroundColor: '#fff',
-        alignSelf: 'center',
-        width: '85%',
-        borderRadius: 20,
-        padding: 6,
-        paddingHorizontal: 14,
-        marginBottom: 15,
-        marginTop: 10,
-        shadowColor: '#ccc',
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.5,
-        shadowRadius: 5,
-
-    },
-    cardImage: {
-        flex: 3,
-        width: "100%",
-        height: "100%",
-        alignSelf: "center",
-        borderBottomRightRadius: 25
-    },
-    textContent: {
-        flex: 2,
-        padding: 10,
-    },
-    cardtitle: {
-        fontSize: 12,
-        // marginTop: 5,
-        fontWeight: "bold",
-    },
-    cardDescription: {
-        fontSize: 12,
-        color: "#444",
     },
     scrollView: {
         position: "absolute",
@@ -272,40 +209,10 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     text: {
-        fontSize: 12,
-        color: 'white'
+        fontSize: 15,
+        color: 'white',
+        marginBottom: 10
     },
-    button: {
-        alignItems: 'center',
-        marginTop: 5
-    },
-    signIn: {
-        width: '80%',
-        padding: 5,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    textSign: {
-        fontSize: 14,
-        fontWeight: 'bold'
-    },
-    chipsIcon: {
-        marginRight: 5,
-    },
-    chipsItem: {
-        flexDirection: "row",
-        backgroundColor: '#fff',
-        borderRadius: 20,
-        padding: 5,
-        paddingHorizontal: 20,
-        marginHorizontal: 10,
-        height: 30,
-        shadowColor: '#ccc',
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.5,
-        shadowRadius: 5,
-        elevation: 10,
-    }
 
 })
 
