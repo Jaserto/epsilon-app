@@ -223,7 +223,6 @@ export const InicioScreen = ({ navigation }: any) => {
                             </View>
                         </View>
                         <TouchableOpacity
-                            key={workout.id}
                             onPress={() => {
                                 navigation.navigate('Workout', {
                                     id: workout.id,

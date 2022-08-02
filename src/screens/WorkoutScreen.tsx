@@ -1,13 +1,12 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Alert, Button, Dimensions, Platform, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
-import * as Keychain from "react-native-keychain";
 import { Path, Svg, Circle, Line, Polyline } from 'react-native-svg';
-import CalendarStrip from 'react-native-calendar-strip';
 import 'react-native-get-random-values'
 import { Series } from '../utils/models/Series';
 import { Exercise } from '../utils/models/Exercise';
 import { Workout } from '../utils/models/Workout';
+import LinearGradient from 'react-native-linear-gradient';
 
 const { width, height } = Dimensions.get("window");
 
@@ -39,16 +38,37 @@ export const WorkoutScreen = (props: any) => {
         );
     };
 
-    const getExercises = (series: any) => {
-        console.log(series)
-        return series.map((exercise: Series, index:number) => (
-            <View key={exercise.id}>
-       
-                <Text style={{ color: 'white' }}>{index +1}  {exercise.weight} kg x {exercise.reps}</Text>
+    const getExercises = (exercises: any) => {
+        /*  console.log('------------------------------------')
+         console.log(exercises.series, 'series') */
+        return exercises.map((exercise: Series, index: number) => (
+            <View key={exercise.id} style={{ borderColor: 'white', borderWidth: 1, marginBottom: 5, display: 'flex', flexDirection: 'column', borderRadius: 5, padding: 3 }}>
+                <Text style={{ color: 'white', fontSize: 15, fontWeight: 'bold', marginBottom: 6 }}>{/* {exercise.series.length} */}{exercise.exercise}</Text>
+                <View style={{ marginBottom: 3 }}>
+                    {exercise.series.map((serie, index: number) => (
+                        <View>
+                            <Text style={{ color: 'white' }}>{index + 1}   {serie.reps} x {serie.weight}kg</Text>
+                        </View>
+                    ))}
+                </View>
+
             </View>
 
         ));
     }
+
+    const getBestSeries = (exercises: any) => {
+
+        return exercises.map((exercise: any, index: number) => (
+            <View key={exercise.id} style={{ borderColor: 'purple', borderWidth: 1, display: 'flex', flexDirection: 'column', marginTop: 3, borderRadius: 5, padding: 3 }}>
+                {
+                    <Text style={{ color: 'purple' }}>{Math.max(...exercise.series.map((serie: any) => serie.weight))} kg x {exercise.series[0].reps} </Text>
+                }
+            </View>
+
+        ));
+    }
+
 
     return (
 
@@ -66,77 +86,85 @@ export const WorkoutScreen = (props: any) => {
             contentContainerStyle={{
                 paddingRight: Platform.OS === 'android' ? 0 : 0
             }} style={styles.view}>
-            <View style={{ marginVertical: 10 }}>
-                <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold' }}>{props.route.params.title}</Text>
-            </View>
-            <View>
-                <Text style={{ color: 'white', fontSize: 16 }}>{props.route.params.fecha}</Text>
-            </View>
-            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: 20, width: '100%' }}>
-                <View style={{ flex: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                    <Svg
-                        width={15}
-                        height={15}
-                        viewBox="0 0 25 25"
-                        stroke="white"
-                        strokeWidth={2}
-                        strokeLinecap="round"
-                        strokeLinejoin="round">
-                        <Circle cx="12" cy="12" r="10" />
-                        <Polyline points="12 6 12 12 16 14" />
-                    </Svg>
+            <View style={{ justifyContent: 'space-between', height:'100%', marginBottom: 40 }}>
+                <View>
 
-                    <Text style={{ textAlign: 'center', marginLeft: 5, color: 'white' }}>{props.route.params.time}</Text>
-                </View>
-                <View style={{ flex: 3, flexDirection: 'row', alignItems: 'center' }}>
-                    <Svg
-                        width={15}
-                        height={15}
-                        viewBox="0 0 25 25"
-                        fill="white"
-                        stroke="white"
-                        strokeWidth={2}
-                        strokeLinecap="round"
-                        strokeLinejoin="round">
-                        <Line x1="12" y1="5" x2="12" y2="19" />
-                        <Line x1="5" y1="12" x2="19" y2="12" />
-                        <Line x1="5" y1="12" x2="19" y2="12" />
-                    </Svg>
-                    <Text style={{ textAlign: 'center', marginLeft: 5, color: 'white' }}>{props.route.params.totalWeight} Kg</Text>
-                </View>
-                <View style={{ flex: 3, flexDirection: 'row', alignItems: 'center' }}>
-                    <Svg
-                        width={15}
-                        height={15}
-                        viewBox="0 0 25 25"
-                        fill="white"
-                        stroke="white"
-                        strokeWidth={2}
-                        strokeLinecap="round"
-                        strokeLinejoin="round">
-                        <Polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-                        <Polyline points="17 6 23 6 23 12" />
-                    </Svg>
-                    <Text style={{ textAlign: 'right', marginLeft: 5, color: 'white' }}>{props.route.params.pr} PRs</Text>
-                </View>
-            </View>
-            <View style={{ marginVertical: 20 }}>
 
-                <Text style={{ textAlign: 'center', marginLeft: 5, color: 'white' }}>{props.route.params.notes}</Text>
-            </View> 
-            <View>
-            <Text style={{ color: 'white' }}>{props.route.params.exercises}</Text>
-            
-            {getExercises(props.route.params.series)}
-            </View>
-            <TouchableOpacity
-          
-            >
-                <View  style={{backgroundColor:'blue', display:'flex', alignItems:'center', borderRadius:4, padding:3}}>
+                    <View style={{ marginVertical: 10 }}>
+                        <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold' }}>{props.route.params.title}</Text>
+                    </View>
+                    <View>
+                        <Text style={{ color: 'white', fontSize: 16 }}>{props.route.params.fecha}</Text>
+                    </View>
+                    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: 20, width: '100%' }}>
+                        <View style={{ flex: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <Svg
+                                width={15}
+                                height={15}
+                                viewBox="0 0 25 25"
+                                stroke="white"
+                                strokeWidth={2}
+                                strokeLinecap="round"
+                                strokeLinejoin="round">
+                                <Circle cx="12" cy="12" r="10" />
+                                <Polyline points="12 6 12 12 16 14" />
+                            </Svg>
 
-                <Text style={{color:'white'}}>Realizar de nuevo</Text>
+                            <Text style={{ textAlign: 'center', marginLeft: 5, color: 'white' }}>{props.route.params.time}</Text>
+                        </View>
+                        <View style={{ flex: 3, flexDirection: 'row', alignItems: 'center' }}>
+                            <Svg
+                                width={15}
+                                height={15}
+                                viewBox="0 0 25 25"
+                                fill="white"
+                                stroke="white"
+                                strokeWidth={2}
+                                strokeLinecap="round"
+                                strokeLinejoin="round">
+                                <Line x1="12" y1="5" x2="12" y2="19" />
+                                <Line x1="5" y1="12" x2="19" y2="12" />
+                                <Line x1="5" y1="12" x2="19" y2="12" />
+                            </Svg>
+                            <Text style={{ textAlign: 'center', marginLeft: 5, color: 'white' }}>{props.route.params.totalWeight} Kg</Text>
+                        </View>
+                        <View style={{ flex: 3, flexDirection: 'row', alignItems: 'center' }}>
+                            <Svg
+                                width={15}
+                                height={15}
+                                viewBox="0 0 25 25"
+                                fill="white"
+                                stroke="white"
+                                strokeWidth={2}
+                                strokeLinecap="round"
+                                strokeLinejoin="round">
+                                <Polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                                <Polyline points="17 6 23 6 23 12" />
+                            </Svg>
+                            <Text style={{ textAlign: 'right', marginLeft: 5, color: 'white' }}>{props.route.params.pr} PRs</Text>
+                        </View>
+                    </View>
+                    <View style={{ marginVertical: 15 }}>
+
+                        <Text style={{ textAlign: 'center', marginLeft: 5, color: 'white' }}>{props.route.params.notes}</Text>
+                    </View>
+                    <View>
+                        <Text style={{ color: 'white' }}>{props.route.params.exercises}</Text>
+
+                        {getExercises(props.route.params.series)}
+                    </View>
+
                 </View>
-            </TouchableOpacity>
+                
+                <TouchableOpacity
+                        >
+                            <LinearGradient start={{x: 0.0, y: 0.25}} end={{x: 0.5, y: 1.0}} colors={['#673ab7', '#512da8']} style={styles.linearGradient}>
+                                <Text style={styles.buttonText}>
+                                    Realizar de nuevo
+                                </Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
+            </View>
         </ScrollView>
 
 
@@ -150,7 +178,22 @@ const styles = StyleSheet.create({
         backgroundColor: '#111111',
         height: height,
         width: width,
-        padding: 15
+        padding: 15,
+    },
+    linearGradient: {
+        marginVertical: 6,
+        flex: 1,
+        paddingLeft: 15,
+        paddingRight: 15,
+        borderRadius: 6
+    },
+    buttonText: {
+        fontSize: 14,
+        fontFamily: 'Gill Sans',
+        textAlign: 'center',
+        margin: 10,
+        color: '#ffffff',
+        backgroundColor: 'transparent',
     },
 
 
