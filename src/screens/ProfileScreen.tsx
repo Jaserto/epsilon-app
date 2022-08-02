@@ -1,16 +1,15 @@
-
 import React from 'react'
 
-import {View } from 'react-native'
+import {Dimensions, View } from 'react-native'
 
 import 'react-native-get-random-values'
-
+const { width, height } = Dimensions.get("window");
 
 
 export const ProfileScreen = ({ navigation }: any) => {
 
     return (
-        <View style={{ backgroundColor: 'black' }}>
+        <View style={{ backgroundColor: 'black', height, width }}>
        
         </View>
     )
