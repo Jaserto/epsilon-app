@@ -65,7 +65,23 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
             <View style={{marginBottom:20, height:'100%'}}>
                 <Text style={{ color: 'white', marginBottom:13, fontWeight:'bold'}}>Plantillas de ejemplo</Text>
                 <View>
-                    <View style={{ width:width*0.9,borderRadius:5, padding:13, borderWidth:1, borderColor:'white'}}>
+                    <View style={{ width:width*0.9,borderRadius:5, marginBottom:10,padding:13, borderWidth:1, borderColor:'white'}}>
+                        <Text style={{fontWeight:'bold', color:'white', fontSize:16, marginBottom:3}}>Legs</Text>
+                        <View>
+                            <Text style={styles.text}>3 x Squat</Text>
+                            <Text style={styles.text}>3 x Squat</Text>
+                            <Text style={styles.text}>3 x Squat</Text>
+                        </View>
+                    </View>
+                    <View style={{ width:width*0.9,borderRadius:5, marginBottom:10,padding:13, borderWidth:1, borderColor:'white'}}>
+                        <Text style={{fontWeight:'bold', color:'white', fontSize:16, marginBottom:3}}>Strong 5x5 - Workout A</Text>
+                        <View>
+                            <Text style={styles.text}>5 x Squat (barbell)</Text>
+                            <Text style={styles.text}>5 x Bench Press</Text>
+                            <Text style={styles.text}>5 x Deadlift</Text>
+                        </View>
+                    </View>
+                    <View style={{ width:width*0.9,borderRadius:5, marginBottom:10,padding:13, borderWidth:1, borderColor:'white'}}>
                         <Text style={{fontWeight:'bold', color:'white', fontSize:16, marginBottom:3}}>Legs</Text>
                         <View>
                             <Text style={styles.text}>3 x Squat</Text>
