@@ -16,3 +16,22 @@ También permite el cáculo de diferentes metricas: cálculo del RM, velocidad, 
 <br/>
 
 > NOTA: Epsilon esta en desarrollo, muchas de las categorias mencionadas son experimentales y sujetas a cambios.
+
+
+Características que vendrán pronto:
+
+  - Strava API
+  - Google Fit
+  - Microsoft CodePush
+
+
+## To install app
+
+Firts, clone app in your machine.
+
+Install packages:
+
+sh```
+  yarn install
+```
+
