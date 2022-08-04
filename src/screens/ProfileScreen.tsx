@@ -55,14 +55,17 @@ export const ProfileScreen = ({ navigation }: any) => {
                 </View>
             </View>
             <View style={{ marginTop: 10 }}>
-                <Text style={{ color: 'white', marginBottom:8 }}>PANEL DE CONTROL</Text>
-                <View style={{width:'100%', borderWidth:1, borderColor:'white', borderRadius:4, paddingHorizontal:10, paddingVertical:5}}>
+                <Text style={{ color: 'white', marginBottom:18 }}>PANEL DE CONTROL</Text>
+                <View style={{width:'100%', height:150, borderWidth:1, marginBottom:30, borderColor:'white', borderRadius:4, paddingHorizontal:10, paddingVertical:5}}>
                     <Text style={{ color: 'white' }}>Entrenamientos por semana</Text>
                     <Text style={{ color: 'white' }}>GRAFICA</Text>
                 </View>
-                <View style={{width:'100%', borderWidth:1, borderColor:'white', borderRadius:4, paddingHorizontal:10, paddingVertical:5}}>
-                    <Text style={{ color: 'white' }}>Calorías esta semana</Text>
-                    <Text style={{ color: 'white' }}>GRAFICA</Text>
+                <View style={{width:'100%', height:100, borderWidth:1, borderColor:'white', borderRadius:4, paddingHorizontal:10, paddingVertical:5}}>
+                    <Text style={{ color: 'white', marginBottom:10 }}>Calorías esta semana</Text>
+
+                    <View style={{borderWidth:1, borderColor:'white', borderRadius:5, padding:5, display:'flex', alignItems:'center'}}>
+                        <Text style={{color:'white'}}>Conectarse a Google Fit</Text>
+                    </View>
                 </View>
             </View>
         </ScrollView>

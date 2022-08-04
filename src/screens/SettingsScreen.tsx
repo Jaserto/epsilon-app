@@ -1,19 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Alert, Dimensions, Image, LogBox, Platform, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { FlatList, ScrollView, Switch } from 'react-native-gesture-handler'
-import * as Keychain from "react-native-keychain";
-import { Path, Svg, Circle, Line } from 'react-native-svg';
-import CalendarStrip from 'react-native-calendar-strip';
-import 'react-native-get-random-values'
-import { customAlphabet } from 'nanoid/non-secure';
+import 'react-native-get-random-values';
 
 const { width, height } = Dimensions.get("window");
 
-
 export const SettingsScreen = ({ navigation }: any) => {
-
-
-    const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
 
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -168,23 +160,12 @@ const styles = StyleSheet.create({
         width: width,
         padding: 15
     },
-    imageProd: {
-        width: 33,
-        height: 33,
-
-    },
-    contendorFechaNombre: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-    },
     cardFecha: {
         display: 'flex',
         alignItems: 'center',
         maxWidth: '40%',
         height: 110,
     },
-
     spacer: {
         marginBottom: 11,
         display: 'flex',
@@ -202,11 +183,6 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         paddingVertical: 10,
-    },
-    marker: {
-        backgroundColor: '#23324F',
-        padding: 0,
-        borderRadius: 5,
     },
     text: {
         fontSize: 15,
