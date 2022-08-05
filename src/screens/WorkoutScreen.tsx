@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, Button, Dimensions, Platform, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, Button, Dimensions, Platform, RefreshControl, Share, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { Path, Svg, Circle, Line, Polyline } from 'react-native-svg';
 import 'react-native-get-random-values'
@@ -71,6 +71,26 @@ export const WorkoutScreen = (props: any) => {
         ));
     }
 
+    const onShare = async () => {
+        try {
+          const result = await Share.share({
+            message:
+              'React Native | A framework for building native apps using React',
+          });
+          if (result.action === Share.sharedAction) {
+            if (result.activityType) {
+              // shared with activity type of result.activityType
+            } else {
+              // shared
+            }
+          } else if (result.action === Share.dismissedAction) {
+            // dismissed
+          }
+        } catch (error:any) {
+          Alert.alert(error.message);
+        }
+      };
+
 
     return (
 
@@ -105,6 +125,7 @@ export const WorkoutScreen = (props: any) => {
                         </Svg>
                     </TouchableOpacity>
                     <View style={{display:'flex', flexDirection:'row'}}>
+                    <TouchableOpacity onPress={onShare}>
                         <Svg
                             width={25}
                             height={25}
@@ -119,6 +140,7 @@ export const WorkoutScreen = (props: any) => {
                             <Line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
                             <Line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
                         </Svg>
+                    </TouchableOpacity>
                         <Svg
                             width={25}
                             height={25}
