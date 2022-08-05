@@ -24,8 +24,8 @@ export const StackNavigator = () => {
             <Stack.Screen name="Analysis" component={AnalysisScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="AddWorkout" component={AddWorkoutScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="Workout" component={WorkoutScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="AddWorkout" component={AddWorkoutScreen}  />
+            <Stack.Screen name="Workout" component={WorkoutScreen}/>
         </>
     </Stack.Navigator>
   );

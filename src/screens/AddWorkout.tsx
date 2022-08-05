@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-import { Alert, Button, Dimensions, Image, LogBox, Platform, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, Button, Dimensions, Image, LogBox, Platform, RefreshControl, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { FlatList, GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler'
 import 'react-native-get-random-values'
 import BottomSheet from '../components/bottomSheet';
@@ -22,6 +22,7 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
 
     return (
         <GestureHandlerRootView style={{flex:1}}>
+             <StatusBar hidden={false} />
         <View
            /*  scrollEventThrottle={1}
             showsHorizontalScrollIndicator={false}
