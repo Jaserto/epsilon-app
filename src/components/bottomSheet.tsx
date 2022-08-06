@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet, Text, View } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated,{ Extrapolate, interpolate, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated'
 
@@ -7,7 +7,12 @@ const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 const MAX_TRANSLATE_Y = -SCREEN_HEIGHT + 50
 
 const bottomSheet = () => {
-    const translateY = useSharedValue(0.1);
+    const translateY = useSharedValue(0);
+
+    const scrollTo = useCallback((destination:number) => {
+        "worklet"
+        translateY.value = withSpring(destination, {damping:30 });
+    }, [])
 
     const context = useSharedValue({ y:0 })
 
@@ -21,9 +26,9 @@ const bottomSheet = () => {
     })
     .onEnd(() => {
         if(translateY.value > -SCREEN_HEIGHT / 3) {
-            translateY.value = withSpring(0, {damping:30 });
+            scrollTo(0)
         } else if(translateY.value > -SCREEN_HEIGHT / 1.5) {
-            translateY.value = withSpring(MAX_TRANSLATE_Y, {damping:50 });
+            scrollTo(MAX_TRANSLATE_Y)
         }
     })
 
@@ -46,7 +51,7 @@ const bottomSheet = () => {
 
 
     useEffect(() => {
-        translateY.value = withSpring(-SCREEN_HEIGHT/3, { damping:16 })
+        scrollTo(-SCREEN_HEIGHT/3)
     },[])
 
   return (

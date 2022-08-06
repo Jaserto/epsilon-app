@@ -6,7 +6,8 @@ import { InicioScreen } from '../screens/InicioScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
 import { AnalysisScreen } from '../screens/AnalysisScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
-import Svg, { Circle, Path, Polyline } from 'react-native-svg'
+import Svg, { Circle, Line, Path, Polyline } from 'react-native-svg'
+import { AddWorkoutScreen } from '../screens/AddWorkout';
 
 
 
@@ -93,6 +94,24 @@ export const Tabs = () => {
                 )
             }} 
             />
+                   <Tab.Screen name="AddWorkout" component={AddWorkoutScreen} 
+            options={{ 
+                headerShown: false,
+                tabBarIcon: ({ color }) => (
+                    <Svg
+                        width={28}
+                        height={28}
+                        viewBox="0 0 28 28"
+                        fill="none"
+                        stroke="white"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round">
+                        <Line x1="12" y1="5" x2="12" y2="19"/>
+                        <Line  x1="5" y1="12" x2="19" y2="12" />
+                    </Svg>
+                )
+            }} />
             <Tab.Screen name="Profile" component={ProfileScreen} 
             options={{ 
                 headerShown: false,
@@ -111,9 +130,6 @@ export const Tabs = () => {
                     </Svg>
                 )
             }} />
-
-
-
         </Tab.Navigator>
     );
 }
