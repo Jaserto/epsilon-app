@@ -16,9 +16,6 @@
 <a href="#">
     <img width="160px" style="margin: 10px 10px;" src="https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=google-play&logoColor=white">
 </a>
-<a href="#">
-    <img width="160px" style="margin: 10px 10px;" src="https://img.shields.io/badge/App_Store-0D96F6?style=for-the-badge&logo=app-store&logoColor=white">
-</a>
 </p>
 <p align="center">
  
@@ -28,7 +25,7 @@
 
 <img src="https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
 
-<img src="https://img.shields.io/twitter/follow/karan_6864.svg?style=social" />
+<img src="https://img.shields.io/twitter/follow/serdev_.svg?style=social" />
 
 <img src="https://badges.frapsoft.com/os/v1/open-source.svg?v=103" />
 
