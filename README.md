@@ -19,7 +19,6 @@
 </p>
 <p align="center">
  
-<img src="https://build.appcenter.ms/v0.1/apps/8277c135-e249-4122-beb3-6bc00b7ec11d/branches/master/badge" />
 
 <img src="https://build.appcenter.ms/v0.1/apps/85fe31ae-1f83-4aa3-a27e-8f2c762bec9e/branches/master/badge" />
 
