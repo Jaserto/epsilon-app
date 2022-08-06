@@ -14,9 +14,12 @@ import {
   StyleSheet
 } from 'react-native';
 
+import { LogBox } from 'react-native';
 
 
 const App = () => {
+  LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
   return (
     <NavigationContainer>
 
