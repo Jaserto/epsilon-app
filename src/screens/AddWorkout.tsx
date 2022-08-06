@@ -4,7 +4,7 @@ import { Alert, Button, Dimensions, Image, LogBox, Platform, Pressable, RefreshC
 import { FlatList, GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler'
 import BottomSheet from '@gorhom/bottom-sheet';
 import BackgroundTimer from 'react-native-background-timer';
-import LinearGradient from 'react-native-linear-gradient';
+
 
 const { width, height } = Dimensions.get("window");
 
@@ -33,31 +33,15 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
     const formatNumber = (number: any) => `0${number}`.slice(-2);
 
     //Functions
-    const startTimer = () => {
+/*     const startTimer = () => {
         BackgroundTimer.runBackgroundTimer(() => {
             setSecondsLeft(secs => {
                 if (secs > 0) return secs - 1
                 else return 0
             })
         }, 1000)
-    }
-
-    const toggle = () => {
-        setIsActive(!isActive);
-    }
-
-    const reset = () => {
-        setRemainingSecs(0);
-        setIsActive(false);
-    }
-
-    const getRemaining = (time: any) => {
-        const mins = Math.floor(time / 60);
-        const secs = time - mins * 60;
-        return { mins: formatNumber(mins), secs: formatNumber(secs) };
-    }
-    const { mins, secs } = getRemaining(remainingSecs);
-
+    } */
+/* 
     useEffect(() => {
         if (secondsLeft === 0) BackgroundTimer.stopBackgroundTimer()
     }, [secondsLeft]);
@@ -68,22 +52,9 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
         return () => {
             BackgroundTimer.stopBackgroundTimer();
         }
-    }, [timerOn])
+    }, [timerOn]) */
 
-    useEffect(() => {
-        let interval:any = null;
-        if (isActive) {
-            interval = setInterval(() => {
-                setRemainingSecs(remainingSecs => remainingSecs + 1);
-            }, 1000);
-        } else if (!isActive && remainingSecs !== 0) {
-            clearInterval(interval);
-        }
-        return () => clearInterval(interval);
-    }, [isActive, remainingSecs]);
-
-
-    const clockify = () => {
+ /*    const clockify = () => {
         let hours = Math.floor(secondsLeft / 60 / 60)
         let mins = Math.floor((secondsLeft / 60) % 60)
         let seconds = Math.floor(secondsLeft % 60)
@@ -95,7 +66,56 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
             displayMins,
             displaySecs,
         }
+    } */
+
+    const toggle = () => {
+        setIsActive(!isActive);
     }
+
+    const reset = () => {
+        setRemainingSecs(0);
+        setIsActive(false);
+    }
+    const startTimer = () => {
+        BackgroundTimer.runBackgroundTimer(() => {
+            
+                setRemainingSecs(remainingSecs => remainingSecs + 1);
+        
+        }, 1000)
+    }
+    const getRemaining = (time: any) => {
+        const mins = Math.floor(time / 60);
+        const secs = time - mins * 60;
+        return { mins: formatNumber(mins), secs: formatNumber(secs) };
+    }
+    const { mins, secs } = getRemaining(remainingSecs);
+
+/*  */
+
+    /* useEffect(() => {
+        let interval:any = null;
+        if (isActive) {
+            interval = setInterval(() => {
+                setRemainingSecs(remainingSecs => remainingSecs + 1);
+            }, 1000);
+        } else if (!isActive && remainingSecs !== 0) {
+            clearInterval(interval);
+        }
+        return () => clearInterval(interval);
+    }, [isActive, remainingSecs]); */
+
+    useEffect(() => {
+        if (remainingSecs === 0) BackgroundTimer.stopBackgroundTimer()
+    }, [secondsLeft]);
+
+    useEffect(() => {
+        if (isActive) startTimer();
+        else BackgroundTimer.stopBackgroundTimer();
+        return () => {
+            BackgroundTimer.stopBackgroundTimer();
+        }
+    }, [isActive]) 
+
 
 
     return (
@@ -259,6 +279,7 @@ const styles = StyleSheet.create({
     timerText: {
         color: '#663EE3',
         fontSize: 70,
+
         marginBottom: 20
     },
     buttonReset: {
