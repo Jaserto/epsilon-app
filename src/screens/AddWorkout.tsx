@@ -4,6 +4,8 @@ import { Alert, Button, Dimensions, Image, LogBox, Platform, Pressable, RefreshC
 import { FlatList, GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler'
 import BottomSheet from '@gorhom/bottom-sheet';
 import BackgroundTimer from 'react-native-background-timer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Workout } from '../utils/models/Workout';
 
 
 const { width, height } = Dimensions.get("window");
@@ -13,6 +15,138 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
     // ref
     const bottomSheetRef = useRef<BottomSheet>(null);
 
+    const workout = [{
+        id: 9,
+        dia: '20 julio',
+        title: 'Entrenamiento de mañana',
+        tiempo: '1h 10m',
+        notes: 'Almost die with 10RPe',
+        pr: 2,
+        totalWeight: 6086,
+        mes: 7,
+        exercises: [
+            {
+                id: 12304,
+                exercise: 'Barbell Squat',
+                series:[
+                    {
+                        reps:5,
+                        weight:10
+                    },
+                    {
+                        reps:5,
+                        weight:20
+                    },
+                    {
+                        reps:5,
+                        weight:30
+                    }
+                ]
+            },
+            {
+                id: 12305,
+                exercise: 'Barbell Squat',
+                series:[
+                    {
+                        reps:5,
+                        weight:40
+                    },
+                    {
+                        reps:5,
+                        weight:50
+                    },
+                    {
+                        reps:5,
+                        weight:60
+                    }
+                ]
+            },
+            {
+                id: 1234,
+                exercise: 'Barbell Squat',
+                series:[
+                    {
+                        reps:5,
+                        weight:70
+                    },
+                    {
+                        reps:5,
+                        weight:80
+                    },
+                    {
+                        reps:5,
+                        weight:90
+                    }
+                ]
+            }
+        ]
+    }]
+    const workout2 = [{
+        id: 10,
+        dia: '22 julio',
+        title: 'Entrenamiento de mañana',
+        tiempo: '1h 10m',
+        notes: 'Almost die with 10RPe',
+        pr: 2,
+        totalWeight: 6086,
+        mes: 7,
+        exercises: [
+            {
+                id: 12304,
+                exercise: 'Barbell Squat',
+                series:[
+                    {
+                        reps:5,
+                        weight:10
+                    },
+                    {
+                        reps:5,
+                        weight:20
+                    },
+                    {
+                        reps:5,
+                        weight:30
+                    }
+                ]
+            },
+            {
+                id: 12305,
+                exercise: 'Barbell Squat',
+                series:[
+                    {
+                        reps:5,
+                        weight:40
+                    },
+                    {
+                        reps:5,
+                        weight:50
+                    },
+                    {
+                        reps:5,
+                        weight:60
+                    }
+                ]
+            },
+            {
+                id: 1234,
+                exercise: 'Barbell Squat',
+                series:[
+                    {
+                        reps:5,
+                        weight:70
+                    },
+                    {
+                        reps:5,
+                        weight:80
+                    },
+                    {
+                        reps:5,
+                        weight:90
+                    }
+                ]
+            }
+        ]
+    }]
     //States
     const [isOpen, setIsOpen] = useState<boolean>(true);
     const [notes, setNotes] = useState('');
@@ -116,6 +250,37 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
         }
     }, [isActive]) 
 
+    const storeData = async (value:any) => {
+        try {
+          const jsonValue = JSON.stringify(value)
+          await AsyncStorage.setItem('workout', jsonValue)
+        } catch (e) {
+          // saving error
+        }
+      }
+
+      const storeData2 = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem('workout')
+            const jsonValue2 = JSON.stringify(workout2)
+            const res = jsonValue != null ? jsonValue.concat(jsonValue2):'';
+          await AsyncStorage.setItem('workout', res)
+        } catch (e) {
+          // saving error
+        }
+      }
+
+
+      const getData = async () => {
+        try {
+          const jsonValue = await AsyncStorage.getItem('workout')
+          console.log(jsonValue)
+          return jsonValue != null ? JSON.parse(jsonValue) : null;
+        } catch(e) {
+          // error reading value
+        }
+      }
+      
 
 
     return (
@@ -130,8 +295,8 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                         onPress={() => handleSheetChanges(1)}
                         style={{ backgroundColor: 'purple', display: 'flex', alignItems: 'center', padding: 5, borderRadius: 5 }}>
                         {
-                            timerOn ?
-                                <Text style={{ color: 'white' }}>COMENZAR UN ENTRENAMIENTO VACÍO</Text>
+                            isActive ?
+                                <Text style={{ color: 'white' }}>{`${mins}:${secs}`}</Text>
                                 : <Text style={{ color: 'white' }}>COMENZAR UN ENTRENAMIENTO VACÍO</Text>
 
                         }
@@ -186,7 +351,7 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                             <View style={[styles.button, { backgroundColor: '#005DD5' }]}>
                                 <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center' }}>Añadir ejercicio</Text>
                             </View>
-                            <View style={[styles.button, { backgroundColor: '#E43434' }]}>
+                            <View style={[styles.button, { backgroundColor: '#44005F' }]}>
                                 <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center' }}>Cancelar</Text>
                             </View>
                             </View>
@@ -204,7 +369,7 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                                 </Pressable> */}
                                  <View style={{ display:'flex', alignItems:'center'}}>
                                 <Text style={styles.timerText}>{`${mins}:${secs}`}</Text>
-                                <View style={{ display:'flex', alignItems:'center', flexDirection:'row', width: width*0.77, justifyContent:'space-around'}}>
+                                <View style={{ display:'flex', alignItems:'center', flexDirection:'row', width: width*0.77, justifyContent:'space-around', marginBottom:30}}>
                                 <TouchableOpacity onPress={() => toggle()} style={styles.button2}>
                                     <Text style={styles.buttonText}>{isActive ? 'Pause' : 'Start'}</Text>
                                 </TouchableOpacity>
@@ -234,6 +399,18 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                                     </Text>
 
                                 </TouchableOpacity> */}
+                                <Button 
+                                        
+                                    title="Guardar entrenamiento" 
+                                    onPress={() => {
+                                        storeData2()
+                                    }}/>
+                                    <Button 
+                                        
+                                        title="Mostrar entrenamiento CLG" 
+                                        onPress={() => {
+                                            getData()
+                                        }}/>
                             </View>
                            
                         </View>
@@ -270,23 +447,22 @@ const styles = StyleSheet.create({
     button2: {
         borderWidth: 10,
         borderColor: '#B9AAFF',
-        width: width / 3,
-        height: width / 3,
+        width: width / 3.5,
+        height: width / 3.5,
         borderRadius: width / 2,
         alignItems: 'center',
         justifyContent: 'center'
     },
     timerText: {
         color: '#663EE3',
-        fontSize: 70,
-
+        fontSize: 55,
         marginBottom: 20
     },
     buttonReset: {
-        borderColor: "#E43434"
+        borderColor: "#44005F"
     },
     buttonTextReset: {
-        color: "#E43434"
+        color: "#663EE3"
     },
     text: {
         fontSize: 15,
