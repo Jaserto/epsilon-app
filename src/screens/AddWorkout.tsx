@@ -335,7 +335,20 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                     /*  enablePanDownToClose={true} */
                     onClose={() => setIsOpen(false)}
                 >
-                    <View style={{ paddingHorizontal: 10 }}>
+                    <ScrollView 
+                      scrollEventThrottle={1}
+                      showsHorizontalScrollIndicator={false}
+                      nestedScrollEnabled={true}
+                      contentInset={{ // iOS only
+                          top: 0,
+                          left: 0,
+                          bottom: 0,
+                          right: 0
+                      }}
+                      contentContainerStyle={{
+                          paddingRight: Platform.OS === 'android' ? 0 : 0
+                      }}
+                    style={{ paddingHorizontal: 10 }}>
                         <TouchableOpacity
                             style={{ backgroundColor: '#663EE3', borderRadius: 5, padding: 6 }}
                             onPress={() => handleSheetChanges(0)}>
@@ -373,7 +386,7 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                                 <Text style={styles.timerText}>{`${mins}:${secs}`}</Text>
                                 <View style={{ display:'flex', alignItems:'center', flexDirection:'row', width: width*0.77, justifyContent:'space-around', marginBottom:30}}>
                                 <TouchableOpacity onPress={() => toggle()} style={styles.button2}>
-                                    <Text style={styles.buttonText}>{isActive ? 'Pause' : 'Start'}</Text>
+                                    <Text style={styles.buttonText}>{isActive ? 'Pausa' : 'Start'}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => reset()} style={[styles.button2, styles.buttonReset]}>
                                     <Text style={[styles.buttonText, styles.buttonTextReset]}>Reset</Text>
@@ -401,8 +414,17 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                                     </Text>
 
                                 </TouchableOpacity> */}
+                                <View style={{ marginVertical: 15, width:'100%' }}>
+                                    <Text>Bench Press (Barbell)</Text>
+                                    <Text>Serie 1</Text>
+                               
+                                    <TextInput placeholder={'Kg'} value={notes} style={styles.input} maxLength={40} />
+                                    <TextInput placeholder={'Repeticiones'} value={notes} style={styles.input} maxLength={40} />
+                                    <Text style={{alignSelf:'center', fontSize:17, color:'#005DD5', marginVertical:7}}>Añadir serie</Text>
+                                    <Text style={{alignSelf:'center', fontSize:17, color:'#005DD5', marginVertical:7}}>Añadir Ejercicio</Text>
+                                </View>
                                 <Button 
-                                        
+                                  
                                     title="Guardar entrenamiento" 
                                     onPress={() => {
                                         storeData2()
@@ -416,7 +438,7 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                             </View>
                            
                         </View>
-                    </View>
+                    </ScrollView>
                 </BottomSheet>
             </View>
         </GestureHandlerRootView>
@@ -487,6 +509,7 @@ const styles = StyleSheet.create({
         borderColor: '#663EE3',
         borderRadius: 5,
         padding: 10,
+        marginVertical:5
     },
 
 })

@@ -7,7 +7,7 @@ export const exercises = [
     },
     {
         id:2,
-        nombre: 'Barbell or dumbbell Bench Press',
+        nombre: 'Barbell or Dumbbell Bench Press',
         muscularGroup: 'Chest',
         instrucciones: '',
     },
@@ -25,7 +25,7 @@ export const exercises = [
     },
     {
         id:5,
-        nombre: 'Pull ups',
+        nombre: 'Pull up',
         muscularGroup: 'Back',
         instrucciones: '',
     },
@@ -45,6 +45,30 @@ export const exercises = [
         id:8,
         nombre: 'Barbell Row',
         muscularGroup: 'Back',
+        instrucciones: '',
+    },
+    {
+        id:9,
+        nombre: 'Sumo Deadlift',
+        muscularGroup: 'Back',
+        instrucciones: '',
+    },
+    {
+        id:10,
+        nombre: 'Gironda Row',
+        muscularGroup: 'Back',
+        instrucciones: '',
+    },
+    {
+        id:11,
+        nombre: 'Squat Smith Machine',
+        muscularGroup: 'Legs',
+        instrucciones: '',
+    },
+    {
+        id:12,
+        nombre: 'Ab Wheel',
+        muscularGroup: 'Core',
         instrucciones: '',
     },
 ]/*

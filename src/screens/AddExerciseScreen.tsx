@@ -26,19 +26,7 @@ export const AddExerciseScreen = ({ navigation }: any) => {
 
   return (
     <>
-    <ScrollView
-      scrollEventThrottle={1}
-      showsHorizontalScrollIndicator={false}
-      nestedScrollEnabled={true}
-      contentInset={{ // iOS only
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0
-      }}
-      contentContainerStyle={{
-        paddingRight: Platform.OS === 'android' ? 0 : 0
-      }} style={styles.view}>
+    <View style={styles.view}>
       <View style={{ marginVertical: 10 }}>
         <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold' }}>Ejercicios</Text>
       </View>
@@ -52,7 +40,7 @@ export const AddExerciseScreen = ({ navigation }: any) => {
       />
    
      
-    </ScrollView>
+    </View>
 
     {selectedExercises.length > 0 &&
         <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, alignItems: 'flex-end', justifyContent:'flex-end' }}>

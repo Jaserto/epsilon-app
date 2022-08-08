@@ -185,6 +185,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
     },
     text: {
+        lineHeight:20,
         fontSize: 15,
         color: 'white',
         marginBottom: 10
