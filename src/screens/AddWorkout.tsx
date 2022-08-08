@@ -348,9 +348,11 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                                 <TextInput placeholder={'Notas del entrenamiento'} value={notes} style={styles.input} maxLength={40} />
                             </View>
                             <View style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-                            <View style={[styles.button, { backgroundColor: '#005DD5' }]}>
+                            <TouchableOpacity
+                             onPress={() => navigation.navigate('AddExerciseScreen' as never)}
+                             style={[styles.button, { backgroundColor: '#005DD5' }]}>
                                 <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center' }}>Añadir ejercicio</Text>
-                            </View>
+                            </TouchableOpacity>
                             <View style={[styles.button, { backgroundColor: '#44005F' }]}>
                                 <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center' }}>Cancelar</Text>
                             </View>
