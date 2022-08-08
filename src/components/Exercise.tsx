@@ -13,9 +13,9 @@ export const  Exercise = ({item, onPress, selected }:any ) =>  {
   return (
     <TouchableOpacity
     onPress={onPress}
-     style={{marginVertical:10, flexDirection:'row', alignItems:'center', overflow:'hidden', padding:6}}>
+     style={{marginVertical:7, flexDirection:'row', alignItems:'center', overflow:'hidden'}}>
         <View style={{width:30, height:30, borderRadius:100, backgroundColor:'gray', marginRight:10, marginLeft:5}}></View>
-        <View>
+        <View style={{padding:3}}>
             <Text style={{color:'white', fontWeight:'bold', fontSize:17}}>{item.nombre}</Text>
             <Text style={{color:'white', fontSize:15}}>{item.muscularGroup}</Text>
         </View>
