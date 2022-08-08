@@ -35,6 +35,18 @@ export const exercises = [
         muscularGroup: 'Chest',
         instrucciones: '',
     },
+    {
+        id:7,
+        nombre: 'Face Pull',
+        muscularGroup: 'Shoulders',
+        instrucciones: '',
+    },
+    {
+        id:8,
+        nombre: 'Barbell Row',
+        muscularGroup: 'Back',
+        instrucciones: '',
+    },
 ]/*
 {
     "Push Ups":,//cehst

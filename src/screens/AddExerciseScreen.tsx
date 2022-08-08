@@ -5,9 +5,7 @@ import { Exercise } from '../components/Exercise';
 import Svg, { Line, Polyline } from 'react-native-svg';
 
 
-
 const { width, height } = Dimensions.get("window");
-
 
 
 export const AddExerciseScreen = ({ navigation }: any) => {
@@ -17,18 +15,17 @@ export const AddExerciseScreen = ({ navigation }: any) => {
   const onPressExercise = (exercise: any) => {
     if (selectedExercises.includes(exercise.id)) {
       const newListItem = selectedExercises.filter((exerciseId: any) => exerciseId !== exercise.id)
-      console.log('la nueva lista', newListItem)
       return setSelectedExercises(newListItem)
     }
     setSelectedExercises([...selectedExercises, exercise.id])
   }
 
-  console.log(selectedExercises)
 
   const getSelected = (exercise: any) => selectedExercises.includes(exercise.id)
 
 
   return (
+    <>
     <ScrollView
       scrollEventThrottle={1}
       showsHorizontalScrollIndicator={false}
@@ -53,14 +50,13 @@ export const AddExerciseScreen = ({ navigation }: any) => {
           <Exercise onPress={() => onPressExercise(item)} selected={getSelected(item)} item={item} />
         )}
       />
-      {/*   {exercises.map(({id, nombre, muscularGroup}, index) => (
-    <View key={id}>
-        <Exercise nombre={nombre} muscularGroup={muscularGroup} />
-    </View>
-  ))} */}
-      {selectedExercises.length > 0 &&
-        <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, alignItems: 'flex-end' }}>
-          <TouchableOpacity onPress={() => { }} style={{ width: 50, alignItems:'center', justifyContent:'center', display:'flex', height: 50, borderRadius: 100, backgroundColor: '#C49CFF', marginRight: 10 }}>
+   
+     
+    </ScrollView>
+
+    {selectedExercises.length > 0 &&
+        <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, alignItems: 'flex-end', justifyContent:'flex-end' }}>
+          <TouchableOpacity onPress={() => {}} style={{ width: 50, alignItems:'center', justifyContent:'center', display:'flex', height: 50, borderRadius: 100, backgroundColor: '#C49CFF', margin: 20 }}>
             <Svg
               width={30}
               height={30}
@@ -76,7 +72,7 @@ export const AddExerciseScreen = ({ navigation }: any) => {
           </TouchableOpacity>
         </View>
       }
-    </ScrollView>
+    </>
   )
 }
 
