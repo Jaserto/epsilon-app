@@ -478,7 +478,13 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
 
                                 <Text style={{ alignSelf: 'center', fontSize: 17, color: "#663EE3", marginVertical: 7 }}>Añadir serie</Text>
                                 <Text style={{ alignSelf: 'center', fontSize: 17, color: "#663EE3", marginVertical: 7 }}>Añadir Ejercicio</Text>
-                                <Button
+                                
+                                <TouchableOpacity style={{marginVertical:10, width:width* 0.7, backgroundColor:'red', height:40, borderRadius:5, display:'flex', alignItems:'center', justifyContent:'center'}}>
+                                        <Text style={{color:'white', fontWeight:'bold'}}>Terminar entrenamiento</Text>
+                                </TouchableOpacity>
+                                
+                            {/* DEBUG                               */}
+                              {/*   <Button
 
                                     title="Guardar entrenamiento"
                                     onPress={() => {
@@ -489,7 +495,7 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                                     title="Mostrar entrenamiento CLG"
                                     onPress={() => {
                                         getData()
-                                    }} />
+                                    }} /> */}
                             </View>
 
                         </View>
@@ -524,17 +530,17 @@ const styles = StyleSheet.create({
         borderRadius: 6
     },
     button2: {
-        borderWidth: 10,
+        borderWidth: 6,
         borderColor: '#B9AAFF',
-        width: width / 3.5,
-        height: width / 3.5,
+        width: width / 4,
+        height: width / 4,
         borderRadius: width / 2,
         alignItems: 'center',
         justifyContent: 'center'
     },
     timerText: {
         color: '#663EE3',
-        fontSize: 55,
+        fontSize: 45,
         marginBottom: 20
     },
     buttonReset: {
