@@ -1,20 +1,15 @@
+import { View, Text, ScrollView, Alert, RefreshControl, Platform, Dimensions, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { Alert, Dimensions, Platform, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import {  ScrollView } from 'react-native-gesture-handler'
-
-
-import { exercises } from '../utils/exercices/data';
+import { exercises } from '../utils/exercices/data'
 
 const { width, height } = Dimensions.get("window");
 
-
-export const AnalysisScreen = ({ navigation }: any) => {
-
+export const ExerciseScreen = (props:any) =>  {
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
     useEffect(() => {
-     
+     console.log(props)
     }, [])
 
     const refreshControl = () => {
@@ -52,31 +47,20 @@ export const AnalysisScreen = ({ navigation }: any) => {
                 paddingRight: Platform.OS === 'android' ? 0 : 0
             }} style={styles.view}>
            <View  style={{marginVertical:10}}>
-            <Text style={{color:'white', fontSize:25, fontWeight:'bold'}}>Ejercicios</Text>
+            <Text style={{color:'white', fontSize:25, fontWeight:'bold'}}>Descripción</Text>
            </View>
-          {exercises.map(({id, nombre, muscularGroup, instrucciones}) => (
-            <TouchableOpacity 
-            onPress={() => {
-                navigation.navigate('ExerciseScreen', {
-                    id,
-                    nombre,
-                    muscularGroup,
-                    instrucciones
-                })
-            }}
-            key={id}>
-                <View style={{marginVertical:10, flexDirection:'row', alignItems:'center'}}>
-                    <View style={{width:33, height:33, borderRadius:100, backgroundColor:'gray', marginRight:10}}></View>
-                    <View>
-                        <Text style={{color:'white', fontWeight:'bold', fontSize:16}}>{nombre}</Text>
-                        <Text style={{color:'white', fontSize:14}}>{muscularGroup}</Text>
-                    </View>
-
+           
+           <View style={{marginVertical:7}}>
+                <Text style={{color:'white', fontSize:19}}>{props.route.params.nombre}</Text>
+                <View style={{ marginVertical:5}}>
+                <Text style={{color:'white', fontSize:16}}>Grupo Muscular:</Text>
+                <Text style={{color:'white', fontSize:19}}>{props.route.params.muscularGroup}</Text>
                 </View>
-            </TouchableOpacity>
-          ))}
-           <View>
-            
+                 <View style={{ marginVertical:5}}>
+                <Text style={{color:'white', fontSize:16, marginVertical:5}}>Intrucciones:</Text>
+                <Text style={{color:'white', fontSize:16}}>{props.route.params.instrucciones}</Text>
+                </View>
+              
                
            </View>
         

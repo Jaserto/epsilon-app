@@ -6,6 +6,7 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import BackgroundTimer from 'react-native-background-timer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Workout } from '../utils/models/Workout';
+import Svg, { Polyline } from 'react-native-svg';
 
 
 const { width, height } = Dimensions.get("window");
@@ -28,54 +29,54 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
             {
                 id: 12304,
                 exercise: 'Barbell Squat',
-                series:[
+                series: [
                     {
-                        reps:5,
-                        weight:10
+                        reps: 5,
+                        weight: 10
                     },
                     {
-                        reps:5,
-                        weight:20
+                        reps: 5,
+                        weight: 20
                     },
                     {
-                        reps:5,
-                        weight:30
+                        reps: 5,
+                        weight: 30
                     }
                 ]
             },
             {
                 id: 12305,
                 exercise: 'Barbell Squat',
-                series:[
+                series: [
                     {
-                        reps:5,
-                        weight:40
+                        reps: 5,
+                        weight: 40
                     },
                     {
-                        reps:5,
-                        weight:50
+                        reps: 5,
+                        weight: 50
                     },
                     {
-                        reps:5,
-                        weight:60
+                        reps: 5,
+                        weight: 60
                     }
                 ]
             },
             {
                 id: 1234,
                 exercise: 'Barbell Squat',
-                series:[
+                series: [
                     {
-                        reps:5,
-                        weight:70
+                        reps: 5,
+                        weight: 70
                     },
                     {
-                        reps:5,
-                        weight:80
+                        reps: 5,
+                        weight: 80
                     },
                     {
-                        reps:5,
-                        weight:90
+                        reps: 5,
+                        weight: 90
                     }
                 ]
             }
@@ -94,54 +95,54 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
             {
                 id: 12304,
                 exercise: 'Barbell Squat',
-                series:[
+                series: [
                     {
-                        reps:5,
-                        weight:10
+                        reps: 5,
+                        weight: 10
                     },
                     {
-                        reps:5,
-                        weight:20
+                        reps: 5,
+                        weight: 20
                     },
                     {
-                        reps:5,
-                        weight:30
+                        reps: 5,
+                        weight: 30
                     }
                 ]
             },
             {
                 id: 12305,
                 exercise: 'Barbell Squat',
-                series:[
+                series: [
                     {
-                        reps:5,
-                        weight:40
+                        reps: 5,
+                        weight: 40
                     },
                     {
-                        reps:5,
-                        weight:50
+                        reps: 5,
+                        weight: 50
                     },
                     {
-                        reps:5,
-                        weight:60
+                        reps: 5,
+                        weight: 60
                     }
                 ]
             },
             {
                 id: 1234,
                 exercise: 'Barbell Squat',
-                series:[
+                series: [
                     {
-                        reps:5,
-                        weight:70
+                        reps: 5,
+                        weight: 70
                     },
                     {
-                        reps:5,
-                        weight:80
+                        reps: 5,
+                        weight: 80
                     },
                     {
-                        reps:5,
-                        weight:90
+                        reps: 5,
+                        weight: 90
                     }
                 ]
             }
@@ -167,40 +168,40 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
     const formatNumber = (number: any) => `0${number}`.slice(-2);
 
     //Functions
-/*     const startTimer = () => {
-        BackgroundTimer.runBackgroundTimer(() => {
-            setSecondsLeft(secs => {
-                if (secs > 0) return secs - 1
-                else return 0
-            })
-        }, 1000)
-    } */
-/* 
-    useEffect(() => {
-        if (secondsLeft === 0) BackgroundTimer.stopBackgroundTimer()
-    }, [secondsLeft]);
+    /*     const startTimer = () => {
+            BackgroundTimer.runBackgroundTimer(() => {
+                setSecondsLeft(secs => {
+                    if (secs > 0) return secs - 1
+                    else return 0
+                })
+            }, 1000)
+        } */
+    /* 
+        useEffect(() => {
+            if (secondsLeft === 0) BackgroundTimer.stopBackgroundTimer()
+        }, [secondsLeft]);
+    
+        useEffect(() => {
+            if (timerOn) startTimer();
+            else BackgroundTimer.stopBackgroundTimer();
+            return () => {
+                BackgroundTimer.stopBackgroundTimer();
+            }
+        }, [timerOn]) */
 
-    useEffect(() => {
-        if (timerOn) startTimer();
-        else BackgroundTimer.stopBackgroundTimer();
-        return () => {
-            BackgroundTimer.stopBackgroundTimer();
-        }
-    }, [timerOn]) */
-
- /*    const clockify = () => {
-        let hours = Math.floor(secondsLeft / 60 / 60)
-        let mins = Math.floor((secondsLeft / 60) % 60)
-        let seconds = Math.floor(secondsLeft % 60)
-        let displayHours = hours < 10 ? `0${hours}` : hours
-        let displayMins = mins < 10 ? `0${mins}` : mins
-        let displaySecs = seconds < 10 ? `0${seconds}` : seconds
-        return {
-            displayHours,
-            displayMins,
-            displaySecs,
-        }
-    } */
+    /*    const clockify = () => {
+           let hours = Math.floor(secondsLeft / 60 / 60)
+           let mins = Math.floor((secondsLeft / 60) % 60)
+           let seconds = Math.floor(secondsLeft % 60)
+           let displayHours = hours < 10 ? `0${hours}` : hours
+           let displayMins = mins < 10 ? `0${mins}` : mins
+           let displaySecs = seconds < 10 ? `0${seconds}` : seconds
+           return {
+               displayHours,
+               displayMins,
+               displaySecs,
+           }
+       } */
 
     const toggle = () => {
         setIsActive(!isActive);
@@ -212,9 +213,9 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
     }
     const startTimer = () => {
         BackgroundTimer.runBackgroundTimer(() => {
-            
-                setRemainingSecs(remainingSecs => remainingSecs + 1);
-        
+
+            setRemainingSecs(remainingSecs => remainingSecs + 1);
+
         }, 1000)
     }
     const getRemaining = (time: any) => {
@@ -224,7 +225,7 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
     }
     const { mins, secs } = getRemaining(remainingSecs);
 
-/*  */
+    /*  */
 
     /* useEffect(() => {
         let interval:any = null;
@@ -248,39 +249,39 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
         return () => {
             BackgroundTimer.stopBackgroundTimer();
         }
-    }, [isActive]) 
+    }, [isActive])
 
-    const storeData = async (value:any) => {
+    const storeData = async (value: any) => {
         try {
-          const jsonValue = JSON.stringify(value)
-          await AsyncStorage.setItem('workout', jsonValue)
+            const jsonValue = JSON.stringify(value)
+            await AsyncStorage.setItem('workout', jsonValue)
         } catch (e) {
-          // saving error
+            // saving error
         }
-      }
+    }
 
-      const storeData2 = async () => {
+    const storeData2 = async () => {
         try {
             const jsonValue = await AsyncStorage.getItem('workout')
             const jsonValue2 = JSON.stringify(workout2)
-            const res = jsonValue != null ? jsonValue.concat(jsonValue2):'';
-          await AsyncStorage.setItem('workout', res)
+            const res = jsonValue != null ? jsonValue.concat(jsonValue2) : '';
+            await AsyncStorage.setItem('workout', res)
         } catch (e) {
-          // saving error
+            // saving error
         }
-      }
+    }
 
 
-      const getData = async () => {
+    const getData = async () => {
         try {
-          const jsonValue = await AsyncStorage.getItem('workout')
-          console.log(jsonValue)
-          return jsonValue != null ? JSON.parse(jsonValue) : null;
-        } catch(e) {
-          // error reading value
+            const jsonValue = await AsyncStorage.getItem('workout')
+            console.log(jsonValue)
+            return jsonValue != null ? JSON.parse(jsonValue) : null;
+        } catch (e) {
+            // error reading value
         }
-      }
-      
+    }
+
 
 
     return (
@@ -335,20 +336,20 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                     /*  enablePanDownToClose={true} */
                     onClose={() => setIsOpen(false)}
                 >
-                    <ScrollView 
-                      scrollEventThrottle={1}
-                      showsHorizontalScrollIndicator={false}
-                      nestedScrollEnabled={true}
-                      contentInset={{ // iOS only
-                          top: 0,
-                          left: 0,
-                          bottom: 0,
-                          right: 0
-                      }}
-                      contentContainerStyle={{
-                          paddingRight: Platform.OS === 'android' ? 0 : 0
-                      }}
-                    style={{ paddingHorizontal: 10 }}>
+                    <ScrollView
+                        scrollEventThrottle={1}
+                        showsHorizontalScrollIndicator={false}
+                        nestedScrollEnabled={true}
+                        contentInset={{ // iOS only
+                            top: 0,
+                            left: 0,
+                            bottom: 0,
+                            right: 0
+                        }}
+                        contentContainerStyle={{
+                            paddingRight: Platform.OS === 'android' ? 0 : 0
+                        }}
+                        style={{ paddingHorizontal: 10 }}>
                         <TouchableOpacity
                             style={{ backgroundColor: '#663EE3', borderRadius: 5, padding: 6 }}
                             onPress={() => handleSheetChanges(0)}>
@@ -360,19 +361,19 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                                 {/*   <Text style={styles.labelInput}>Notas del entrenamiento</Text> */}
                                 <TextInput placeholder={'Notas del entrenamiento'} value={notes} style={styles.input} maxLength={40} />
                             </View>
-                            <View style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
-                            <TouchableOpacity
-                             onPress={() => navigation.navigate('AddExerciseScreen' as never)}
-                             style={[styles.button, { backgroundColor: "#663EE3" }]}>
-                                <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center' }}>Añadir ejercicio</Text>
-                            </TouchableOpacity>
-                            <View style={[styles.button, { backgroundColor: '#44005F' }]}>
-                                <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center' }}>Cancelar</Text>
+                            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <TouchableOpacity
+                                    onPress={() => navigation.navigate('AddExerciseScreen' as never)}
+                                    style={[styles.button, { backgroundColor: "#663EE3" }]}>
+                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center' }}>Añadir ejercicio</Text>
+                                </TouchableOpacity>
+                                <View style={[styles.button, { backgroundColor: '#44005F' }]}>
+                                    <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center' }}>Cancelar</Text>
+                                </View>
                             </View>
-                            </View>
-                           
+
                             <View style={{ display: 'flex', alignItems: 'center', marginVertical: 2 }}>
-                               {/*  <Text style={{ fontSize: 30, marginVertical: 10 }}>
+                                {/*  <Text style={{ fontSize: 30, marginVertical: 10 }}>
                                     {clockify().displayHours} H {clockify().displayMins} Mins{" "}
                                     {clockify().displaySecs} s
                                 </Text> */}
@@ -382,17 +383,17 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                                 >
                                     <Text sty>START/stop</Text>
                                 </Pressable> */}
-                                 <View style={{ display:'flex', alignItems:'center'}}>
-                                <Text style={styles.timerText}>{`${mins}:${secs}`}</Text>
-                                <View style={{ display:'flex', alignItems:'center', flexDirection:'row', width: width*0.77, justifyContent:'space-around', marginBottom:30}}>
-                                <TouchableOpacity onPress={() => toggle()} style={styles.button2}>
-                                    <Text style={styles.buttonText}>{isActive ? 'Pausa' : 'Start'}</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => reset()} style={[styles.button2, styles.buttonReset]}>
-                                    <Text style={[styles.buttonText, styles.buttonTextReset]}>Reset</Text>
-                                </TouchableOpacity>
+                                <View style={{ display: 'flex', alignItems: 'center' }}>
+                                    <Text style={styles.timerText}>{`${mins}:${secs}`}</Text>
+                                    <View style={{ display: 'flex', alignItems: 'center', flexDirection: 'row', width: width * 0.77, justifyContent: 'space-around', marginBottom: 30 }}>
+                                        <TouchableOpacity onPress={() => toggle()} style={styles.button2}>
+                                            <Text style={styles.buttonText}>{isActive ? 'Pausa' : 'Start'}</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => reset()} style={[styles.button2, styles.buttonReset]}>
+                                            <Text style={[styles.buttonText, styles.buttonTextReset]}>Reset</Text>
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
-                            </View>
                                 {/* <TouchableOpacity
                                     onPress={() => setTimerOn(timerOn => !timerOn)}
                                     style={{
@@ -414,44 +415,83 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                                     </Text>
 
                                 </TouchableOpacity> */}
-                                <View style={{ marginVertical: 15, width:'100%' }}>
-                                    <Text style={{fontWeight:'bold'}}>Bench Press (Barbell)</Text>
-                                    <View 
-                                    style={{display:'flex', 
-                                    flexDirection:'row', 
-                                    width:'100%', 
-                                    alignItems:'center',
-                                    justifyContent:'space-between',
-                                    marginVertical:6
-                                    }}>
+                                <View style={{ marginVertical: 5, width: '100%' }}>
+                                    <Text style={{ fontWeight: 'bold' }}>Bench Press (Barbell)</Text>
+                                    <View
+                                        style={{
+                                            display: 'flex',
+                                            flexDirection: 'row',
+                                            width: '100%',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-between',
+                                            marginVertical: 6
+                                        }}>
                                         <Text>Serie 1</Text>
-                                        <TextInput  keyboardType='numeric' placeholder={'Kg'} value={notes} style={styles.input} maxLength={40} />
-                                        <TextInput  keyboardType='numeric' placeholder={'Repeticiones'} value={notes} style={styles.input} maxLength={40} />
-                                        <TouchableOpacity style={{width:'13%',borderRadius:6, height:'90%', backgroundColor:"#663EE3"}}>
-
+                                        <TextInput keyboardType='numeric' placeholder={'Kg'} value={notes} style={styles.inputData} maxLength={40} />
+                                        <TextInput keyboardType='numeric' placeholder={'Repeticiones'} value={notes} style={styles.inputData} maxLength={40} />
+                                        <TouchableOpacity style={{ display:'flex', alignItems:'center',width: '13%',height:40, borderRadius: 6, justifyContent:'center', backgroundColor: "#663EE3" }}>
+                                            <Svg
+                                                width={32}
+                                                height={32}
+                                                viewBox="0 0 28 28"
+                                                fill="none"
+                                                stroke="white"
+                                                strokeWidth={2}
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round">
+                                                <Polyline  points="20 6 9 17 4 12" />
+                       
+                                            </Svg>
                                         </TouchableOpacity>
                                     </View>
-
-                                 
-                                    <Text style={{alignSelf:'center', fontSize:17, color:"#663EE3", marginVertical:7}}>Añadir serie</Text>
-                                    <Text style={{alignSelf:'center', fontSize:17, color:"#663EE3", marginVertical:7}}>Añadir Ejercicio</Text>
                                 </View>
-                                
-                                
-                                <Button 
-                                  
-                                    title="Guardar entrenamiento" 
+                                <View style={{ marginVertical: 5, width: '100%' }}>
+                                    <Text style={{ fontWeight: 'bold' }}>Bench Press (Barbell)</Text>
+                                    <View
+                                        style={{
+                                            display: 'flex',
+                                            flexDirection: 'row',
+                                            width: '100%',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-between',
+                                            marginVertical: 6
+                                        }}>
+                                        <Text>Serie 1</Text>
+                                        <TextInput keyboardType='numeric' placeholder={'Kg'} value={notes} style={styles.inputData} maxLength={40} />
+                                        <TextInput keyboardType='numeric' placeholder={'Repeticiones'} value={notes} style={styles.inputData} maxLength={40} />
+                                        <TouchableOpacity style={{ display:'flex', alignItems:'center',width: '13%',height:40, borderRadius: 6, justifyContent:'center', backgroundColor: "#663EE3" }}>
+                                            <Svg
+                                                width={32}
+                                                height={32}
+                                                viewBox="0 0 28 28"
+                                                fill="none"
+                                                stroke="white"
+                                                strokeWidth={2}
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round">
+                                                <Polyline  points="20 6 9 17 4 12" />
+                       
+                                            </Svg>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+
+                                <Text style={{ alignSelf: 'center', fontSize: 17, color: "#663EE3", marginVertical: 7 }}>Añadir serie</Text>
+                                <Text style={{ alignSelf: 'center', fontSize: 17, color: "#663EE3", marginVertical: 7 }}>Añadir Ejercicio</Text>
+                                <Button
+
+                                    title="Guardar entrenamiento"
                                     onPress={() => {
                                         storeData2()
-                                    }}/>
-                                    <Button 
-                                        
-                                        title="Mostrar entrenamiento CLG" 
-                                        onPress={() => {
-                                            getData()
-                                        }}/>
+                                    }} />
+                                <Button
+
+                                    title="Mostrar entrenamiento CLG"
+                                    onPress={() => {
+                                        getData()
+                                    }} />
                             </View>
-                           
+
                         </View>
                     </ScrollView>
                 </BottomSheet>
@@ -524,7 +564,16 @@ const styles = StyleSheet.create({
         borderColor: '#663EE3',
         borderRadius: 5,
         padding: 10,
-        marginVertical:5
+        marginVertical: 5
+    },
+    inputData: {
+        height: 40,
+        borderWidth: 1,
+        borderColor: '#663EE3',
+        borderRadius: 5,
+        padding: 10,
+        width: '30%',
+        marginVertical: 5
     },
 
 })

@@ -1,8 +1,10 @@
-export const exercises = [
+import { Exercise } from "../models/Exercise";
+
+export const exercises:Array<Exercise> = [
     {
         id:1,
         nombre: 'Push ups',
-        muscularGroup: 'Shoulers',
+        muscularGroup: 'Shoulders',
         instrucciones: '',
     },
     {
@@ -21,7 +23,7 @@ export const exercises = [
         id:4,
         nombre: 'Barbell Squat',
         muscularGroup: 'Legs',
-        instrucciones: '',
+        instrucciones: 'En este ejercicio la técnica es muy importante, ya que, en el caso de que realices un mal movimiento, puedes lesionarte.',
     },
     {
         id:5,
@@ -71,6 +73,37 @@ export const exercises = [
         muscularGroup: 'Core',
         instrucciones: '',
     },
+    {
+        id:13,
+        nombre: 'Dips',
+        muscularGroup: 'Triceps',
+        instrucciones: '',
+    },
+    {
+        id:14,
+        nombre: 'Crunches',
+        muscularGroup: 'Core',
+        instrucciones: '',
+    },
+    {
+        id:15,
+        nombre: 'Weighted Crunches',
+        muscularGroup: 'Core',
+        instrucciones: '',
+    },
+    {
+        id:16,
+        nombre: 'Triceps Pullovers',
+        muscularGroup: 'Triceps',
+        instrucciones: '',
+    },
+    {
+        id:17,
+        nombre: 'Oblique Crunches',
+        muscularGroup: 'Core',
+        instrucciones: '',
+    },
+]/*
 ]/*
 {
     "Push Ups":,//cehst

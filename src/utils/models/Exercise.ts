@@ -1,7 +1,7 @@
  export interface Exercise {
     id: number,
     nombre: string,
-    muscularGroup: muscularGroup,
+    muscularGroup:string,
     instrucciones: string
  }
 
