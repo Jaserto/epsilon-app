@@ -363,7 +363,7 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                             <View style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}>
                             <TouchableOpacity
                              onPress={() => navigation.navigate('AddExerciseScreen' as never)}
-                             style={[styles.button, { backgroundColor: '#005DD5' }]}>
+                             style={[styles.button, { backgroundColor: "#663EE3" }]}>
                                 <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center' }}>Añadir ejercicio</Text>
                             </TouchableOpacity>
                             <View style={[styles.button, { backgroundColor: '#44005F' }]}>
@@ -415,14 +415,29 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
 
                                 </TouchableOpacity> */}
                                 <View style={{ marginVertical: 15, width:'100%' }}>
-                                    <Text>Bench Press (Barbell)</Text>
-                                    <Text>Serie 1</Text>
-                               
-                                    <TextInput placeholder={'Kg'} value={notes} style={styles.input} maxLength={40} />
-                                    <TextInput placeholder={'Repeticiones'} value={notes} style={styles.input} maxLength={40} />
-                                    <Text style={{alignSelf:'center', fontSize:17, color:'#005DD5', marginVertical:7}}>Añadir serie</Text>
-                                    <Text style={{alignSelf:'center', fontSize:17, color:'#005DD5', marginVertical:7}}>Añadir Ejercicio</Text>
+                                    <Text style={{fontWeight:'bold'}}>Bench Press (Barbell)</Text>
+                                    <View 
+                                    style={{display:'flex', 
+                                    flexDirection:'row', 
+                                    width:'100%', 
+                                    alignItems:'center',
+                                    justifyContent:'space-between',
+                                    marginVertical:6
+                                    }}>
+                                        <Text>Serie 1</Text>
+                                        <TextInput  keyboardType='numeric' placeholder={'Kg'} value={notes} style={styles.input} maxLength={40} />
+                                        <TextInput  keyboardType='numeric' placeholder={'Repeticiones'} value={notes} style={styles.input} maxLength={40} />
+                                        <TouchableOpacity style={{width:'13%',borderRadius:6, height:'90%', backgroundColor:"#663EE3"}}>
+
+                                        </TouchableOpacity>
+                                    </View>
+
+                                 
+                                    <Text style={{alignSelf:'center', fontSize:17, color:"#663EE3", marginVertical:7}}>Añadir serie</Text>
+                                    <Text style={{alignSelf:'center', fontSize:17, color:"#663EE3", marginVertical:7}}>Añadir Ejercicio</Text>
                                 </View>
+                                
+                                
                                 <Button 
                                   
                                     title="Guardar entrenamiento" 
