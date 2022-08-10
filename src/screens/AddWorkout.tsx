@@ -16,6 +16,41 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
     // ref
     const bottomSheetRef = useRef<BottomSheet>(null);
 
+
+    // this will be attached with each input onChangeText
+    const [textValue, setTextValue] = useState('');
+    // our number of inputs, we can add the length or decrease the length
+    const [numInputs, setNumInputs] = useState(1);
+    // all our input fields are tracked with this array
+    const refInputs = useRef<string[]>([textValue]);
+
+    const [inputs, setInputs] = useState([{ key: '', value: '' }]);
+
+
+    const addHandler = () => {
+        const _inputs = [...inputs];
+        _inputs.push({ key: '', value: '' });
+        setInputs(_inputs);
+    }
+
+    const deleteHandler = (key: any) => {
+        const _inputs = inputs.filter((input, index) => index != key);
+        setInputs(_inputs);
+    }
+
+    const inputHandler = (text: any, key: any) => {
+        const _inputs = [...inputs];
+        _inputs[key].value = text;
+        _inputs[key].key = key;
+        setInputs(_inputs);
+
+    }
+
+
+
+
+
+
     const workout = [{
         id: 9,
         dia: '20 julio',
@@ -82,7 +117,7 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
             }
         ]
     }]
-    const workout2 = [{
+    const workout2 = {
         id: 10,
         dia: '22 julio',
         title: 'Entrenamiento de mañana',
@@ -147,7 +182,7 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                 ]
             }
         ]
-    }]
+    }
     //States
     const [isOpen, setIsOpen] = useState<boolean>(true);
     const [notes, setNotes] = useState('');
@@ -239,8 +274,12 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
         return () => clearInterval(interval);
     }, [isActive, remainingSecs]); */
 
+    
+
+
     useEffect(() => {
         if (remainingSecs === 0) BackgroundTimer.stopBackgroundTimer()
+
     }, [secondsLeft]);
 
     useEffect(() => {
@@ -251,21 +290,41 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
         }
     }, [isActive])
 
-    const storeData = async (value: any) => {
+    const storeData = async () => {
         try {
-            const jsonValue = JSON.stringify(value)
+
+            const jsonValue = JSON.stringify(workout)
             await AsyncStorage.setItem('workout', jsonValue)
         } catch (e) {
             // saving error
         }
     }
 
+    const saveData = async () => {
+        AsyncStorage.getItem('workout')
+            .then((workouts) => {
+                const c = workouts ? JSON.parse(workouts) : [];
+                c.push(workout2);
+                AsyncStorage.setItem('workout', JSON.stringify(c));
+            });
+    }
+
+
     const storeData2 = async () => {
         try {
+            let respuesta;
             const jsonValue = await AsyncStorage.getItem('workout')
-            const jsonValue2 = JSON.stringify(workout2)
-            const res = jsonValue != null ? jsonValue.concat(jsonValue2) : '';
-            await AsyncStorage.setItem('workout', res)
+            if (jsonValue !== null) {
+                const jsonParse = JSON.parse(jsonValue)
+                jsonParse.concat(workout2)
+                console.log(jsonParse)
+                respuesta = JSON.stringify(jsonParse);
+
+            }
+            //  const res = jsonValue !== null ? jsonParse.push(workout2) : workout2 ;
+
+            console.log(respuesta)
+            //    await AsyncStorage.setItem('workout', JSON.stringify(res))
         } catch (e) {
             // saving error
         }
@@ -283,6 +342,16 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
     }
 
 
+
+    const deleteData = async () => {
+        try {
+            await AsyncStorage.removeItem('workout');
+            return console.log('se Borro todo');
+        }
+        catch (exception) {
+            return false;
+        }
+    }
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -429,7 +498,7 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                                         <Text>Serie 1</Text>
                                         <TextInput keyboardType='numeric' placeholder={'Kg'} value={notes} style={styles.inputData} maxLength={40} />
                                         <TextInput keyboardType='numeric' placeholder={'Repeticiones'} value={notes} style={styles.inputData} maxLength={40} />
-                                        <TouchableOpacity style={{ display:'flex', alignItems:'center',width: '13%',height:40, borderRadius: 6, justifyContent:'center', backgroundColor: "#663EE3" }}>
+                                        <TouchableOpacity style={{ display: 'flex', alignItems: 'center', width: '13%', height: 40, borderRadius: 6, justifyContent: 'center', backgroundColor: "#663EE3" }}>
                                             <Svg
                                                 width={32}
                                                 height={32}
@@ -439,8 +508,8 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                                                 strokeWidth={2}
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round">
-                                                <Polyline  points="20 6 9 17 4 12" />
-                       
+                                                <Polyline points="20 6 9 17 4 12" />
+
                                             </Svg>
                                         </TouchableOpacity>
                                     </View>
@@ -459,7 +528,7 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                                         <Text>Serie 1</Text>
                                         <TextInput keyboardType='numeric' placeholder={'Kg'} value={notes} style={styles.inputData} maxLength={40} />
                                         <TextInput keyboardType='numeric' placeholder={'Repeticiones'} value={notes} style={styles.inputData} maxLength={40} />
-                                        <TouchableOpacity style={{ display:'flex', alignItems:'center',width: '13%',height:40, borderRadius: 6, justifyContent:'center', backgroundColor: "#663EE3" }}>
+                                        <TouchableOpacity style={{ display: 'flex', alignItems: 'center', width: '13%', height: 40, borderRadius: 6, justifyContent: 'center', backgroundColor: "#663EE3" }}>
                                             <Svg
                                                 width={32}
                                                 height={32}
@@ -469,8 +538,8 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                                                 strokeWidth={2}
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round">
-                                                <Polyline  points="20 6 9 17 4 12" />
-                       
+                                                <Polyline points="20 6 9 17 4 12" />
+
                                             </Svg>
                                         </TouchableOpacity>
                                     </View>
@@ -478,27 +547,63 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
 
                                 <Text style={{ alignSelf: 'center', fontSize: 17, color: "#663EE3", marginVertical: 7 }}>Añadir serie</Text>
                                 <Text style={{ alignSelf: 'center', fontSize: 17, color: "#663EE3", marginVertical: 7 }}>Añadir Ejercicio</Text>
-                                
-                                <TouchableOpacity style={{marginVertical:10, width:width* 0.7, backgroundColor:'red', height:40, borderRadius:5, display:'flex', alignItems:'center', justifyContent:'center'}}>
-                                        <Text style={{color:'white', fontWeight:'bold'}}>Terminar entrenamiento</Text>
+
+                                <TouchableOpacity style={{ marginVertical: 10, width: width * 0.7, backgroundColor: 'red', height: 40, borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <Text style={{ color: 'white', fontWeight: 'bold' }}>Terminar entrenamiento</Text>
                                 </TouchableOpacity>
-                                
-                            {/* DEBUG                               */}
-                              {/*   <Button
+                                <View style={{marginBottom:20, width:'100%'}}>
+
+
+                                    {inputs.map((input, key) => (
+                                        <View style={styles.inputContainer}>
+                                              <Text>Serie 1</Text>
+                                            <TextInput placeholder={"kg"} style={styles.input} value={input.value} onChangeText={(text) => inputHandler(text, key)} />
+                                            <TextInput placeholder={"Repeticiones"} style={styles.input} value={input.value} onChangeText={(text) => inputHandler(text, key)} />
+                                            <TouchableOpacity onPress={() => deleteHandler(key)}>
+                                                <Text style={{ color: "red", fontSize: 13 }}>Borrar</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={{ display: 'flex', alignItems: 'center', width: '13%', height: 40, borderRadius: 6, justifyContent: 'center', backgroundColor: "#663EE3" }}>
+                                            <Svg
+                                                width={32}
+                                                height={32}
+                                                viewBox="0 0 28 28"
+                                                fill="none"
+                                                stroke="white"
+                                                strokeWidth={2}
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round">
+                                                <Polyline points="20 6 9 17 4 12" />
+
+                                            </Svg>
+                                        </TouchableOpacity>
+                                        </View>
+                                    ))}
+                                    <Button title="Añade series" onPress={addHandler} />
+
+                                </View>
+
+                                {/* DEBUG                               */}
+                                <Button
 
                                     title="Guardar entrenamiento"
                                     onPress={() => {
-                                        storeData2()
+                                        saveData()
                                     }} />
                                 <Button
 
                                     title="Mostrar entrenamiento CLG"
                                     onPress={() => {
                                         getData()
-                                    }} /> */}
-                            </View>
+                                    }} />
+                                <Button
 
+                                    title="Borrar todo CLG"
+                                    onPress={() => {
+                                        deleteData()
+                                    }} />
+                            </View>
                         </View>
+
                     </ScrollView>
                 </BottomSheet>
             </View>
@@ -506,6 +611,12 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
     )
 }
 const styles = StyleSheet.create({
+    inputContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderBottomColor: "lightgray"
+    },
     view: {
         flexDirection: 'column',
         backgroundColor: '#111111',
