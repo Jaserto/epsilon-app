@@ -16,39 +16,78 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
     // ref
     const bottomSheetRef = useRef<BottomSheet>(null);
 
-
-    // this will be attached with each input onChangeText
-    const [textValue, setTextValue] = useState('');
-    // our number of inputs, we can add the length or decrease the length
-    const [numInputs, setNumInputs] = useState(1);
-    // all our input fields are tracked with this array
-    const refInputs = useRef<string[]>([textValue]);
-
-    const [inputs, setInputs] = useState([{ key: '', value: '' }]);
+    //States
+    const [data, setData] = useState<number>(0);
+    const [isOpen, setIsOpen] = useState<boolean>(true);
+    const [notes, setNotes] = useState('');
+    const [secondsLeft, setSecondsLeft] = useState(3600);
+    const [timerOn, setTimerOn] = useState<boolean>(false);
+    const [remainingSecs, setRemainingSecs] = useState(0);
+    const [isActive, setIsActive] = useState(false);
+    const [inputs, setInputs] = useState([{ key: '', value: '', value2:'' }]);
 
 
     const addHandler = () => {
         const _inputs = [...inputs];
-        _inputs.push({ key: '', value: '' });
+        _inputs.push({ key: '', value: '', value2:'' });
         setInputs(_inputs);
+        
     }
+
+   
 
     const deleteHandler = (key: any) => {
         const _inputs = inputs.filter((input, index) => index != key);
         setInputs(_inputs);
     }
 
-    const inputHandler = (text: any, key: any) => {
+    const inputHandler = (text: any, text2:any, key: any) => {
         const _inputs = [...inputs];
         _inputs[key].value = text;
+        _inputs[key].value2 = text2;
         _inputs[key].key = key;
         setInputs(_inputs);
+      /*   console.log(text, text2, key) */
+
+        let kilos:number = 0;
+        let series:number = inputs.length;
+        let seriesInfo:any=[]
+        let repeticiones:number=0
+
+        for(let i=0; i<inputs.length;i++){
+         
+           series = 
+            kilos += parseInt(inputs[i].value)
+            repeticiones += parseInt(inputs[i].value2) === undefined ? 0 : parseInt(inputs[i].value2)
+            seriesInfo.push({
+                weight:inputs[i].value,
+                reps:inputs[i].value2
+            })
+        }
+        console.log(kilos, repeticiones, series)
+  
+        let hora = new Date().getHours()
+        const data = {
+            id: 10,
+            dia: Date.now(),
+            title: hora > 12 && hora < 18 ? 'Entrenamiento de tarde' : hora > 18 && hora < 24 ? 'Entrenamiento de noche' : 'Entrenamiento de mañana',
+            tiempo: mins.toString +'m'+ ' ' + secs+'s',
+            notes: 'Almost die with 1090000RPe',
+            pr: 2,
+            totalWeight: kilos,
+            mes: 7,
+            exercises: [
+                {
+                    id: 12304,
+                    exercise: 'Barbell Squat',
+                    series: seriesInfo
+                }
+            ]
+        }
+
+        setData(data)
 
     }
-
-
-
-
 
 
     const workout = [{
@@ -117,79 +156,7 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
             }
         ]
     }]
-    const workout2 = {
-        id: 10,
-        dia: '22 julio',
-        title: 'Entrenamiento de mañana',
-        tiempo: '1h 10m',
-        notes: 'Almost die with 10RPe',
-        pr: 2,
-        totalWeight: 6086,
-        mes: 7,
-        exercises: [
-            {
-                id: 12304,
-                exercise: 'Barbell Squat',
-                series: [
-                    {
-                        reps: 5,
-                        weight: 10
-                    },
-                    {
-                        reps: 5,
-                        weight: 20
-                    },
-                    {
-                        reps: 5,
-                        weight: 30
-                    }
-                ]
-            },
-            {
-                id: 12305,
-                exercise: 'Barbell Squat',
-                series: [
-                    {
-                        reps: 5,
-                        weight: 40
-                    },
-                    {
-                        reps: 5,
-                        weight: 50
-                    },
-                    {
-                        reps: 5,
-                        weight: 60
-                    }
-                ]
-            },
-            {
-                id: 1234,
-                exercise: 'Barbell Squat',
-                series: [
-                    {
-                        reps: 5,
-                        weight: 70
-                    },
-                    {
-                        reps: 5,
-                        weight: 80
-                    },
-                    {
-                        reps: 5,
-                        weight: 90
-                    }
-                ]
-            }
-        ]
-    }
-    //States
-    const [isOpen, setIsOpen] = useState<boolean>(true);
-    const [notes, setNotes] = useState('');
-    const [secondsLeft, setSecondsLeft] = useState(3600);
-    const [timerOn, setTimerOn] = useState<boolean>(false);
-    const [remainingSecs, setRemainingSecs] = useState(0);
-    const [isActive, setIsActive] = useState(false);
+    
 
 
     const handleSheetChanges = useCallback((index: number) => {
@@ -300,31 +267,31 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
         }
     }
 
-    const saveData = async () => {
+    const saveData = async (data:any) => {
         AsyncStorage.getItem('workout')
             .then((workouts) => {
                 const c = workouts ? JSON.parse(workouts) : [];
-                c.push(workout2);
+                c.push(data);
                 AsyncStorage.setItem('workout', JSON.stringify(c));
             });
     }
 
 
-    const storeData2 = async () => {
+    const storeData2 = async (data:any) => {
         try {
             let respuesta;
             const jsonValue = await AsyncStorage.getItem('workout')
             if (jsonValue !== null) {
                 const jsonParse = JSON.parse(jsonValue)
-                jsonParse.concat(workout2)
+                jsonParse.concat(data)
                 console.log(jsonParse)
                 respuesta = JSON.stringify(jsonParse);
-
+               
             }
             //  const res = jsonValue !== null ? jsonParse.push(workout2) : workout2 ;
 
             console.log(respuesta)
-            //    await AsyncStorage.setItem('workout', JSON.stringify(res))
+           // await AsyncStorage.setItem('workout', JSON.stringify(res))
         } catch (e) {
             // saving error
         }
@@ -398,7 +365,7 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                     </View>
 
                 </View>
-                {/*  <BottomSheet /> */}
+    
                 <BottomSheet
                     ref={bottomSheetRef}
                     snapPoints={snapPoints}
@@ -484,85 +451,20 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                                     </Text>
 
                                 </TouchableOpacity> */}
-                                <View style={{ marginVertical: 5, width: '100%' }}>
-                                    <Text style={{ fontWeight: 'bold' }}>Bench Press (Barbell)</Text>
-                                    <View
-                                        style={{
-                                            display: 'flex',
-                                            flexDirection: 'row',
-                                            width: '100%',
-                                            alignItems: 'center',
-                                            justifyContent: 'space-between',
-                                            marginVertical: 6
-                                        }}>
-                                        <Text>Serie 1</Text>
-                                        <TextInput keyboardType='numeric' placeholder={'Kg'} value={notes} style={styles.inputData} maxLength={40} />
-                                        <TextInput keyboardType='numeric' placeholder={'Repeticiones'} value={notes} style={styles.inputData} maxLength={40} />
-                                        <TouchableOpacity style={{ display: 'flex', alignItems: 'center', width: '13%', height: 40, borderRadius: 6, justifyContent: 'center', backgroundColor: "#663EE3" }}>
-                                            <Svg
-                                                width={32}
-                                                height={32}
-                                                viewBox="0 0 28 28"
-                                                fill="none"
-                                                stroke="white"
-                                                strokeWidth={2}
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round">
-                                                <Polyline points="20 6 9 17 4 12" />
-
-                                            </Svg>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                                <View style={{ marginVertical: 5, width: '100%' }}>
-                                    <Text style={{ fontWeight: 'bold' }}>Bench Press (Barbell)</Text>
-                                    <View
-                                        style={{
-                                            display: 'flex',
-                                            flexDirection: 'row',
-                                            width: '100%',
-                                            alignItems: 'center',
-                                            justifyContent: 'space-between',
-                                            marginVertical: 6
-                                        }}>
-                                        <Text>Serie 1</Text>
-                                        <TextInput keyboardType='numeric' placeholder={'Kg'} value={notes} style={styles.inputData} maxLength={40} />
-                                        <TextInput keyboardType='numeric' placeholder={'Repeticiones'} value={notes} style={styles.inputData} maxLength={40} />
-                                        <TouchableOpacity style={{ display: 'flex', alignItems: 'center', width: '13%', height: 40, borderRadius: 6, justifyContent: 'center', backgroundColor: "#663EE3" }}>
-                                            <Svg
-                                                width={32}
-                                                height={32}
-                                                viewBox="0 0 28 28"
-                                                fill="none"
-                                                stroke="white"
-                                                strokeWidth={2}
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round">
-                                                <Polyline points="20 6 9 17 4 12" />
-
-                                            </Svg>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-
-                                <Text style={{ alignSelf: 'center', fontSize: 17, color: "#663EE3", marginVertical: 7 }}>Añadir serie</Text>
-                                <Text style={{ alignSelf: 'center', fontSize: 17, color: "#663EE3", marginVertical: 7 }}>Añadir Ejercicio</Text>
-
-                                <TouchableOpacity style={{ marginVertical: 10, width: width * 0.7, backgroundColor: 'red', height: 40, borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ color: 'white', fontWeight: 'bold' }}>Terminar entrenamiento</Text>
-                                </TouchableOpacity>
+   
+                           
                                 <View style={{marginBottom:20, width:'100%'}}>
-
-
                                     {inputs.map((input, key) => (
-                                        <View style={styles.inputContainer}>
+                                        <View key={key} style={styles.inputContainer}>
                                               <Text>Serie 1</Text>
-                                            <TextInput placeholder={"kg"} style={styles.input} value={input.value} onChangeText={(text) => inputHandler(text, key)} />
-                                            <TextInput placeholder={"Repeticiones"} style={styles.input} value={input.value} onChangeText={(text) => inputHandler(text, key)} />
+                                            <TextInput keyboardType = 'numeric' placeholder={"kg"}  style={styles.input} value={input.value} onChangeText={(text) => inputHandler(text, input.value2 , key)} />
+                                            <TextInput keyboardType = 'numeric' placeholder={"Repeticiones"} style={styles.input} value={input.value2} onChangeText={(text2) => inputHandler(input.value, text2, key)} />
                                             <TouchableOpacity onPress={() => deleteHandler(key)}>
                                                 <Text style={{ color: "red", fontSize: 13 }}>Borrar</Text>
                                             </TouchableOpacity>
-                                            <TouchableOpacity style={{ display: 'flex', alignItems: 'center', width: '13%', height: 40, borderRadius: 6, justifyContent: 'center', backgroundColor: "#663EE3" }}>
+                                            <TouchableOpacity 
+                                            onPress={() => addHandler()}
+                                            style={{ display: 'flex', alignItems: 'center', width: '13%', height: 40, borderRadius: 6, justifyContent: 'center', backgroundColor: "#663EE3" }}>
                                             <Svg
                                                 width={32}
                                                 height={32}
@@ -573,21 +475,22 @@ export const AddWorkoutScreen = ({ navigation }: any) => {
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round">
                                                 <Polyline points="20 6 9 17 4 12" />
-
                                             </Svg>
                                         </TouchableOpacity>
                                         </View>
                                     ))}
-                                    <Button title="Añade series" onPress={addHandler} />
 
                                 </View>
-
+                                    <Button title="Añade series" onPress={addHandler} />
+                                <TouchableOpacity style={{ marginVertical: 10, width: width * 0.7, backgroundColor: 'red', height: 40, borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <Text style={{ color: 'white', fontWeight: 'bold' }}>Terminar entrenamiento</Text>
+                                </TouchableOpacity>
                                 {/* DEBUG                               */}
                                 <Button
 
                                     title="Guardar entrenamiento"
                                     onPress={() => {
-                                        saveData()
+                                        saveData(data)
                                     }} />
                                 <Button
 
