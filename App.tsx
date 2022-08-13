@@ -15,17 +15,31 @@ import {
 } from 'react-native';
 
 import { LogBox } from 'react-native';
+import { WorkoutProvider } from './src/context/WorkoutContext/WorkoutContext';
+
+
+
+const AppState = ({ children }: {children: JSX.Element | JSX.Element[]}) => {
+  return (
+    <WorkoutProvider>
+      {children}
+    </WorkoutProvider>
+  )
+}
+
 
 
 const App = () => {
   LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
+
+
   return (
     <NavigationContainer>
+      <AppState>
+        <StackNavigator /> 
+       </AppState>
 
-       <StackNavigator /> 
-
-   {/*   <MenuLateral /> */}
 
   </NavigationContainer>
   );
