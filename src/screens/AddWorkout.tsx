@@ -60,7 +60,7 @@ export const AddWorkoutScreen = (props: any) => {
             
             for(let exerciseeId of exercisesId){
             
-                _exerciseBlock.push({ key: exerciseeId, inputsData: [{ key: '', value: '', value2: '', exerciseId: exerciseeId, exerciseName: 'Ejercicio' }] })            
+                _exerciseBlock.push({ key: exerciseeId, inputsData: [{ key: 0, value: '', value2: '', exerciseId: exerciseeId, exerciseName: 'Ejercicio' }] })            
             }
 
             
@@ -82,7 +82,7 @@ export const AddWorkoutScreen = (props: any) => {
                for(let exerciseeId of exercisesId){
                 if(!keyInput.includes(exerciseeId)){
 
-                    _exerciseBlock.push({ key: exerciseeId, inputsData: [{ key: '', value: '', value2: '', exerciseId: exerciseeId, exerciseName: 'Ejercicio' }] })            
+                    _exerciseBlock.push({ key: exerciseeId, inputsData: [{ key: 0, value: '', value2: '', exerciseId: exerciseeId, exerciseName: 'Ejercicio' }] })            
                 }
                  }
                  setExercisesData(_exerciseBlock)
@@ -121,19 +121,64 @@ export const AddWorkoutScreen = (props: any) => {
         const _exerciseBlock = [...exercisesData]
       let ex =  _exerciseBlock.find((exerciseData:any) => exerciseData.key === exerciseId);
       console.log('el ex',ex)
-        ex.inputsData.push({ key: '', value: '', value2: '', exerciseId: exerciseId, exerciseName: 'Ejercicio' })
+        ex.inputsData.push({ key: ex.inputsData.length, value: '', value2: '', exerciseId: exerciseId, exerciseName: 'Ejercicio' })
         setExercisesData(_exerciseBlock)
         setInputsData(_exerciseBlock)
     }
 
     
-    const deleteSerie = (exerciseId: any) => {
-        const _exerciseBlock = [...exercisesData]
-      let ex =  _exerciseBlock.find((exerciseData:any) => exerciseData.key === exerciseId);
+    const deleteSerie = (exerciseId:any,index: any) => {
+        const _exerciseBlock = [...inputsData.inputsData]
+     /*    console.log('eeeeeeeeeeeeeeeeeeeeeeeeee',exerciseId)
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaa',index)
+        console.log('000000000000000000000000000000000000000000000000000000',_exerciseBlock)
+        console.log('------------------------------------------------------',exercisesData) */
+        if(inputsData !== undefined){
+            
+            /*        if(ex !== undefined){
+                const result = _exerciseBlock.reduce((prev:any, curr:any) => {
+                    const aux = curr.inputsData.filter((i:any) => i.key != index )
+                    console.log('auziliar' ,aux)
+                    if (aux.length > 0) {
+                        const add = { ...curr, inputsData: aux }
+                        prev.push(add)
+                    }
+                    
+                    return prev
+                }, [])  
+                console.log('filterData', result) */
+                /*   setExercisesData(result) */
+                
+          /* 
+                console.log('exxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',ex)
+                let filterData = _exerciseBlock.filter((x:any, i:any, o:any) => (o[i].inputsData = x.inputsData.filter((y:any) => y.key !== index  )) && x.inputsData.length);
+                
+                console.log('el filterrrrrrrrrrrrr',filterData); */
+                
+                let nuevo=[]
+                for(let op of _exerciseBlock){
+                    if(op.key === exerciseId){
+                        op.inputsData.splice(index,1)
+                    }
+                    nuevo.push(op)
+                }
+                console.log('hito', nuevo)
+            let ex =  _exerciseBlock.find((exerciseData:any) => exerciseData.key === exerciseId);
+                
+               let res = ex.inputsData.filter((exercisee:any) => exercisee.key != index)
+                 /* ex.inputsData.push(res) */
+                 console.log(res)
+                  console.log('¡nuevoooooo',_exerciseBlock)
+            
+                setExercisesData(nuevo)
+               /*  setInputsData(_exerciseBlock) */
+        }
   /*     const _exercisesData = exercisesData.filter((input: any, index: any) => index != exerciseId); */
-    ex.inputsData.filter((inputsData:any) => { inputsData } )
-        setExercisesData(ex)
-        setInputsData(ex)
+      //  let filtrado = ex.inputsData.filter((inputsData:any) =>  inputsData.key ===exerciseId )
+     
+       // console.log('Filtrado', filtrado)
+     //   setExercisesData(ex)
+      /*   setInputsData(ex) */
     }
 
     const deleteExerciseData = (key: any) => {
@@ -420,12 +465,14 @@ export const AddWorkoutScreen = (props: any) => {
         return  inputsData.map((inputData:any, index:any) => (
             <View key={index} style={styles.inputContainer}>
             <Text style={{ color: 'white' }}>Serie 1</Text>
+            <Text style={{ color: 'white' }}>{inputData.exerciseId}</Text>
+            <Text style={{ color: 'white' }}>{inputData.key}</Text>
             <TextInput placeholderTextColor='white' keyboardType='numeric' placeholder={"kg"} style={styles.input} value={inputData.value} onChangeText={(text) => exerciseDataHandler(text, inputData.value2, inputData.key, inputsData.exerciseId, inputData.exerciseName)} />
             <TextInput placeholderTextColor='white' keyboardType='numeric' placeholder={"Repeticiones"} style={styles.input} value={inputData.value2} onChangeText={(text2) => exerciseDataHandler(inputData.value, text2, inputData.key, inputData.exerciseId, inputData.exerciseName)} />
            {/*  <TouchableOpacity onPress={() => deleteExerciseData(inputData.key)} style={{backgroundColor:'red', padding:3, borderRadius:4}}>
                 <Text style={{ color: "white", fontSize: 13 }}>Borrar</Text>
             </TouchableOpacity> */}
-            <TouchableOpacity onPress={() => deleteSerie(index)} style={{backgroundColor:'red', padding:3, borderRadius:4}}>
+            <TouchableOpacity onPress={() => deleteSerie(inputData.exerciseId ,inputData.key)} style={{backgroundColor:'red', padding:3, borderRadius:4}}>
                 <Text style={{ color: "white", fontSize: 13 }}>Borrar</Text>
             </TouchableOpacity>
             
