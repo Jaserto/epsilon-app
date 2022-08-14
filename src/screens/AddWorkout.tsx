@@ -35,6 +35,9 @@ export const AddWorkoutScreen = (props: any) => {
     /* console.log(props.route.params.selectedExercices) */
 
     useEffect(() => {
+
+        console.log('El input', inputsData)
+        console.log('El exercises', exercisesData)
         if (props.route.params) {
 
             setSelectedExercises(props.route.params.selectedExercices)
@@ -43,9 +46,13 @@ export const AddWorkoutScreen = (props: any) => {
 
             if (!selectedExercises.includes(lastElement)) {
                 console.log('uno nuevo ', lastElement)
-                addExerciseData(props.route.params.selectedExercices)
+                inputsData !== null &&  setExercisesData(inputsData.inputsData)
+            /*     addExerciseData(props.route.params.selectedExercices) */
+          
             } else {
-                console.log('no hay nuevos')
+                inputsData !== null &&  setExercisesData(inputsData.inputsData)
+                return
+               
             }
 
 
@@ -60,18 +67,15 @@ export const AddWorkoutScreen = (props: any) => {
     }, [props.route.params])
 
     const addExerciseData = (exerciseIds: any) => {
-
         const _exerciseBlock = [...exercisesData]
-        console.log('paso por aqui', exerciseIds)
+
         for(let exerciseeId of exerciseIds){
-            
-             _exerciseBlock.push({ key: exerciseeId, inputsData: [{ key: '', value: '', value2: '', exerciseId: exerciseeId, exerciseName: 'Ejercicio' }] }),
-
-
-        /*    let name = exercises.filter((exercise) => exercise.id ===exerciseId) */
-        setExercisesData(_exerciseBlock)
-        console.log('ExerciseData', _exerciseBlock)
+            _exerciseBlock.push({ key: exerciseeId, inputsData: [{ key: '', value: '', value2: '', exerciseId: exerciseeId, exerciseName: 'Ejercicio' }] })            
         }
+
+        setInputsData(_exerciseBlock)
+        setExercisesData(_exerciseBlock)
+        console.log('guardado')
     }
 
     const addSerie = (exerciseId: any) => {
@@ -81,6 +85,7 @@ export const AddWorkoutScreen = (props: any) => {
       console.log('el ex',ex)
         ex.inputsData.push({ key: '', value: '', value2: '', exerciseId: exerciseId, exerciseName: 'Ejercicio' })
         setExercisesData(_exerciseBlock)
+        setInputsData(_exerciseBlock)
     }
 
     const deleteExerciseData = (key: any) => {
@@ -119,7 +124,7 @@ export const AddWorkoutScreen = (props: any) => {
     }
 
     async function funcion(): Promise<void> {
-        setInputs(inputsData.inputsData)
+       console.log(inputsData.inputsData)
 
     }
 
@@ -364,12 +369,12 @@ export const AddWorkoutScreen = (props: any) => {
     }
 
     const renderInput = (inputsData:any) => {
-        return  inputsData.map((inputData:any) => (
-            <View key={inputData.key} style={styles.inputContainer}>
+        return  inputsData.map((inputData:any, index:any) => (
+            <View key={index} style={styles.inputContainer}>
             <Text style={{ color: 'white' }}>Serie 1</Text>
             <TextInput placeholderTextColor='white' keyboardType='numeric' placeholder={"kg"} style={styles.input} value={inputData.value} onChangeText={(text) => exerciseDataHandler(text, inputData.value2, inputData.key, inputsData.exerciseId, inputData.exerciseName)} />
             <TextInput placeholderTextColor='white' keyboardType='numeric' placeholder={"Repeticiones"} style={styles.input} value={inputData.value2} onChangeText={(text2) => exerciseDataHandler(inputData.value, text2, inputData.key, inputData.exerciseId, inputData.exerciseName)} />
-            <TouchableOpacity onPress={() => deleteHandler(inputData.key)}>
+            <TouchableOpacity onPress={() => deleteExerciseData(inputData.key)}>
                 <Text style={{ color: "red", fontSize: 13 }}>Borrar</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -430,9 +435,9 @@ export const AddWorkoutScreen = (props: any) => {
 
                             <View style={{ marginBottom: 20, width: '100%' }}>
 
-                                {exercisesData.map((inputsData: any, key: any) => (
-                                    <View key={key} style={{ display: 'flex' }}>
-                                        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>{exercises.filter((exercise: Exercise) => exercise.id === 3)[0].nombre}</Text>
+                                {exercisesData.map((inputsData: any) => (
+                                    <View key={inputsData.key} style={{ display: 'flex' }}>
+                                        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>{exercises.filter((exercise: Exercise) => exercise.id === inputsData.key)[0].nombre}</Text>
 {/* 
                                         {inputsData !== undefined && inputsData.map((input: any) => (
                                           
