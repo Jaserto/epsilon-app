@@ -187,14 +187,27 @@ export const AddWorkoutScreen = (props: any) => {
         setInputsData(_exercisesData)
     }
 
-    const exerciseDataHandler = (text: any, text2: any, key: any, exerciseId: any, exerciseName: any) => {
+    const exerciseDataHandler = (text: any, text2: any,index: any, exerciseId: any, exerciseName: any) => {
+        console.log('Lineeee', 'text: ',text,'text2: ', text2, 'key: ', index, 'exerciseId: ', exerciseId, 'nameEercuse: ',exerciseName )
         const _exerciseBlock = [...exercisesData]
-        _exerciseBlock[exerciseId].key = exerciseId
-        _exerciseBlock[exerciseId].inputsData.name = exerciseName;
-        _exerciseBlock[exerciseId].inputsData.key = key;
-        _exerciseBlock[exerciseId].inputsData.value = text;
-        _exerciseBlock[exerciseId].inputsData.value2 = text2;
-        setExercisesData(_exerciseBlock);
+        console.log(_exerciseBlock)
+
+        for (let exer of _exerciseBlock){
+            if(exer.key === exerciseId){
+                exer.inputsData[index].key = index;
+                exer.inputsData[index].value = text;
+                exer.inputsData[index].value2 = text2;
+                exer.inputsData[index].exerciseId = exerciseId;
+                exer.inputsData[index].exerciseName = exerciseName; 
+        }
+    }
+    setExercisesData(_exerciseBlock);
+ /*        _exerciseBlock[key].key = exerciseId
+        _exerciseBlock[key].inputsData.name = exerciseName;
+        _exerciseBlock[key].inputsData.key = key;
+        _exerciseBlock[key].inputsData.value = text;
+        _exerciseBlock[key].inputsData.value2 = text2; */
+       
     }
 
     const addInputExerciseData = (exerciseId: any) => {
@@ -209,7 +222,7 @@ export const AddWorkoutScreen = (props: any) => {
 
 
     const addHandler = async (exerciseId: any) => {
-        const _inputs = [...inputs];
+        const _inputs = [...inputs];5
         _inputs.push({ key: '', value: '', value2: '', exerciseId });
         console.log(_inputs)
         setInputsData(_inputs)
@@ -467,8 +480,11 @@ export const AddWorkoutScreen = (props: any) => {
             <Text style={{ color: 'white' }}>Serie 1</Text>
             <Text style={{ color: 'white' }}>{inputData.exerciseId}</Text>
             <Text style={{ color: 'white' }}>{inputData.key}</Text>
-            <TextInput placeholderTextColor='white' keyboardType='numeric' placeholder={"kg"} style={styles.input} value={inputData.value} onChangeText={(text) => exerciseDataHandler(text, inputData.value2, inputData.key, inputsData.exerciseId, inputData.exerciseName)} />
-            <TextInput placeholderTextColor='white' keyboardType='numeric' placeholder={"Repeticiones"} style={styles.input} value={inputData.value2} onChangeText={(text2) => exerciseDataHandler(inputData.value, text2, inputData.key, inputData.exerciseId, inputData.exerciseName)} />
+            <TextInput placeholderTextColor='white' keyboardType='numeric' placeholder={"kg"} style={styles.input} value={inputData.value} 
+            onChangeText={(text) => exerciseDataHandler(text, inputData.value2, index, inputData.exerciseId, inputData.exerciseName)} />
+
+            <TextInput placeholderTextColor='white' keyboardType='numeric' placeholder={"Repeticiones"} style={styles.input} value={inputData.value2} 
+            onChangeText={(text2) => exerciseDataHandler(inputData.value,text2, index, inputData.exerciseId, inputData.exerciseName)} />
            {/*  <TouchableOpacity onPress={() => deleteExerciseData(inputData.key)} style={{backgroundColor:'red', padding:3, borderRadius:4}}>
                 <Text style={{ color: "white", fontSize: 13 }}>Borrar</Text>
             </TouchableOpacity> */}
