@@ -53,18 +53,78 @@ export const AddWorkoutScreen = (props: any) => {
     }, [props.route.params])
 
     const finalizeWorkout = () => {
+        const _exerciseBlock:any = [...exercisesData]
+        console.log('terminando')
+      /*   console.log('line 58',_exerciseBlock) */
             //console.log(kilos, repeticiones, series)
-        /* 
+            
+            let kilos: number = 0;
+            let series: number = inputs.length;
+            let repeticiones: number = 0
+            let time = mins + ':' + secs;
+            let exercisesInfo:any =[];
+            let seriesInfo: any = []
+     
+    
+           /*  for (let i = 0; i < _exerciseBlock.length; i++) {
+    
+                series = 
+                kilos += parseInt(inputs[i].value)
+                repeticiones += parseInt(inputs[i].value2) === undefined ? 0 : parseInt(inputs[i].value2)
+                seriesInfo.push({
+                    weight: inputs[i].value,
+                    reps: inputs[i].value2
+                })
+            } */
+            for (let item of _exerciseBlock){
+                    exercisesInfo.push({
+                        exercise: exercises.filter(exercise => exercise.id === item.key)[0].nombre,
+                        idExercise: item.key
+                    });
+                
+                    for (let serie of item.inputsData){
+                        kilos += parseInt(serie.value)*parseInt(serie.value2);
+                        seriesInfo.push({
+                            weight: serie.value,
+                            reps: serie.value2,
+                            exerciseId: serie.exerciseId
+                        })
+                    }
+                    
+                   
+                    
+                    series = item.inputsData.length;
+                    
+                }
+                console.log('Series',seriesInfo)
+               for(let j = 0; j < seriesInfo.length; j++){
+                   //seriesInfo[j].exerciseId === exercisesInfo[j].key && exercisesInfo[j].series = seriesInfo[j];
+                   for(let k= 0; k< exercisesInfo.length; k++){
+                    console.log(seriesInfo[j])
+                       if(seriesInfo[j].exerciseId === exercisesInfo[k].idExercise){
+                           exercisesInfo[k].series = [ ...exercisesInfo[k].series,seriesInfo[j]]
+                           console.log('coincide')
+                        }else{
+                            console.log( 'lac comprobacion',exercisesInfo[0].series)
+                        }
+                    }
+                }
+                console.log('Ejercicios',exercisesInfo)
+
+
+           /*  console.log(exercisesInfo) */
+            //se coge de los inputs
               let hora = new Date().getHours()
+             
               const data:any = {
                   id: 10,
                   dia: Date.now(),
-                  title: 
+                  title:  hora > 12 && hora < 18 ? 'Entrenamiento de tarde' : hora > 18 && hora < 24 ? 'Entrenamiento de noche' : 'Entrenamiento de mañana',
                   tiempo: time,
-                  notes: 'Almost die with 1090000RPe',
+                  notes: notes,
                   pr: 2,
                   totalWeight: kilos,
-                  mes: 7,
+                  mes: new Date().getMonth(),
                   exercises: [
                       {
                           id: 12304,
@@ -74,9 +134,75 @@ export const AddWorkoutScreen = (props: any) => {
                   ]
               }
       
-              setData(data) */
+              /* setData(data) */
     }
 
+    const workout1 = [{
+        id: 9,
+        dia: '20 julio',
+        title: 'Entrenamiento de mañana',
+        tiempo: '1h 10m',
+        notes: 'Almost die with 10RPe',
+        pr: 2,
+        totalWeight: 6086,
+        mes: 7,
+        exercises: [
+            {
+                id: 12304,
+                exercise: 'Barbell Squat',
+                series: [
+                    {
+                        reps: 5,
+                        weight: 10
+                    },
+                    {
+                        reps: 5,
+                        weight: 20
+                    },
+                    {
+                        reps: 5,
+                        weight: 30
+                    }
+                ]
+            },
+            {
+                id: 12305,
+                exercise: 'Barbell Squat',
+                series: [
+                    {
+                        reps: 5,
+                        weight: 40
+                    },
+                    {
+                        reps: 5,
+                        weight: 50
+                    },
+                    {
+                        reps: 5,
+                        weight: 60
+                    }
+                ]
+            },
+            {
+                id: 1234,
+                exercise: 'Barbell Squat',
+                series: [
+                    {
+                        reps: 5,
+                        weight: 70
+                    },
+                    {
+                        reps: 5,
+                        weight: 80
+                    },
+                    {
+                        reps: 5,
+                        weight: 90
+                    }
+                ]
+            }
+        ]
+    }]
 
     const addExerciseData = (exercisesId: any) => {
         const _exerciseBlock:any = [...exercisesData]
@@ -261,7 +387,7 @@ export const AddWorkoutScreen = (props: any) => {
         setInputs(_inputs);
         /*   console.log(text, text2, key) */
 
-        let kilos: number = 0;
+ /*        let kilos: number = 0;
         let series: number = inputs.length;
         let seriesInfo: any = []
         let repeticiones: number = 0
@@ -276,7 +402,7 @@ export const AddWorkoutScreen = (props: any) => {
                 weight: inputs[i].value,
                 reps: inputs[i].value2
             })
-        }
+        } */
 
         //console.log(kilos, repeticiones, series)
         /* 
@@ -303,82 +429,9 @@ export const AddWorkoutScreen = (props: any) => {
 
     }
 
-
-    const workout1 = [{
-        id: 9,
-        dia: '20 julio',
-        title: 'Entrenamiento de mañana',
-        tiempo: '1h 10m',
-        notes: 'Almost die with 10RPe',
-        pr: 2,
-        totalWeight: 6086,
-        mes: 7,
-        exercises: [
-            {
-                id: 12304,
-                exercise: 'Barbell Squat',
-                series: [
-                    {
-                        reps: 5,
-                        weight: 10
-                    },
-                    {
-                        reps: 5,
-                        weight: 20
-                    },
-                    {
-                        reps: 5,
-                        weight: 30
-                    }
-                ]
-            },
-            {
-                id: 12305,
-                exercise: 'Barbell Squat',
-                series: [
-                    {
-                        reps: 5,
-                        weight: 40
-                    },
-                    {
-                        reps: 5,
-                        weight: 50
-                    },
-                    {
-                        reps: 5,
-                        weight: 60
-                    }
-                ]
-            },
-            {
-                id: 1234,
-                exercise: 'Barbell Squat',
-                series: [
-                    {
-                        reps: 5,
-                        weight: 70
-                    },
-                    {
-                        reps: 5,
-                        weight: 80
-                    },
-                    {
-                        reps: 5,
-                        weight: 90
-                    }
-                ]
-            }
-        ]
-    }]
-
-
-
-
-
     // variables
 
     const formatNumber = (number: any) => `0${number}`.slice(-2);
-
 
     const toggle = () => {
         setIsActive(!isActive);
@@ -574,7 +627,9 @@ export const AddWorkoutScreen = (props: any) => {
                                 ))}
                             </View>
 
-                            <TouchableOpacity style={{backgroundColor:'#FF3D3D', marginVertical: 10, width: width * 0.7, height: 40, borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <TouchableOpacity style={{backgroundColor:'#FF3D3D', marginVertical: 10, width: width * 0.7, height: 40, borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                onPress={()=> finalizeWorkout()}
+                            >
                                 <Text style={{ color: 'white', fontWeight: 'bold' }}>Terminar entrenamiento</Text>
                             </TouchableOpacity>
                             {/*            DEBUG           */}
