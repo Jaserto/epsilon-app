@@ -100,12 +100,20 @@ export const AddWorkoutScreen = (props: any) => {
                for(let j = 0; j < seriesInfo.length; j++){
                    //seriesInfo[j].exerciseId === exercisesInfo[j].key && exercisesInfo[j].series = seriesInfo[j];
                    for(let k= 0; k< exercisesInfo.length; k++){
-                    console.log(seriesInfo[j])
+                  
                        if(seriesInfo[j].exerciseId === exercisesInfo[k].idExercise){
-                           exercisesInfo[k].series = [ ...exercisesInfo[k].series,seriesInfo[j]]
-                           console.log('coincide')
+                        console.log(exercisesInfo[k].series)
+                        
+                                console.log( 'lac comprobacion',exercisesInfo[0])
+                                if(Array.isArray(exercisesInfo[k].series)){
+                                    exercisesInfo[k].series.push(seriesInfo[j])
+                                }else{
+
+                                    exercisesInfo[k].series = [seriesInfo[j]] 
+                                }
+                            
+                            
                         }else{
-                            console.log( 'lac comprobacion',exercisesInfo[0].series)
                         }
                     }
                 }
