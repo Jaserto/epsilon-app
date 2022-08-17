@@ -108,7 +108,6 @@ export const AddWorkoutScreen = (props: any) => {
                                 if(Array.isArray(exercisesInfo[k].series)){
                                     exercisesInfo[k].series.push(seriesInfo[j])
                                 }else{
-
                                     exercisesInfo[k].series = [seriesInfo[j]] 
                                 }
                             

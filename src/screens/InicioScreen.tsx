@@ -149,7 +149,7 @@ export const InicioScreen = ({ navigation }: any) => {
                 {data.map((workout) => (
                     <View key={workout.id}
                         style={{
-                            backgroundColor: '#FFFCEB', width: '100%',
+                            backgroundColor: 'white', width: '100%',
                             marginBottom: 18, borderRadius: 5, paddingHorizontal: 15, paddingVertical: 6
                         }}>
                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
