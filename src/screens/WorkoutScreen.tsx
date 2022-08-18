@@ -42,7 +42,7 @@ export const WorkoutScreen = (props: any) => {
         /*  console.log('------------------------------------')
          console.log(exercises.series, 'series') */
         return exercises.map((exercise: Series, index: number) => (
-            <View key={exercise.id} style={{ borderColor: 'white', borderWidth: 1, marginBottom: 5, display: 'flex', flexDirection: 'column', borderRadius: 5, paddingHorizontal: 10, paddingVertical:4 }}>
+            <View key={index} style={{ borderColor: 'white', borderWidth: 1, marginBottom: 5, display: 'flex', flexDirection: 'column', borderRadius: 5, paddingHorizontal: 10, paddingVertical:4 }}>
                 <Text style={{ color: 'white', fontSize: 15, fontWeight: 'bold', marginBottom: 6 }}>{/* {exercise.series.length} */}{exercise.exercise}</Text>
                 <View style={{ marginBottom: 3 }}>
 

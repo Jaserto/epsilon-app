@@ -148,7 +148,7 @@ export const AddWorkoutScreen = (props: any) => {
 
         console.log(data)
         /* setData(data) */
-        storeData2(data)
+        storeData(data)
     }
 
     const workout1 = [{
@@ -486,16 +486,6 @@ export const AddWorkoutScreen = (props: any) => {
     }, [isActive])
 
 
-    const storeData = async () => {
-        try {
-
-            const jsonValue = JSON.stringify(workout)
-            await AsyncStorage.setItem('workout', jsonValue)
-        } catch (e) {
-            // saving error
-        }
-    }
-
     const saveData = async (data: any) => {
         AsyncStorage.getItem('workout')
             .then((workouts) => {
@@ -506,38 +496,24 @@ export const AddWorkoutScreen = (props: any) => {
     }
 
 
-    const storeData2 = async (data: any) => {
+    const storeData = async (data: any) => {
         try {
             let respuesta;
             const jsonValue = await AsyncStorage.getItem('workout')
             if (jsonValue !== null) {
-
-                console.log('data1  ', data)
                 console.log('nopooooooo es nullllll')
                 const jsonParse = JSON.parse(jsonValue)
                 let newArray = [...jsonParse, data]
-
-
                 console.log('El Json',jsonParse)
                 await AsyncStorage.setItem('workout',JSON.stringify(newArray));
-
-   
-                
-          
-            /*  await AsyncStorage.setItem('workout', JSON.stringify(respuesta)) */
             }else{
                 let datos=[]
                 datos.push(data)
                 const jsonValue2 = JSON.stringify(datos)
                 await AsyncStorage.setItem('workout', jsonValue2)
             }
-      
-            //  const res = jsonValue !== null ? jsonParse.push(workout2) : workout2 ;
-
-           /*  console.log(respuesta) */
-            // await AsyncStorage.setItem('workout', JSON.stringify(res))
         } catch (e) {
-            // saving error
+            console.log('Ha habido un error guardando el workout')
         }
     }
 
@@ -552,17 +528,6 @@ export const AddWorkoutScreen = (props: any) => {
         }
     }
 
-
-
-    const deleteData = async () => {
-        try {
-            await AsyncStorage.removeItem('workout');
-            return console.log('se Borro todo');
-        }
-        catch (exception) {
-            return false;
-        }
-    }
 
     const renderInput = (inputsData: any) => {
         return inputsData.map((inputData: any, index: any) => (

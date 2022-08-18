@@ -8,6 +8,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Series } from '../utils/models/Series';
 import { TooltipMenu } from 'react-native-tooltip-menu';
 import { data } from '../utils/tmp/data';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const { width, height } = Dimensions.get("window");
 
@@ -16,16 +18,44 @@ export const InicioScreen = ({ navigation }: any) => {
 
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [workouts, setWorkouts] = useState<any>([])
 
+    const getDataStorage = async () => {
+        try {
+            setIsLoading(true)
+            const jsonValue = await AsyncStorage.getItem('workout').then((result:any) => {
 
+                setWorkouts(result)
+            })
+            console.log(workouts)
+            setIsLoading(false)
+           /*  jsonValue != null ? JSON.parse(jsonValue) : []; */
+        } catch (e) {
+            // error reading value
+        }
+    }
 
     useEffect(() => {
+        AsyncStorage.getItem('workout').then((result:any) => {
+            console.log('resultad', result)
+            let data =JSON.parse(result)
+            setWorkouts(data)
+        }).catch((err:any)=> {
+            console.log(err)
+        })
+      /*   getDataStorage() */
     }, [])
 
     const refreshControl = () => {
         const onRefresh = () => {
             try {
-
+                AsyncStorage.getItem('workout').then((result:any) => {
+                    console.log('resultad', result)
+                    let data =JSON.parse(result)
+                    setWorkouts(data)
+                }).catch((err:any)=> {
+                    console.log(err)
+                })
             } catch (e: any) { Alert.alert('Error', e.message) }
         };
 
@@ -56,6 +86,11 @@ export const InicioScreen = ({ navigation }: any) => {
             </View>
 
         ));
+    }
+
+    const func = () => {
+       
+        console.log(typeof workouts)
     }
     
     const getBestSeries = (exercises: any) => {
@@ -146,8 +181,109 @@ export const InicioScreen = ({ navigation }: any) => {
                 <Text style={styles.h3}>Últimos entrenamientos</Text>
             </View>
             <View>
-                {data.map((workout) => (
+           {/*      {data.map((workout) => (
                     <View key={workout.id}
+                        style={{
+                            backgroundColor: 'white', width: '100%',
+                            marginBottom: 18, borderRadius: 5, paddingHorizontal: 15, paddingVertical: 6
+                        }}>
+                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
+                            <Text style={{ fontWeight: 'bold', marginBottom: 5, color: '#111111' }}>{workout.title}</Text>
+                            
+                            <Image
+                                style={{ tintColor: 'red', width: 32, height: 32, borderRadius: 50 }}
+                                source={require('../assets/images/more.png')}
+                            />
+                        </View>
+                        <Text style={{ fontWeight: 'bold' }}>{workout.dia}</Text>
+                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: 9, width: '100%' }}>
+                            <View style={{ flex: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                <Svg
+                                    width={15}
+                                    height={15}
+                                    viewBox="0 0 25 25"
+                                    stroke="black"
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round">
+                                    <Circle cx="12" cy="12" r="10" />
+                                    <Polyline points="12 6 12 12 16 14" />
+                                </Svg>
+
+                                <Text style={{ textAlign: 'center', marginLeft: 5 , color:'#111111'}}>{workout.tiempo}</Text>
+                            </View>
+                            <View style={{ flex: 3, flexDirection: 'row', alignItems: 'center' }}>
+                                <Svg
+                                    width={15}
+                                    height={15}
+                                    viewBox="0 0 25 25"
+                                    fill="black"
+                                    stroke="black"
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round">
+                                    <Line x1="12" y1="5" x2="12" y2="19" />
+                                    <Line x1="5" y1="12" x2="19" y2="12" />
+                                    <Line x1="5" y1="12" x2="19" y2="12" />
+                                </Svg>
+                                <Text style={{ textAlign: 'center', marginLeft: 5, color:'#111111'}}>{workout.totalWeight} Kg</Text>
+                            </View>
+                            <View style={{ flex: 3, flexDirection: 'row', alignItems: 'center' }}>
+
+                                <Svg
+                                    width={15}
+                                    height={15}
+                                    viewBox="0 0 25 25"
+                                    fill="black"
+                                    stroke="black"
+                                    strokeWidth={2}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round">
+                                    <Polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                                    <Polyline points="17 6 23 6 23 12" />
+                                </Svg>
+                                <Text style={{ textAlign: 'right', marginLeft: 5, color:'#111111' }}>{workout.pr} PRs</Text>
+                            </View>
+                        </View>
+                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 10 }}>
+                            <Text style={{ fontWeight: 'bold', marginBottom: 2, color: '#111111' }}>Ejercicio</Text>
+                            <Text style={{ fontWeight: 'bold', marginBottom: 2, color: '#111111' }}>Mejor serie</Text>
+                        </View>
+                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginVertical: 4 }}>
+                            <View style={{ display: 'flex', flexDirection: 'column' }}>
+                                {getExercises(workout.exercises)}
+                            </View>
+                            <View style={{ display: 'flex', flexDirection: 'column' }}>
+                            {getBestSeries(workout.exercises)}
+                            </View>
+                        </View>
+                        <TouchableOpacity
+                            onPress={() => {
+                                navigation.navigate('Workout', {
+                                    id: workout.id,
+                                    title: workout.title,
+                                    notes: workout.notes,
+                                    fecha: workout.dia,
+                                    time: workout.tiempo,
+                                    pr: workout.pr,
+                                    totalWeight: workout.totalWeight,
+                                    series: workout.exercises
+                                })
+                            }}
+                        >
+                            <LinearGradient start={{x: 0.0, y: 0.25}} end={{x: 0.5, y: 1.0}} colors={['#673ab7', '#512da8']} style={styles.linearGradient}>
+                                <Text style={styles.buttonText}>
+                                    Ver entrenamiento
+                                </Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
+
+
+                ))} */}
+                   
+                         {workouts.map((workout:any, index:any) => (
+                    <View key={index}
                         style={{
                             backgroundColor: 'white', width: '100%',
                             marginBottom: 18, borderRadius: 5, paddingHorizontal: 15, paddingVertical: 6
