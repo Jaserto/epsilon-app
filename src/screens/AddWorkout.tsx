@@ -95,6 +95,7 @@ export const AddWorkoutScreen = (props: any) => {
                 } else {
                     console.log('inserta los datos de la serie')
                     setError(true)
+                    return
                 }
 
             }
@@ -104,15 +105,15 @@ export const AddWorkoutScreen = (props: any) => {
             series = item.inputsData.length;
 
         }
-        console.log('Series', seriesInfo)
+      /*   console.log('Series', seriesInfo) */
         for (let j = 0; j < seriesInfo.length; j++) {
             //seriesInfo[j].exerciseId === exercisesInfo[j].key && exercisesInfo[j].series = seriesInfo[j];
             for (let k = 0; k < exercisesInfo.length; k++) {
 
                 if (seriesInfo[j].exerciseId === exercisesInfo[k].idExercise) {
-                    console.log(exercisesInfo[k].series)
+                 /*    console.log(exercisesInfo[k].series) */
 
-                    console.log('lac comprobacion', exercisesInfo[0])
+                  /*   console.log('lac comprobacion', exercisesInfo[0]) */
                     if (Array.isArray(exercisesInfo[k].series)) {
                         exercisesInfo[k].series.push(seriesInfo[j])
                     } else {
@@ -124,8 +125,8 @@ export const AddWorkoutScreen = (props: any) => {
                 }
             }
         }
-        console.log('Ejercicios', exercisesInfo)
-
+     /*    console.log('Ejercicios', exercisesInfo)
+ */
 
         /*  console.log(exercisesInfo) */
         //se coge de los inputs
@@ -133,23 +134,21 @@ export const AddWorkoutScreen = (props: any) => {
 
         const data: any = {
             id: 10,
-            dia: Date.now(),
+            dia: new Date().getDate(),
+            fecha: new Date().getDate() + '-' + new Date().getMonth() + '-' + new Date().getFullYear(),
+            fechaISO: new Date().toISOString(),
             title: hora > 12 && hora < 18 ? 'Entrenamiento de tarde' : hora > 18 && hora < 24 ? 'Entrenamiento de noche' : 'Entrenamiento de mañana',
             tiempo: time,
             notes: notes,
-            pr: 2,
+            pr: 3,
             totalWeight: kilos,
             mes: new Date().getMonth(),
-            exercises: [
-                {
-                    id: 12304,
-                    exercise: 'Barbell Squat',
-                    series: seriesInfo
-                }
-            ]
+            exercises: exercisesInfo
         }
 
+        console.log(data)
         /* setData(data) */
+        storeData2(data)
     }
 
     const workout1 = [{
@@ -512,15 +511,30 @@ export const AddWorkoutScreen = (props: any) => {
             let respuesta;
             const jsonValue = await AsyncStorage.getItem('workout')
             if (jsonValue !== null) {
-                const jsonParse = JSON.parse(jsonValue)
-                jsonParse.concat(data)
-                console.log(jsonParse)
-                respuesta = JSON.stringify(jsonParse);
 
+                console.log('data1  ', data)
+                console.log('nopooooooo es nullllll')
+                const jsonParse = JSON.parse(jsonValue)
+                let newArray = [...jsonParse, data]
+
+
+                console.log('El Json',jsonParse)
+                await AsyncStorage.setItem('workout',JSON.stringify(newArray));
+
+   
+                
+          
+            /*  await AsyncStorage.setItem('workout', JSON.stringify(respuesta)) */
+            }else{
+                let datos=[]
+                datos.push(data)
+                const jsonValue2 = JSON.stringify(datos)
+                await AsyncStorage.setItem('workout', jsonValue2)
             }
+      
             //  const res = jsonValue !== null ? jsonParse.push(workout2) : workout2 ;
 
-            console.log(respuesta)
+           /*  console.log(respuesta) */
             // await AsyncStorage.setItem('workout', JSON.stringify(res))
         } catch (e) {
             // saving error
@@ -664,7 +678,7 @@ export const AddWorkoutScreen = (props: any) => {
                                 title="Mostrar entrenamiento CLG"
                                 onPress={() => {
                                     getDataStorage()
-                                    funcion()
+                                    /* funcion() */
                                 }} />
                             <Button
 
