@@ -24,8 +24,9 @@ export const AddWorkoutScreen = (props: any) => {
     //States
     const [data, setData] = useState<number>(0);
     const [hora, setHora] = useState<number>(0);
-    
+
     const [isOpen, setIsOpen] = useState<boolean>(true);
+    const [error, setError] = useState<boolean>(false);
     const [notes, setNotes] = useState('');
     const [secondsLeft, setSecondsLeft] = useState(3600);
     const [remainingSecs, setRemainingSecs] = useState(0);
@@ -49,99 +50,106 @@ export const AddWorkoutScreen = (props: any) => {
 
         }
 
-  
+
     }, [props.route.params])
 
     const finalizeWorkout = () => {
-        const _exerciseBlock:any = [...exercisesData]
+        const _exerciseBlock: any = [...exercisesData]
         console.log('terminando')
-      /*   console.log('line 58',_exerciseBlock) */
-            //console.log(kilos, repeticiones, series)
-            
-            let kilos: number = 0;
-            let series: number = inputs.length;
-            let repeticiones: number = 0
-            let time = mins + ':' + secs;
-            let exercisesInfo:any =[];
-            let seriesInfo: any = []
-     
-    
-           /*  for (let i = 0; i < _exerciseBlock.length; i++) {
-    
-                series = 
-                kilos += parseInt(inputs[i].value)
-                repeticiones += parseInt(inputs[i].value2) === undefined ? 0 : parseInt(inputs[i].value2)
-                seriesInfo.push({
-                    weight: inputs[i].value,
-                    reps: inputs[i].value2
-                })
-            } */
-            for (let item of _exerciseBlock){
-                    exercisesInfo.push({
-                        exercise: exercises.filter(exercise => exercise.id === item.key)[0].nombre,
-                        idExercise: item.key
-                    });
-                
-                    for (let serie of item.inputsData){
-                        kilos += parseInt(serie.value)*parseInt(serie.value2);
-                        seriesInfo.push({
-                            weight: serie.value,
-                            reps: serie.value2,
-                            exerciseId: serie.exerciseId
-                        })
-                    }
-                    
-                   
-                    
-                    series = item.inputsData.length;
-                    
-                }
-                console.log('Series',seriesInfo)
-               for(let j = 0; j < seriesInfo.length; j++){
-                   //seriesInfo[j].exerciseId === exercisesInfo[j].key && exercisesInfo[j].series = seriesInfo[j];
-                   for(let k= 0; k< exercisesInfo.length; k++){
-                  
-                       if(seriesInfo[j].exerciseId === exercisesInfo[k].idExercise){
-                        console.log(exercisesInfo[k].series)
-                        
-                                console.log( 'lac comprobacion',exercisesInfo[0])
-                                if(Array.isArray(exercisesInfo[k].series)){
-                                    exercisesInfo[k].series.push(seriesInfo[j])
-                                }else{
-                                    exercisesInfo[k].series = [seriesInfo[j]] 
-                                }
-                            
-                            
-                        }else{
-                        }
-                    }
-                }
-                console.log('Ejercicios',exercisesInfo)
+        /*   console.log('line 58',_exerciseBlock) */
+        //console.log(kilos, repeticiones, series)
+
+        let kilos: number = 0;
+        let series: number = inputs.length;
+        let repeticiones: number = 0
+        let time = mins + ':' + secs;
+        let exercisesInfo: any = [];
+        let seriesInfo: any = []
 
 
-           /*  console.log(exercisesInfo) */
-            //se coge de los inputs
-              let hora = new Date().getHours()
-             
-              const data:any = {
-                  id: 10,
-                  dia: Date.now(),
-                  title:  hora > 12 && hora < 18 ? 'Entrenamiento de tarde' : hora > 18 && hora < 24 ? 'Entrenamiento de noche' : 'Entrenamiento de mañana',
-                  tiempo: time,
-                  notes: notes,
-                  pr: 2,
-                  totalWeight: kilos,
-                  mes: new Date().getMonth(),
-                  exercises: [
-                      {
-                          id: 12304,
-                          exercise: 'Barbell Squat',
-                          series: seriesInfo
-                      }
-                  ]
-              }
-      
-              /* setData(data) */
+        /*  for (let i = 0; i < _exerciseBlock.length; i++) {
+ 
+             series = 
+             kilos += parseInt(inputs[i].value)
+             repeticiones += parseInt(inputs[i].value2) === undefined ? 0 : parseInt(inputs[i].value2)
+             seriesInfo.push({
+                 weight: inputs[i].value,
+                 reps: inputs[i].value2
+             })
+         } */
+        for (let item of _exerciseBlock) {
+            exercisesInfo.push({
+                exercise: exercises.filter(exercise => exercise.id === item.key)[0].nombre,
+                idExercise: item.key
+            });
+
+            for (let serie of item.inputsData) {
+                if (serie.value != '' && serie.value2 != '') {
+                    kilos += parseInt(serie.value) * parseInt(serie.value2);
+                    seriesInfo.push({
+                        weight: serie.value,
+                        reps: serie.value2,
+                        exerciseId: serie.exerciseId
+                    })
+                    setError(false)
+                } else {
+                    console.log('inserta los datos de la serie')
+                    setError(true)
+                }
+
+            }
+
+
+
+            series = item.inputsData.length;
+
+        }
+        console.log('Series', seriesInfo)
+        for (let j = 0; j < seriesInfo.length; j++) {
+            //seriesInfo[j].exerciseId === exercisesInfo[j].key && exercisesInfo[j].series = seriesInfo[j];
+            for (let k = 0; k < exercisesInfo.length; k++) {
+
+                if (seriesInfo[j].exerciseId === exercisesInfo[k].idExercise) {
+                    console.log(exercisesInfo[k].series)
+
+                    console.log('lac comprobacion', exercisesInfo[0])
+                    if (Array.isArray(exercisesInfo[k].series)) {
+                        exercisesInfo[k].series.push(seriesInfo[j])
+                    } else {
+                        exercisesInfo[k].series = [seriesInfo[j]]
+                    }
+
+
+                } else {
+                }
+            }
+        }
+        console.log('Ejercicios', exercisesInfo)
+
+
+        /*  console.log(exercisesInfo) */
+        //se coge de los inputs
+        let hora = new Date().getHours()
+
+        const data: any = {
+            id: 10,
+            dia: Date.now(),
+            title: hora > 12 && hora < 18 ? 'Entrenamiento de tarde' : hora > 18 && hora < 24 ? 'Entrenamiento de noche' : 'Entrenamiento de mañana',
+            tiempo: time,
+            notes: notes,
+            pr: 2,
+            totalWeight: kilos,
+            mes: new Date().getMonth(),
+            exercises: [
+                {
+                    id: 12304,
+                    exercise: 'Barbell Squat',
+                    series: seriesInfo
+                }
+            ]
+        }
+
+        /* setData(data) */
     }
 
     const workout1 = [{
@@ -212,87 +220,87 @@ export const AddWorkoutScreen = (props: any) => {
     }]
 
     const addExerciseData = (exercisesId: any) => {
-        const _exerciseBlock:any = [...exercisesData]
-        
-        if(inputsData === null){
-            
-            for(let exerciseeId of exercisesId){
-            
-                _exerciseBlock.push({ key: exerciseeId, inputsData: [{ key: 0, value: '', value2: '', exerciseId: exerciseeId, exerciseName: 'Ejercicio' }] })            
+        const _exerciseBlock: any = [...exercisesData]
+
+        if (inputsData === null) {
+
+            for (let exerciseeId of exercisesId) {
+
+                _exerciseBlock.push({ key: exerciseeId, inputsData: [{ key: 0, value: '', value2: '', exerciseId: exerciseeId, exerciseName: 'Ejercicio' }] })
             }
 
-            
-        setInputsData(_exerciseBlock)
-        setExercisesData(_exerciseBlock)
 
-        }else{
+            setInputsData(_exerciseBlock)
+            setExercisesData(_exerciseBlock)
 
-            if(inputsData !== undefined){
-            
+        } else {
 
-                const _exerciseBlock:any = [...inputsData.inputsData]
-              console.log('entrnadoooooooooooooooooooooooooooooooo', inputsData.inputsData)
-              let keyInput=[];
-              for(let inputos of inputsData.inputsData){
-                keyInput.push(inputos.key)
-              }
+            if (inputsData !== undefined) {
 
-               for(let exerciseeId of exercisesId){
-                if(!keyInput.includes(exerciseeId)){
 
-                    _exerciseBlock.push({ key: exerciseeId, inputsData: [{ key: 0, value: '', value2: '', exerciseId: exerciseeId, exerciseName: 'Ejercicio' }] })            
+                const _exerciseBlock: any = [...inputsData.inputsData]
+                console.log('entrnadoooooooooooooooooooooooooooooooo', inputsData.inputsData)
+                let keyInput = [];
+                for (let inputos of inputsData.inputsData) {
+                    keyInput.push(inputos.key)
                 }
-                 }
-                 setExercisesData(_exerciseBlock)
 
-              
+                for (let exerciseeId of exercisesId) {
+                    if (!keyInput.includes(exerciseeId)) {
+
+                        _exerciseBlock.push({ key: exerciseeId, inputsData: [{ key: 0, value: '', value2: '', exerciseId: exerciseeId, exerciseName: 'Ejercicio' }] })
+                    }
+                }
+                setExercisesData(_exerciseBlock)
+
+
             }
-           
-     /*        setExercisesData(inputsData.inputsData) */
+
+            /*        setExercisesData(inputsData.inputsData) */
         }
 
-/* 
-        console.log('123123', inputsData)
-        console.log('entrando con el exerciseData ',_exerciseBlock )
-        console.log('entrando ',exercisesId ) */
+        /* 
+                console.log('123123', inputsData)
+                console.log('entrando con el exerciseData ',_exerciseBlock )
+                console.log('entrando ',exercisesId ) */
 
 
-/* 
-        if(_exerciseBlock === undefined ){
-            console.log('entro en el block')
-            _exerciseBlock.push({ key: exerciseId, inputsData: [{ key: '', value: '', value2: '', exerciseId: exerciseId, exerciseName: 'Ejercicio' }] })            
-        }else{
-            console.log('no entro en el block')
-        } */
-      
-        
-       // _exerciseBlock?.find((exercise:any) => exercise.key === exerciseId ).push({ key: exerciseId, inputsData: [{ key: '', value: '', value2: '', exerciseId, exerciseName: 'Ejercicio' }] })
-/*             _exerciseBlock.push({ key: exerciseeId, inputsData: [{ key: '', value: '', value2: '', exerciseId: exerciseeId, exerciseName: 'Ejercicio' }] })      */       
-        
-/* 
-        setInputsData(_exerciseBlock)
-        setExercisesData(_exerciseBlock)
-        console.log('guardado') */
+        /* 
+                if(_exerciseBlock === undefined ){
+                    console.log('entro en el block')
+                    _exerciseBlock.push({ key: exerciseId, inputsData: [{ key: '', value: '', value2: '', exerciseId: exerciseId, exerciseName: 'Ejercicio' }] })            
+                }else{
+                    console.log('no entro en el block')
+                } */
+
+
+        // _exerciseBlock?.find((exercise:any) => exercise.key === exerciseId ).push({ key: exerciseId, inputsData: [{ key: '', value: '', value2: '', exerciseId, exerciseName: 'Ejercicio' }] })
+        /*             _exerciseBlock.push({ key: exerciseeId, inputsData: [{ key: '', value: '', value2: '', exerciseId: exerciseeId, exerciseName: 'Ejercicio' }] })      */
+
+        /* 
+                setInputsData(_exerciseBlock)
+                setExercisesData(_exerciseBlock)
+                console.log('guardado') */
     }
 
     const addSerie = (exerciseId: any) => {
         const _exerciseBlock = [...exercisesData]
-      let ex =  _exerciseBlock.find((exerciseData:any) => exerciseData.key === exerciseId);
-      console.log('el ex',ex)
+        let ex = _exerciseBlock.find((exerciseData: any) => exerciseData.key === exerciseId);
+        console.log('el ex', ex)
         ex.inputsData.push({ key: ex.inputsData.length, value: '', value2: '', exerciseId: exerciseId, exerciseName: 'Ejercicio' })
         setExercisesData(_exerciseBlock)
         setInputsData(_exerciseBlock)
     }
 
-    
-    const deleteSerie = (exerciseId:any,index: any) => {
+
+    const deleteSerie = (exerciseId: any, index: any) => {
         const _exerciseBlock = [...inputsData.inputsData]
-     /*    console.log('eeeeeeeeeeeeeeeeeeeeeeeeee',exerciseId)
-        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaa',index)
-        console.log('000000000000000000000000000000000000000000000000000000',_exerciseBlock)
-        console.log('------------------------------------------------------',exercisesData) */
-        if(inputsData !== undefined){
-            
+        /*    console.log('eeeeeeeeeeeeeeeeeeeeeeeeee',exerciseId)
+           console.log('aaaaaaaaaaaaaaaaaaaaaaaaaa',index)
+           console.log('000000000000000000000000000000000000000000000000000000',_exerciseBlock)
+           console.log('------------------------------------------------------',exercisesData) */
+        if (inputsData !== undefined) {
+
             /*        if(ex !== undefined){
                 const result = _exerciseBlock.reduce((prev:any, curr:any) => {
                     const aux = curr.inputsData.filter((i:any) => i.key != index )
@@ -305,39 +313,39 @@ export const AddWorkoutScreen = (props: any) => {
                     return prev
                 }, [])  
                 console.log('filterData', result) */
-                /*   setExercisesData(result) */
-                
-          /* 
-                console.log('exxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',ex)
-                let filterData = _exerciseBlock.filter((x:any, i:any, o:any) => (o[i].inputsData = x.inputsData.filter((y:any) => y.key !== index  )) && x.inputsData.length);
-                
-                console.log('el filterrrrrrrrrrrrr',filterData); */
-                
-                let nuevo=[]
-                for(let op of _exerciseBlock){
-                    if(op.key === exerciseId){
-                        op.inputsData.splice(index,1)
-                        //cambiar eliminar ejerccio
-                    }
-                    nuevo.push(op)
+            /*   setExercisesData(result) */
+
+            /* 
+                  console.log('exxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',ex)
+                  let filterData = _exerciseBlock.filter((x:any, i:any, o:any) => (o[i].inputsData = x.inputsData.filter((y:any) => y.key !== index  )) && x.inputsData.length);
+                  
+                  console.log('el filterrrrrrrrrrrrr',filterData); */
+
+            let nuevo = []
+            for (let op of _exerciseBlock) {
+                if (op.key === exerciseId) {
+                    op.inputsData.splice(index, 1)
+                    //cambiar eliminar ejerccio
                 }
-                console.log('hito', nuevo)
-            let ex =  _exerciseBlock.find((exerciseData:any) => exerciseData.key === exerciseId);
-                
-               let res = ex.inputsData.filter((exercisee:any) => exercisee.key != index)
-                 /* ex.inputsData.push(res) */
-                 console.log(res)
-                  console.log('¡nuevoooooo',_exerciseBlock)
-            
-                setExercisesData(nuevo)
-               /*  setInputsData(_exerciseBlock) */
+                nuevo.push(op)
+            }
+            console.log('hito', nuevo)
+            let ex = _exerciseBlock.find((exerciseData: any) => exerciseData.key === exerciseId);
+
+            let res = ex.inputsData.filter((exercisee: any) => exercisee.key != index)
+            /* ex.inputsData.push(res) */
+            console.log(res)
+            console.log('¡nuevoooooo', _exerciseBlock)
+
+            setExercisesData(nuevo)
+            /*  setInputsData(_exerciseBlock) */
         }
-  /*     const _exercisesData = exercisesData.filter((input: any, index: any) => index != exerciseId); */
-      //  let filtrado = ex.inputsData.filter((inputsData:any) =>  inputsData.key ===exerciseId )
-     
-       // console.log('Filtrado', filtrado)
-     //   setExercisesData(ex)
-      /*   setInputsData(ex) */
+        /*     const _exercisesData = exercisesData.filter((input: any, index: any) => index != exerciseId); */
+        //  let filtrado = ex.inputsData.filter((inputsData:any) =>  inputsData.key ===exerciseId )
+
+        // console.log('Filtrado', filtrado)
+        //   setExercisesData(ex)
+        /*   setInputsData(ex) */
     }
 
     const deleteExerciseData = (key: any) => {
@@ -346,22 +354,22 @@ export const AddWorkoutScreen = (props: any) => {
         setInputsData(_exercisesData)
     }
 
-    const exerciseDataHandler = (text: any, text2: any,index: any, exerciseId: any, exerciseName: any) => {
-        console.log('Lineeee', 'text: ',text,'text2: ', text2, 'key: ', index, 'exerciseId: ', exerciseId, 'nameEercuse: ',exerciseName )
+    const exerciseDataHandler = (text: any, text2: any, index: any, exerciseId: any, exerciseName: any) => {
+        console.log('Lineeee', 'text: ', text, 'text2: ', text2, 'key: ', index, 'exerciseId: ', exerciseId, 'nameEercuse: ', exerciseName)
         const _exerciseBlock = [...exercisesData]
         console.log(_exerciseBlock)
 
-        for (let exer of _exerciseBlock){
-            if(exer.key === exerciseId){
+        for (let exer of _exerciseBlock) {
+            if (exer.key === exerciseId) {
                 exer.inputsData[index].key = index;
                 exer.inputsData[index].value = text;
                 exer.inputsData[index].value2 = text2;
                 exer.inputsData[index].exerciseId = exerciseId;
-                exer.inputsData[index].exerciseName = exerciseName; 
+                exer.inputsData[index].exerciseName = exerciseName;
+            }
         }
-    }
-    setExercisesData(_exerciseBlock);
-       
+        setExercisesData(_exerciseBlock);
+
     }
 
     const addInputExerciseData = (exerciseId: any) => {
@@ -374,7 +382,7 @@ export const AddWorkoutScreen = (props: any) => {
 
 
     async function funcion(): Promise<void> {
-       console.log(inputsData.inputsData)
+        console.log(inputsData.inputsData)
 
     }
 
@@ -394,22 +402,22 @@ export const AddWorkoutScreen = (props: any) => {
         setInputs(_inputs);
         /*   console.log(text, text2, key) */
 
- /*        let kilos: number = 0;
-        let series: number = inputs.length;
-        let seriesInfo: any = []
-        let repeticiones: number = 0
-        let time = mins + ':' + secs;
-
-        for (let i = 0; i < inputs.length; i++) {
-
-            series =
-                kilos += parseInt(inputs[i].value)
-            repeticiones += parseInt(inputs[i].value2) === undefined ? 0 : parseInt(inputs[i].value2)
-            seriesInfo.push({
-                weight: inputs[i].value,
-                reps: inputs[i].value2
-            })
-        } */
+        /*        let kilos: number = 0;
+               let series: number = inputs.length;
+               let seriesInfo: any = []
+               let repeticiones: number = 0
+               let time = mins + ':' + secs;
+       
+               for (let i = 0; i < inputs.length; i++) {
+       
+                   series =
+                       kilos += parseInt(inputs[i].value)
+                   repeticiones += parseInt(inputs[i].value2) === undefined ? 0 : parseInt(inputs[i].value2)
+                   seriesInfo.push({
+                       weight: inputs[i].value,
+                       reps: inputs[i].value2
+                   })
+               } */
 
         //console.log(kilos, repeticiones, series)
         /* 
@@ -542,42 +550,43 @@ export const AddWorkoutScreen = (props: any) => {
         }
     }
 
-    const renderInput = (inputsData:any) => {
-        return  inputsData.map((inputData:any, index:any) => (
+    const renderInput = (inputsData: any) => {
+        return inputsData.map((inputData: any, index: any) => (
             <View key={index} style={styles.inputContainer}>
-            <Text style={{ color: 'white' }}>Serie 1</Text>
-            <Text style={{ color: 'white' }}>{inputData.exerciseId}</Text>
-            <Text style={{ color: 'white' }}>{inputData.key}</Text>
-            <TextInput placeholderTextColor='white' keyboardType='numeric' placeholder={"kg"} style={styles.input} value={inputData.value} 
-            onChangeText={(text) => exerciseDataHandler(text, inputData.value2, index, inputData.exerciseId, inputData.exerciseName)} />
+                <Text style={{ color: 'white' }}>Serie {index + 1}</Text>
+                {/* <Text style={{ color: 'white' }}>{inputData.exerciseId}</Text>
+            <Text style={{ color: 'white' }}>{inputData.key}</Text> */}
 
-            <TextInput placeholderTextColor='white' keyboardType='numeric' placeholder={"Repeticiones"} style={styles.input} value={inputData.value2} 
-            onChangeText={(text2) => exerciseDataHandler(inputData.value,text2, index, inputData.exerciseId, inputData.exerciseName)} />
-           {/*  <TouchableOpacity onPress={() => deleteExerciseData(inputData.key)} style={{backgroundColor:'red', padding:3, borderRadius:4}}>
+                <TextInput placeholderTextColor='white' keyboardType='numeric' placeholder={"kg"} style={styles.input} value={inputData.value}
+                    onChangeText={(text) => exerciseDataHandler(text, inputData.value2, index, inputData.exerciseId, inputData.exerciseName)} />
+
+                <TextInput placeholderTextColor='white' keyboardType='numeric' placeholder={"Repeticiones"} style={styles.input} value={inputData.value2}
+                    onChangeText={(text2) => exerciseDataHandler(inputData.value, text2, index, inputData.exerciseId, inputData.exerciseName)} />
+                {/*  <TouchableOpacity onPress={() => deleteExerciseData(inputData.key)} style={{backgroundColor:'red', padding:3, borderRadius:4}}>
                 <Text style={{ color: "white", fontSize: 13 }}>Borrar</Text>
             </TouchableOpacity> */}
-            <TouchableOpacity onPress={() => deleteSerie(inputData.exerciseId ,inputData.key)} style={{backgroundColor:'red', padding:3, borderRadius:4}}>
-                <Text style={{ color: "white", fontSize: 13 }}>Borrar</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity
-                onPress={() => addSerie(inputData.exerciseId)}
-                style={{ display: 'flex', alignItems: 'center', width: '13%', height: 40, borderRadius: 6, justifyContent: 'center', backgroundColor: "#663EE3" }}>
-                <Svg
-                    width={32}
-                    height={32}
-                    viewBox="0 0 28 28"
-                    fill="none"
-                    stroke="white"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round">
-                    <Polyline points="20 6 9 17 4 12" />
-                </Svg>
-            </TouchableOpacity>
-        </View>
+                <TouchableOpacity onPress={() => deleteSerie(inputData.exerciseId, inputData.key)} style={{ backgroundColor: 'red', padding: 3, borderRadius: 4 }}>
+                    <Text style={{ color: "white", fontSize: 13 }}>Borrar</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => addSerie(inputData.exerciseId)}
+                    style={{ display: 'flex', alignItems: 'center', width: '13%', height: 40, borderRadius: 6, justifyContent: 'center', backgroundColor: "#663EE3" }}>
+                    <Svg
+                        width={32}
+                        height={32}
+                        viewBox="0 0 28 28"
+                        fill="none"
+                        stroke="white"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round">
+                        <Polyline points="20 6 9 17 4 12" />
+                    </Svg>
+                </TouchableOpacity>
+            </View>
         ))
-    } 
+    }
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -621,21 +630,25 @@ export const AddWorkoutScreen = (props: any) => {
                                 {exercisesData.map((inputsData: any) => (
                                     <View key={inputsData.key} style={{ display: 'flex' }}>
                                         <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>{exercises.filter((exercise: Exercise) => exercise.id === inputsData.key)[0].nombre}</Text>
-{/* 
+                                        {/* 
                                         {inputsData !== undefined && inputsData.map((input: any) => (
                                           
                                         ))} */}
                                         {inputsData !== undefined && renderInput(inputsData.inputsData)}
-
-                                        <TouchableOpacity  onPress={() => addSerie(inputsData.key)} style={{ marginVertical: 10, backgroundColor: "#663EE3", height: 30, borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        {error && (
+                                            <View>
+                                                <Text style={{ color: 'red' }}>Error: Inserta todos los datos de la serie</Text>
+                                            </View>
+                                        )}
+                                        <TouchableOpacity onPress={() => addSerie(inputsData.key)} style={{ marginVertical: 10, backgroundColor: "#663EE3", height: 30, borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                             <Text style={{ color: 'white', fontWeight: 'bold' }}>Añade series</Text>
                                         </TouchableOpacity>
                                     </View>
                                 ))}
                             </View>
 
-                            <TouchableOpacity style={{backgroundColor:'#FF3D3D', marginVertical: 10, width: width * 0.7, height: 40, borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                                onPress={()=> finalizeWorkout()}
+                            <TouchableOpacity style={{ backgroundColor: '#FF3D3D', marginVertical: 10, width: width * 0.7, height: 40, borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                onPress={() => finalizeWorkout()}
                             >
                                 <Text style={{ color: 'white', fontWeight: 'bold' }}>Terminar entrenamiento</Text>
                             </TouchableOpacity>
