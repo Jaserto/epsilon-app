@@ -73,7 +73,7 @@ export const InicioScreen = ({ navigation }: any) => {
        /*  console.log('------------------------------------')
         console.log(exercises.series, 'series') */
         return exercises.map((exercise: Series, index:number) => (
-            <View key={exercise.id} style={{borderColor: 'purple',borderWidth:1, display:'flex',flexDirection:'column', marginTop:3,borderRadius:5, padding:3}}>
+            <View key={index} style={{borderColor: 'purple',borderWidth:1, display:'flex',flexDirection:'column', marginTop:3,borderRadius:5, padding:3}}>
                     <Text style={{ color: 'purple' }}>{exercise.series.length} x {exercise.exercise}</Text>
                  {/*    <View>
                         {exercise.series.map((serie)=> (
@@ -96,7 +96,7 @@ export const InicioScreen = ({ navigation }: any) => {
     const getBestSeries = (exercises: any) => {
 
         return exercises.map((exercise: any, index:number) => (
-            <View key={exercise.id} style={{borderColor: 'purple',borderWidth:1, display:'flex',flexDirection:'column', marginTop:3, borderRadius:5, padding:3}}>
+            <View key={index} style={{borderColor: 'purple',borderWidth:1, display:'flex',flexDirection:'column', marginTop:3, borderRadius:5, padding:3}}>
               
         
                    {
@@ -177,9 +177,13 @@ export const InicioScreen = ({ navigation }: any) => {
                     iconStyle={{ tintColor: 'white' }}
                 />
             </View>
-            <View style={{ marginTop: 10 }}>
+           {workouts !== null ? ( <View style={{ marginTop: 10 }}>
                 <Text style={styles.h3}>Últimos entrenamientos</Text>
-            </View>
+            </View>): 
+            <View style={{height:height*0.7, width:'100%', display:'flex', alignItems:'center', justifyContent:'center'}}>
+                <Text style={{fontSize:17,color:'white'}}>No tienes entrenamientos, añade uno.</Text>
+            </View>}
+
             <View>
            {/*      {data.map((workout) => (
                     <View key={workout.id}
@@ -282,7 +286,7 @@ export const InicioScreen = ({ navigation }: any) => {
 
                 ))} */}
                    
-                         {workouts.map((workout:any, index:any) => (
+                         {workouts !== null && workouts.map((workout:any, index:any) => (
                     <View key={index}
                         style={{
                             backgroundColor: 'white', width: '100%',
