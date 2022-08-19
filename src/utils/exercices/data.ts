@@ -103,7 +103,33 @@ export const exercises:Array<Exercise> = [
         muscularGroup: 'Core',
         instrucciones: '',
     },
-]/*
+    {
+        id:18,
+        nombre: 'Romanian Deadlift',
+        muscularGroup: 'Back',
+        instrucciones: '',
+    },
+    {
+        id:19,
+        nombre: 'Military Press',
+        muscularGroup: 'Shoulders',
+        instrucciones: '',
+    },
+    {
+        id:20,
+        nombre: 'Bulgarian Split Squats',
+        muscularGroup: 'Legs',
+        instrucciones: '',
+    },
+    {
+        id:21,
+        nombre: 'Breathing Paused Squats',
+        muscularGroup: 'Legs',
+        instrucciones: '',
+    },
+]
+
+/*
 ]/*
 {
     "Push Ups":,//cehst
