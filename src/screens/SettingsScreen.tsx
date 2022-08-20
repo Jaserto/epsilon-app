@@ -75,9 +75,6 @@ export const SettingsScreen = ({ navigation }: any) => {
                         />
                     </View>
                     <View style={styles.spacer}>
-                        <Text style={styles.text}>Primer día de la semana</Text>
-                    </View>
-                    <View style={styles.spacer}>
                         <Text style={styles.text}>Tamaño</Text>
                     </View>
                 </View>

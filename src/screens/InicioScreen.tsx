@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Alert, Button, Dimensions, Image, LogBox, Platform, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Alert, Button, Dimensions, Image, LogBox, Platform, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { Path, Svg, Circle, Line, Polyline } from 'react-native-svg';
 import CalendarStrip from 'react-native-calendar-strip';
@@ -20,23 +20,108 @@ const { width, height } = Dimensions.get("window");
 
 export const InicioScreen = ({ navigation }: any) => {
 
-
+    
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [workouts, setWorkouts] = useState<Array<Workout>>([])
+    const [workoutsFilter, setWorkoutsFilter] = useState<Array<Workout>>([])
+    const [dates, setDates] = useState<Array<Date>>([])
+    const [day, setDay] = useState<number>(new Date().getDate())
+    const [lastWorkouts, setLastWorkouts] = useState<boolean>(true)
 
+      // Marked dates array format
+
+   /*    const markedDatesArray = [
+        {
+          date: Date.now(),
+          dots: [
+            {
+              color: 'purple',
+              selectedColor: 'blue',
+            },
+          ],
+        },
+        {
+          date: '(string, Date or Moment object)',
+          lines: [
+            {
+              color: 'red',
+              selectedColor: 'green',
+            },r
+          ],
+        },
+      ];
+ */
+      const onDateSelectedd = (date:any) => {
+         
+        let workoutFilter = []
+        setDay(new Date(date).getDate())
+      
+        setWorkoutsFilter([])
+        let fechaEqual = workouts.filter((workout:Workout) => new Date(workout.fechaISO).getDate() ===  new Date(date).getDate() )
+        console.log('fecha           ',fechaEqual)
+        if(fechaEqual.length>0){
+            getDates()
+            for(let workout of fechaEqual){
+                workoutFilter.push(workout)
+              
+                console.log('.................................................' + workout)
+            }
+            setWorkoutsFilter(workoutFilter)
+        }else{
+            setWorkoutsFilter([])
+        }
+        
+        console.log('El filtro de los worokouts', workoutsFilter)
+        console.log('dayy', day)
+        setLastWorkouts(false)
+        
+      }
+    const getDates = () => {
+        let markedDatesArray:any = [];
+        if(workouts !== undefined){
+     
+            for( let workoutt of workouts){
+      
+                markedDatesArray.push({
+                    date: new Date(workoutt.fechaISO),
+                    dots: [
+                       {
+                        color:'purple',
+                        selectedColor:'white'
+                       }
+                    ]
+                })
+                console.log(markedDatesArray) 
+            }
+            setDates(markedDatesArray)
+        }
+        
+    }
 
     const getWorkoutsData = () => {
+       
         AsyncStorage.getItem('workout').then((result: any) => {
-            console.log('resultad', result)
+         /*    console.log('resultad', result) */
             let data = JSON.parse(result)
             setWorkouts(data)
+            setWorkoutsFilter(data)
+            setIsLoading(false)
         }).catch((err: any) => {
             console.log(err)
+            setIsLoading(false)
         })
     }
 
     useEffect(() => {
-        getWorkoutsData()
+        setIsLoading(true)
+
+      try{
+          getWorkoutsData()
+          getDates()
+      }catch(e){
+        console.log(e)
+        setIsLoading(false)
+      }
 
     }, [])
 
@@ -94,6 +179,8 @@ export const InicioScreen = ({ navigation }: any) => {
 
         ));
     }
+
+
 
     return (
 
@@ -156,29 +243,46 @@ export const InicioScreen = ({ navigation }: any) => {
             <View style={{ flex: 1 }}>
                 <CalendarStrip
                     scrollable
-                    style={{ height: 80, paddingTop: 20, paddingBottom: 10 }}
-                    calendarColor={'#111111'}
+                    markedDates={dates}
+                    onDateSelected={onDateSelectedd}
+                  /*   selectedDate={new Date()} */
+                    calendarAnimation={{type: 'sequence', duration: 30}}
+                    daySelectionAnimation={{type:'background', duration: 200, highlightColor:'purple'}}
+                    style={[{ height: 80, marginTop:15, paddingTop: 10, paddingBottom: 10, borderRadius:6}, styles.shadowProp]}
+                  /*   calendarColor={'#111111'} */
+                    calendarColor={'#7743CE'}
+                    dateNumberStyle={{color: 'white'}}
                     calendarHeaderStyle={{ color: 'white' }}
-                    dateNumberStyle={{ color: 'white' }}
+                    highlightDateNumberStyle={{color: 'white'}}
+                    highlightDateNameStyle={{color: 'white'}}
+                    disabledDateNameStyle={{color: 'grey'}}
+                        disabledDateNumberStyle={{color: 'grey'}}
+                        iconContainer={{flex: 0.1}}
                     dateNameStyle={{ color: 'white' }}
-                    iconContainer={{ flex: 0.1 }}
                     iconStyle={{ tintColor: 'white' }}
                 />
             </View>
-            {workouts !== null ? (<View style={{ marginTop: 10 }}>
+            {isLoading &&
+                (<ActivityIndicator size='large' color="purple"/>)
+            }
+            {lastWorkouts && workoutsFilter.length>0 ? (<View style={{marginTop:13}}>
                 <Text style={styles.h3}>Últimos entrenamientos</Text>
             </View>) :
-                <View style={{ height: height * 0.7, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Text style={{ fontSize: 17, color: 'white' }}>No tienes entrenamientos, añade uno.</Text>
-                </View>}
+                (<View style={{marginTop:13, display:'flex', flexDirection:'row'}}>
+                    <Text style={styles.h3}>Entrenamientos del día</Text><Text style={{fontSize:17, fontWeight:'bold', color:'white'}}> {day}</Text>
+                </View>)    
+            }
 
             <View>
-                {workouts !== null && workouts.map((workout: Workout, index: number) => (
+                {workoutsFilter !== null ? workoutsFilter.map((workout: Workout, index: number) => (
+                    
+                    
                     <View key={index}
                         style={{
                             backgroundColor: 'white', width: '100%', borderTopWidth:6, borderTopColor:'purple',
                             marginBottom: 18, borderRadius: 5, paddingHorizontal: 15, paddingVertical: 6
                         }}>
+                            
                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
                             <Text style={{ fontWeight: 'bold', marginBottom: 5, color: '#111111', fontSize: 16 }}>{workout.title}</Text>
                             <Image
@@ -273,7 +377,11 @@ export const InicioScreen = ({ navigation }: any) => {
                     </View>
 
 
-                ))}
+                )) :  (<View style={{ height: height * 0.7, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 17, color: 'white' }}>No tienes entrenamientos, añade uno.</Text>
+            </View>)
+            
+            }
             </View>
         </ScrollView>
 
@@ -309,7 +417,13 @@ const styles = StyleSheet.create({
         fontSize: 17,
         marginBottom: 18,
         color: 'white'
-    }
+    },
+    shadowProp: {  
+        shadowOffset: {width: -2, height: 4},  
+        shadowColor: '#171717',
+        shadowOpacity: 0.2,  
+        shadowRadius: 3,  
+      },  
 
 })
 
