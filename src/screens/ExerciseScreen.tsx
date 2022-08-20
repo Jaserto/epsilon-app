@@ -1,6 +1,7 @@
-import { View, Text, ScrollView, Alert, RefreshControl, Platform, Dimensions, StyleSheet } from 'react-native'
+import { View, Text, ScrollView, Alert, RefreshControl, Platform, Dimensions, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { exercises } from '../utils/exercices/data'
+import Svg, { Line, Polyline } from 'react-native-svg';
 
 const { width, height } = Dimensions.get("window");
 
@@ -46,6 +47,22 @@ export const ExerciseScreen = (props:any) =>  {
             contentContainerStyle={{
                 paddingRight: Platform.OS === 'android' ? 0 : 0
             }} style={styles.view}>
+            
+            <View style={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+            <TouchableOpacity onPress={() => { props.navigation.pop() }}>
+                <Svg
+                    width={25}
+                    height={25}
+                    viewBox="0 0 25 25"
+                    stroke="white"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round">
+                    <Line x1="19" y1="12" x2="5" y2="12" />
+                    <Polyline points="12 19 5 12 12 5" />
+                </Svg>
+            </TouchableOpacity>
+        </View>
            <View  style={{marginVertical:10}}>
             <Text style={{color:'white', fontSize:25, fontWeight:'bold'}}>Descripción</Text>
            </View>

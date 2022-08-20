@@ -32,7 +32,9 @@ const AppState = ({ children }: {children: JSX.Element | JSX.Element[]}) => {
 const App = () => {
   LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
-
+LogBox.ignoreLogs([
+  "Require cycle: node_modules/victory",
+]);
 
   return (
     <NavigationContainer>

@@ -54,22 +54,16 @@ export const SettingsScreen = ({ navigation }: any) => {
             <Text style={styles.h3}>Ajustes</Text>
             <View style={{ marginBottom: 10, display: 'flex' }}>
                 <View style={{ marginBottom: 10 }}>
-                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 12 }}>Perfil</Text>
+                    <Text style={styles.titleCat}>Perfil</Text>
                     <View style={styles.spacer}>
                         <Text style={styles.text}>Editar</Text>
                     </View>
                 </View>
                 {/*   linea  -----------------------------------------------------------*/}
-                <View
-                    style={{
-                        width: '100%',
-                        borderBottomColor: 'white',
-                        borderBottomWidth: StyleSheet.hairlineWidth,
-                        marginBottom: 15
-                    }}
+                <View style={styles.cat}
                 />
                 <View style={{ marginBottom: 10 }}>
-                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 12 }}>Unidades y localización</Text>
+                    <Text style={styles.titleCat}>Unidades y localización</Text>
                     <View style={styles.spacer}>
                         <Text style={styles.text}>Peso</Text>
                     </View>
@@ -89,19 +83,16 @@ export const SettingsScreen = ({ navigation }: any) => {
                 </View>
                 {/*   linea  -----------------------------------------------------------*/}
 
-                <View
-                    style={{
-                        width: '100%',
-                        borderBottomColor: 'white',
-                        borderBottomWidth: StyleSheet.hairlineWidth,
-                        marginBottom: 10
-                    }}
-                />
+                <View style={styles.cat}/>
 
                 <View style={{ marginBottom: 10 }}>
-                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 12 }}>General</Text>
+                    <Text style={styles.titleCat}>General</Text>
                     <View style={styles.spacer}>
                         <Text style={styles.text}>Mantener la pantalla encendida durante el entrenamiento</Text>
+                        <Switch
+                            trackColor={{ false: "#767577", true: "#81b0ff" }}
+                            ios_backgroundColor="#3e3e3e"
+                        />
                     </View>
                     <View style={styles.spacer}>
                         <Text style={styles.text}>Exportar datos</Text>
@@ -118,28 +109,23 @@ export const SettingsScreen = ({ navigation }: any) => {
 
                 {/*   linea  -----------------------------------------------------------*/}
                 <View
-                    style={{
-                        width: '100%',
-                        borderBottomColor: 'white',
-                        borderBottomWidth: StyleSheet.hairlineWidth,
-                        marginBottom: 10
-                    }}
+                    style={styles.cat}
                 />
                 <View style={{ marginBottom: 10 }}>
-                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Avanzado</Text>
+                    <Text style={styles.titleCat}>Avanzado</Text>
                     <Text style={styles.text}>Mantener la pantalla encendida durante el entrenamiento</Text>
                     <Text style={styles.text}>Exportar datos</Text>
                     <Text style={styles.text}>Tema</Text>
                 </View>
                 <View style={{ marginBottom: 10 }}>
-                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Otros servicios</Text>
+                    <Text style={styles.titleCat}>Otros servicios</Text>
                     <Text style={styles.text}>Google Fit</Text>
                 </View>
                 <View style={{ marginBottom: 10 }}>
-                    <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', marginBottom: 9 }}>Contacto y soporte</Text>
-                    <Text style={styles.text}>Informar sobre un problema</Text>
-                    <Text style={styles.text}>Twitter</Text>
-                    <Text style={styles.text}>Facebook</Text>
+                    <Text style={styles.titleCat}>Contacto y soporte</Text>
+                    <Text style={{ padding:8, backgroundColor: 'purple', borderRadius:4, color:'white', marginBottom:10 }}>Si quieres informar sobre un problema puedes contactarme a través de las siguientes redes sociales. </Text>
+                    <Text style={styles.text}>Twitter @serdev_es</Text>
+                    <Text style={styles.text}>Instagram @serdev_es</Text>
                 </View>
 
             </View>
@@ -159,6 +145,14 @@ const styles = StyleSheet.create({
         height: height,
         width: width,
         padding: 15
+    },
+    titleCat: 
+        { color: 'white', fontSize: 17, fontWeight: 'bold', marginBottom: 12 },
+    cat:{
+        width: '100%',
+        borderBottomColor: 'white',
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        marginBottom: 10
     },
     cardFecha: {
         display: 'flex',

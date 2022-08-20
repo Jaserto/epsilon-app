@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react'
-
-import { Dimensions, View, Text, ScrollView, Platform, StyleSheet, Alert, RefreshControl } from 'react-native'
+import { Dimensions, View, Text, ScrollView, Platform, StyleSheet, Alert, RefreshControl } from 'react-native';
+import { VictoryBar, VictoryScatter, VictoryLine,VictoryAxis, VictoryChart, VictoryTheme } from "victory-native";
 
 import 'react-native-get-random-values'
+
+
+
 const { width, height } = Dimensions.get("window");
 
 
 export const ProfileScreen = ({ navigation }: any) => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
-
+    const data = [
+        { quarter: 1, earnings: 10000 },
+        { quarter: 2, earnings: 16500 },
+        { quarter: 3, earnings: 14250 },
+        { quarter: 4, earnings: 19000 }
+      ];
 
     useEffect(() => {
 
@@ -30,6 +38,7 @@ export const ProfileScreen = ({ navigation }: any) => {
             />
         );
     };
+
     return (
         <ScrollView
             refreshControl={refreshControl()}
@@ -54,20 +63,24 @@ export const ProfileScreen = ({ navigation }: any) => {
                     </View>
                 </View>
             </View>
-            <View style={{ marginTop: 10 }}>
+            <View style={{ marginVertical: 10 }}>
                 <Text style={{ color: 'white', marginBottom:18 }}>PANEL DE CONTROL</Text>
                 <View style={{width:'100%', height:150, borderWidth:1, marginBottom:30, borderColor:'white', borderRadius:4, paddingHorizontal:10, paddingVertical:5}}>
                     <Text style={{ color: 'white' }}>Entrenamientos por semana</Text>
                     <Text style={{ color: 'white' }}>GRAFICA</Text>
                 </View>
-                <View style={{width:'100%', height:100, borderWidth:1, borderColor:'white', borderRadius:4, paddingHorizontal:10, paddingVertical:5}}>
-                    <Text style={{ color: 'white', marginBottom:10 }}>Calorías esta semana</Text>
-
-                    <View style={{borderWidth:1, borderColor:'white', borderRadius:5, padding:5, display:'flex', alignItems:'center'}}>
-                        <Text style={{color:'white'}}>Conectarse a Google Fit</Text>
-                    </View>
-                </View>
+          
             </View>
+               <View style={styles.container}>
+        <VictoryChart width={300} theme={VictoryTheme.material}>
+          <VictoryBar data={data} x="quarter" y="earnings" />
+        </VictoryChart>
+        <VictoryChart width={300} height={220} theme={VictoryTheme.material}>
+            <VictoryLine 
+                
+            />
+        </VictoryChart>
+      </View>
         </ScrollView>
     )
 }
@@ -87,6 +100,12 @@ const styles = StyleSheet.create({
         color: 'white',
         marginBottom: 10
     },
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#f5fcff"
+      }
 
 
 })
