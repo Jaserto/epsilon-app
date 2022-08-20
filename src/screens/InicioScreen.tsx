@@ -161,9 +161,44 @@ export const InicioScreen = ({ navigation }: any) => {
         ));
     }
 
-    const func = () => {
+    const deleteWorkout = () => {
+        Alert.alert(
+            "Eliminar el entrenamiento",
+            "¿Estás seguro de elimininar este entrenamiento?",
+            [
+              {
+                text: "Cancelar",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel"
+              },
+              { text: "Eliminar", onPress: async() => {
+           
+                // setWorkouts
 
-        console.log(typeof workouts)
+            /*     try {
+                    let respuesta;
+                    const jsonValue = await AsyncStorage.getItem('workout')
+                    if (jsonValue !== null) {
+                        console.log('nopooooooo es nullllll')
+                        const jsonParse = JSON.parse(jsonValue)
+                        let newArray = [...jsonParse, data]
+                        console.log('El Json',jsonParse)
+                        await AsyncStorage.setItem('workout',JSON.stringify(newArray));
+                    }else{
+                        let datos=[]
+                        datos.push(data)
+                        const jsonValue2 = JSON.stringify(datos)
+                        await AsyncStorage.setItem('workout', jsonValue2)
+                    }
+                } catch (e) {
+                    console.log('Ha habido un error eliminando el workout')
+                } */
+                
+                }
+              }
+            ]
+          );
+        
     }
 
     const getBestSeries = (exercises: any) => {
@@ -285,10 +320,21 @@ export const InicioScreen = ({ navigation }: any) => {
                             
                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
                             <Text style={{ fontWeight: 'bold', marginBottom: 5, color: '#111111', fontSize: 16 }}>{workout.title}</Text>
-                            <Image
-                                style={{ tintColor: 'black', width: 32, height: 32, borderRadius: 50 }}
-                                source={require('../assets/images/more.png')}
-                            />
+                            <TouchableOpacity onPress={deleteWorkout}>
+                            <Svg
+                                    width={23}
+                                    height={23}
+                                    viewBox="0 0 25 25"
+                                    stroke="red"
+                                    fill="white"
+                                    strokeWidth={2}
+                                    >
+                                    <Polyline points="3 6 5 6 21 6" />
+                                    <Path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                    <Line x1="10" y1="11" x2="10" y2="17" />
+                                    <Line x1="14" y1="11" x2="14" y2="17"/>
+                                </Svg>
+                                        </TouchableOpacity>
                         </View>
                         <Text style={{ fontWeight: 'bold' }}>{workout.fecha}</Text>
                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: 9, width: '100%' }}>
@@ -297,7 +343,7 @@ export const InicioScreen = ({ navigation }: any) => {
                                     width={15}
                                     height={15}
                                     viewBox="0 0 25 25"
-                                    stroke="black"
+                                    stroke=""
                                     strokeWidth={2}
                                     strokeLinecap="round"
                                     strokeLinejoin="round">
