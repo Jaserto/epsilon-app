@@ -208,7 +208,7 @@ export const InicioScreen = ({ navigation }: any) => {
 
 
                 {
-                    <Text style={{ color: 'purple' }}>{Math.max(...exercise.series.map((serie: any) => serie.weight))} kg x {exercise.series[0].reps} </Text>
+                    <Text style={{ color: 'purple' }}>{Math.max(...exercise.series.map((serie: any) => serie.weight))} kg x {exercise.series[0].reps} reps</Text>
                 }
             </View>
 
@@ -257,7 +257,7 @@ export const InicioScreen = ({ navigation }: any) => {
                             </Svg>
                         </TouchableOpacity>
                     </View>
-                    <View style={{ display: 'flex', alignItems: 'center' }}>
+         {/*            <View style={{ display: 'flex', alignItems: 'center' }}>
                         <TouchableOpacity>
                             <Svg
                                 width={30}
@@ -272,7 +272,7 @@ export const InicioScreen = ({ navigation }: any) => {
                                 <Path d="M13.73 21a2 2 0 0 1-3.46 0" />
                             </Svg>
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
                 </View>
             </View>
             <View style={{ flex: 1 }}>

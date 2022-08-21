@@ -127,6 +127,114 @@ export const exercises:Array<Exercise> = [
         muscularGroup: 'Legs',
         instrucciones: '',
     },
+    {
+        id:22,
+        nombre: 'Walking Lunges',
+        muscularGroup: 'Legs',
+        instrucciones: '',
+    },
+    {
+        id:23,
+        nombre: 'Dumbell Squat',
+        muscularGroup: 'Legs',
+        instrucciones: '',
+    },
+    {
+        id:24,
+        nombre: 'Leg Press Machine',
+        muscularGroup: 'Legs',
+        instrucciones: '',
+    },
+    {
+        id:25,
+        nombre: 'Weighted Calf Raises',
+        muscularGroup: 'Legs',
+        instrucciones: '',
+    },
+    {
+        id:26,
+        nombre: 'Leg Raises',
+        muscularGroup: 'Legs',
+        instrucciones: '',
+    },
+    {
+        id:27,
+        nombre: 'Tricep Pullovers',
+        muscularGroup: 'Arms',
+        instrucciones: '',
+    },
+    {
+        id:28,
+        nombre: 'Tricep Kickbacks',
+        muscularGroup: 'Arms',
+        instrucciones: '',
+    },
+    {
+        id:29,
+        nombre: 'Plank',
+        muscularGroup: 'Core',
+        instrucciones: '',
+    },
+    {
+        id:30,
+        nombre: 'Bicycle Crunches',
+        muscularGroup: 'Core',
+        instrucciones: '',
+    },
+    {
+        id:31,
+        nombre: 'Tricep Press',
+        muscularGroup: 'Core',
+        instrucciones: '',
+    },
+    {
+        id:32,
+        nombre: 'Lateral Raises',
+        muscularGroup: 'Shoulders',
+        instrucciones: '',
+    },
+    {
+        id:33,
+        nombre: 'Rear Delt Raise',
+        muscularGroup: 'Shoulders',
+        instrucciones: '',
+    },
+    {
+        id:34,
+        nombre: 'Upright Rows',
+        muscularGroup: 'Shoulders',
+        instrucciones: '',
+    },
+    {
+        id:35,
+        nombre: 'Arnold Press',
+        muscularGroup: 'Shoulders',
+        instrucciones: '',
+    },
+    {
+        id:36,
+        nombre: 'Side Plank',
+        muscularGroup: 'Core',
+        instrucciones: '',
+    },
+    {
+        id:37,
+        nombre: 'Straight Leg Deadlifts',
+        muscularGroup: 'Legs',
+        instrucciones: '',
+    },
+    {
+        id:38,
+        nombre: 'Seated Row Machine',
+        muscularGroup: 'Back',
+        instrucciones: '',
+    },
+    {
+        id:39,
+        nombre: 'Handstand Push Up',
+        muscularGroup: 'Shoulders',
+        instrucciones: '',
+    },
 ]
 
 /*
@@ -147,30 +255,19 @@ export const exercises:Array<Exercise> = [
     "Leg Extension Machine":, //legs
     "Leg Curl Machine":, //pecho
     "Straight Leg Deadlifts": , //espalda
-    "Deadlift" , //legs
+
     "Weighted Calf Raises": , //legs
     "Handstand Push Up": , //shoulders
-    "Military Press": , //shoulders
-    "Arnold Presses": , //shoulders
-    "Upright Rows": , //shoulders
-    "Lateral Raises": , //shoulders
-    "Rear Delt Raise": , //shoulders
-    "Dips": , //triceps
-    "Tricep Pullovers": , //triceps
-    "Tricep Kickbacks": , //triceps
-    "Tricep Press": , //triceps
+
+
+
+
     "Straight Bar Curl": , //biceps
     "Bicep Curl Macine": , //biceps
     "Dumbbell Curl": , //biceps
     "Concentration Curls": , //biceps
     "Traditional Sit Ups": , //abs
-    "Crunches": , //abs
-    "Weighted Crunches": , //abs
-    "Bicycle Crunches ": , //abs
-    "Leg Raises": , //abs
-    "Oblique Crunch": , //abs
-    "Plank": , //LOW BACK & CORE
-    "Side Plank": , //LOW BACK & CORE
+
     "Back Extension": , //LOW BACK & CORE
 
 }

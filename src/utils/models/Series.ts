@@ -8,7 +8,7 @@ export interface Series {
     series: Array<Serie>
 }
 
-interface Serie {
+export interface Serie {
     reps:number,
     weight:number,
 }

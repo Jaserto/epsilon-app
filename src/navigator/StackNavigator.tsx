@@ -12,6 +12,7 @@ import { AddWorkoutScreen } from '../screens/AddWorkout';
 import { WorkoutScreen } from '../screens/WorkoutScreen';
 import { AddExerciseScreen } from '../screens/AddExerciseScreen';
 import { ExerciseScreen } from '../screens/ExerciseScreen';
+import { OnboardingScreen } from '../screens/OnboardingScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -21,7 +22,9 @@ export const StackNavigator = () => {
 
     <Stack.Navigator screenOptions={{ headerShown: false}}>
         <>
+            <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
             <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
+            
             <Stack.Screen name="InicioScreen" component={Tabs} options={{ headerShown: false }} />
             <Stack.Screen name="Analysis" component={AnalysisScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }} />
