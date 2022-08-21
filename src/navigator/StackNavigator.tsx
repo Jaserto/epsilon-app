@@ -1,7 +1,9 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+/* import sp from 'synchronized-promise'
+ */
 import { Tabs } from './Tabs';
 import Welcome from '../screens/Welcome';
 import {InicioScreen} from '../screens/InicioScreen';
@@ -14,17 +16,39 @@ import { AddExerciseScreen } from '../screens/AddExerciseScreen';
 import { ExerciseScreen } from '../screens/ExerciseScreen';
 import { OnboardingScreen } from '../screens/OnboardingScreen';
 
-
 const Stack = createNativeStackNavigator();
 
 export const StackNavigator = () => {
+  const [isAppFirstLaunched, setIsAppFirstLaunched] = useState<boolean |any>(null)
+
+
+
+useEffect( () => {
+  async function firstLaunch() {
+     await AsyncStorage.getItem('isAppFirstLaunched').then((result:any) => {
+      console.log('Appadata',result)
+      if(result == null){
+        setIsAppFirstLaunched(true)
+        /* AsyncStorage.setItem('isAppFirstLaunched', 'false') */
+      }else{
+        setIsAppFirstLaunched(false)
+      }
+    })
+  }
+  firstLaunch()
+
+},[])
+
+  
   return (
 
-    <Stack.Navigator screenOptions={{ headerShown: false}}>
+    isAppFirstLaunched != null && (
+      <Stack.Navigator screenOptions={{ headerShown: false}}>
         <>
-            <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
+          {
+            isAppFirstLaunched && ( <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} /> )
+          }
             <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
-            
             <Stack.Screen name="InicioScreen" component={Tabs} options={{ headerShown: false }} />
             <Stack.Screen name="Analysis" component={AnalysisScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }} />
@@ -35,6 +59,8 @@ export const StackNavigator = () => {
             <Stack.Screen name="ExerciseScreen" component={ExerciseScreen} options={{ headerShown: false }}/>
         </>
     </Stack.Navigator>
+    )
+    
   );
 }
 

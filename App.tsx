@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import { StackNavigator } from './src/navigator/StackNavigator';
 import SplashScreen from 'react-native-splash-screen'
@@ -17,7 +17,7 @@ import {
 
 import { LogBox } from 'react-native';
 import { WorkoutProvider } from './src/context/WorkoutContext/WorkoutContext';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const AppState = ({ children }: {children: JSX.Element | JSX.Element[]}) => {
@@ -28,23 +28,26 @@ const AppState = ({ children }: {children: JSX.Element | JSX.Element[]}) => {
   )
 }
 
-
-
 const App = () => {
+
   LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
-LogBox.ignoreAllLogs(); //Ignore all log notifications
-LogBox.ignoreLogs([
-  "Require cycle: node_modules/victory",
-]);
+  LogBox.ignoreAllLogs(); //Ignore all log notifications
+  LogBox.ignoreLogs([
+    "Require cycle: node_modules/victory",
+  ]);
 
   useEffect(()=> {  
     SplashScreen.hide()
   },[])
 
+  
+
+
+
   return (
     <NavigationContainer>
       <AppState>
-        <StackNavigator /> 
+        <StackNavigator  /> 
        </AppState>
 
 
