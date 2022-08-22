@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, Dimensions, Platform, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Dimensions, FlatList, Platform, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import {  ScrollView } from 'react-native-gesture-handler'
 import Svg, { Line, Polyline } from 'react-native-svg';
+import List from '../components/List';
+import SearchBar from '../components/SearchBar';
 
 
 import { exercises } from '../utils/exercices/data';
@@ -14,8 +16,13 @@ export const AnalysisScreen = ({ navigation }: any) => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
+
+    const [searchPhrase, setSearchPhrase] = useState("");
+    const [clicked, setCLicked] = useState(false);
+    const [fakeData, setFakeData] = useState();
+
     useEffect(() => {
-     
+     console.log(searchPhrase)
     }, [])
 
     const refreshControl = () => {
@@ -36,22 +43,11 @@ export const AnalysisScreen = ({ navigation }: any) => {
     };
 
 
+
+
     return (
 
-        <ScrollView
-            refreshControl={refreshControl()}
-            scrollEventThrottle={1}
-            showsHorizontalScrollIndicator={false}
-            nestedScrollEnabled={true}
-            contentInset={{ // iOS only
-                top: 0,
-                left: 0,
-                bottom: 0,
-                right: 0
-            }}
-            contentContainerStyle={{
-                paddingRight: Platform.OS === 'android' ? 0 : 0
-            }} style={styles.view}>
+        <View style={styles.view}>
                      <View style={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
             <TouchableOpacity onPress={() => {   navigation.navigate('InicioScreen',{}) }}>
                 <Svg
@@ -67,10 +63,30 @@ export const AnalysisScreen = ({ navigation }: any) => {
                 </Svg>
             </TouchableOpacity>
         </View>
-           <View  style={{marginVertical:10}}>
-            <Text style={{color:'white', fontSize:25, fontWeight:'bold'}}>Ejercicios</Text>
+           <View style={{marginVertical:10}}>
+            <Text style={{color:'white', fontSize:25, fontWeight:'bold', marginBottom:10}}>Ejercicios</Text>
+       {/*      {!clicked && <Text style={styles.title}>Programming Languages</Text>} */}
+       <View style={{width:'100%', height:'100%'}}>
+       <SearchBar
+                searchPhrase={searchPhrase}
+                setSearchPhrase={setSearchPhrase}
+                clicked={clicked}
+                setCLicked={setCLicked}
+            />
+       
+
+          <List
+            searchPhrase={searchPhrase}
+            data={exercises}
+            setCLicked={setCLicked}
+          />
+
+       </View>
+          
+      
+      
            </View>
-          {exercises.map(({id, nombre, muscularGroup, instrucciones}) => (
+          {/* {exercises.map(({id, nombre, muscularGroup, instrucciones}) => (
             <TouchableOpacity 
             onPress={() => {
                 navigation.navigate('ExerciseScreen', {
@@ -90,13 +106,13 @@ export const AnalysisScreen = ({ navigation }: any) => {
 
                 </View>
             </TouchableOpacity>
-          ))}
+          ))} */}
            <View>
             
                
            </View>
         
-        </ScrollView>
+        </View>
 
 
 
@@ -109,8 +125,25 @@ const styles = StyleSheet.create({
         backgroundColor: '#111111',
         height: height,
         width: width,
-        padding: 15
+        padding: 15,
+        marginBottom:20
     },
+    list__container: {
+        margin: 10,
+        height: "85%",
+        width: "100%",
+      },
+      item: {
+        margin: 30,
+        borderBottomWidth: 2,
+        borderBottomColor: "lightgrey"
+      },
+      title: {
+        fontSize: 20,
+        fontWeight: "bold",
+        marginBottom: 5,
+        fontStyle: "italic",
+      },
   
   
 })

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Alert, Dimensions, Image, LogBox, Platform, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { FlatList, ScrollView, Switch } from 'react-native-gesture-handler'
 import 'react-native-get-random-values';
+import RNFetchBlob from 'rn-fetch-blob'
 
 const { width, height } = Dimensions.get("window");
 
@@ -11,6 +12,32 @@ export const SettingsScreen = ({ navigation }: any) => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
 
+    const downloadCsv = () => {
+
+        // send http request in a new thread (using native code)
+        RNFetchBlob.fetch('GET', 'http://www.example.com/images/img1.png', {
+            Authorization : 'Bearer access-token...',
+            // more headers  ..
+        })
+        .then((res) => {
+            let status = res.info().status;
+            
+            if(status == 200) {
+            // the conversion is done in native code
+            let base64Str = res.base64()
+            // the following conversions are done in js, it's SYNC
+            let text = res.text()
+            let json = res.json()
+            } else {
+            // handle other status codes
+            }
+        })
+        // Something went wrong:
+        .catch((errorMessage:any) => {
+            // error handling
+            console.log(errorMessage)
+        })
+    }
 
     useEffect(() => {
 
