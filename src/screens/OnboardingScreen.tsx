@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Dimensions, View, Text, ScrollView, Platform, StyleSheet, Alert, SafeAreaView, StatusBar, FlatList, TouchableOpacity} from 'react-native';
+import { Dimensions, View, Text, ScrollView, Platform, StyleSheet, Image, Alert, SafeAreaView, StatusBar, FlatList, TouchableOpacity} from 'react-native';
 
 
 import 'react-native-get-random-values'
@@ -19,28 +19,28 @@ export const OnboardingScreen = ({ navigation }: any) => {
     const slides:Array<OnboardingTypes> = [
         {
             id:1,
-           /*  image: require('../image,') */
-           title: 'Trackea tus entrenamientos',
-           subtitle: 'Lorem impsum dolor sit met, consectur',
+            image: require('../assets/images/pesas.png'),
+            title: 'Registra tus entrenamientos',
+            subtitle: '¿No sabes si entrenaste? Lleva un diario de tus entrenamientos y consultalos cuando quieras.',
         },
         {
             id:2,
-           /*  image: require('../image,') */
-           title: 'Monitoriza tu progreso',
-           subtitle: 'Lorem impsum dolor sit met, consectur',
+            image: require('../assets/images/bascula.png'),
+            title: 'Monitoriza tu progreso',
+            subtitle: 'Mide y cuantifica la intensidad y el volumen de tus entrenamientos, lleva tu progreso al siguiente nivel.',
         },
         {
             id:3,
-           /*  image: require('../image,') */
-           title: 'Gestiona tus descansos',
-           subtitle: 'Lorem impsum dolor sit met, consectur',
+            image: require('../assets/images/reloj.png'),
+            title: 'Gestiona tus descansos',
+            subtitle: 'Podrás llevar un control de los descansos entre series.',
         },
 
     ]
 
     const Footer = () => {
         return <View 
-        style={{height:height*0.25, justifyContent:'space-between', paddingHorizontal:20}}>
+        style={{height:height*0.15, justifyContent:'space-between', paddingHorizontal:20}}>
             <View style={{flexDirection:'row', justifyContent:'center', marginTop:20}}>
               {
                 slides.map((_, index) => (
@@ -54,9 +54,13 @@ export const OnboardingScreen = ({ navigation }: any) => {
     }
 
     const Slide = ({item}:any) => {
-        return  <View style={{alignItems:'center',justifyContent:'center', width:width*0.9, display:'flex', flexDirection:'column'}}>
-            <Text style={{color:'white', fontSize:19, fontWeight:'bold'}}>{item.title}</Text>
+        return  <View style={{alignItems:'center',justifyContent:'center',width, }}>
+
+           <Image source={item.image} style={{height:'55%', width, resizeMode:'contain'}}  resizeMode="cover" />
+            <Text style={{color:'white', fontSize:19, fontWeight:'bold', marginTop:20}}>{item.title}</Text>
             <Text style={{color:'white', fontSize:16}}>{item.subtitle}</Text>
+        
+   
         </View>
     }
 
@@ -86,25 +90,25 @@ export const OnboardingScreen = ({ navigation }: any) => {
 
     return (
         <SafeAreaView
-          style={styles.view}>
+          style={{flex:1, backgroundColor:'#111111'}}>
         <StatusBar backgroundColor="#111111" />
         <FlatList
             ref={ref}
             onMomentumScrollEnd={updateCurrentSlideIndex}
             pagingEnabled
             data={slides}
-            contentContainerStyle={{height: height * 0.75}}
+            contentContainerStyle={{height: '100%'}}
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => <Slide item={item} />}
         />
         <Footer />
-        <View style={{ marginBottom:20}}>
+        <View style={{ marginBottom:15}}>
             {
                 currentSlideIndex == slides.length - 1 ?
-                (<View style={{height:50, marginBottom: 20}}>
+                (<View style={{height:50, marginBottom: 10}}>
                 <TouchableOpacity style={styles.btn} onPress={() => navigation.replace('InicioScreen')}>
-                         <Text style={{fontSize:17}}>Empieza ya</Text>
+                         <Text style={{fontSize:17, color:'black'}}>Empieza ya</Text>
                      </TouchableOpacity>
                 </View>) : (
                          <View style={{flexDirection:'row'}}>    
