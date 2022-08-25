@@ -11,13 +11,11 @@ import { WorkoutContext } from '../context/WorkoutContext/WorkoutContext';
 import { exercises } from '../utils/exercices/data';
 import { Exercise } from '../utils/models/Exercise';
 
-
 const { width, height } = Dimensions.get("window");
 
 
 export const AddWorkoutScreen = (props: any) => {
-    // ref
-    const bottomSheetRef = useRef<BottomSheet>(null);
+
 
     const { workout, getData, clearDatabase, inputsData, setInputsData } = useContext(WorkoutContext);
 
@@ -25,7 +23,6 @@ export const AddWorkoutScreen = (props: any) => {
     const [data, setData] = useState<number>(0);
     const [hora, setHora] = useState<number>(0);
 
-    const [isOpen, setIsOpen] = useState<boolean>(true);
     const [error, setError] = useState<boolean>(false);
     const [notes, setNotes] = useState('');
     const [secondsLeft, setSecondsLeft] = useState(3600);
@@ -34,8 +31,8 @@ export const AddWorkoutScreen = (props: any) => {
     const [inputs, setInputs] = useState<any>([]);
     const [selectedExercises, setSelectedExercises] = useState<any>([])
     const [exercisesData, setExercisesData] = useState<any>([])
-    /*   { key: '', value: '', value2:'', exerciseId:''  */
-    /* console.log(props.route.params.selectedExercices) */
+    const [workouts, setWorkouts] = useState<any>([])
+
 
 
     useEffect(() => {
@@ -49,7 +46,8 @@ export const AddWorkoutScreen = (props: any) => {
             addExerciseData(props.route.params.selectedExercices)
 
         }
-
+        getDataStorage2()
+        searchPR()
 
     }, [props.route.params])
 
@@ -146,77 +144,17 @@ export const AddWorkoutScreen = (props: any) => {
             exercises: exercisesInfo
         }
 
-        console.log(data)
+       /*  console.log(data) */
+       console.log('ExerciseData',exercisesData)
         /* setData(data) */
-        storeData(data)
+        if(exercisesData.length===0){
+            console.log('no hy nada')
+            return;
+        }else{
+           /*  storeData(data) */
+        }
     }
 
-    const workout1 = [{
-        id: 9,
-        dia: '20 julio',
-        title: 'Entrenamiento de mañana',
-        tiempo: '1h 10m',
-        notes: 'Almost die with 10RPe',
-        pr: 2,
-        totalWeight: 6086,
-        mes: 7,
-        exercises: [
-            {
-                id: 12304,
-                exercise: 'Barbell Squat',
-                series: [
-                    {
-                        reps: 5,
-                        weight: 10
-                    },
-                    {
-                        reps: 5,
-                        weight: 20
-                    },
-                    {
-                        reps: 5,
-                        weight: 30
-                    }
-                ]
-            },
-            {
-                id: 12305,
-                exercise: 'Barbell Squat',
-                series: [
-                    {
-                        reps: 5,
-                        weight: 40
-                    },
-                    {
-                        reps: 5,
-                        weight: 50
-                    },
-                    {
-                        reps: 5,
-                        weight: 60
-                    }
-                ]
-            },
-            {
-                id: 1234,
-                exercise: 'Barbell Squat',
-                series: [
-                    {
-                        reps: 5,
-                        weight: 70
-                    },
-                    {
-                        reps: 5,
-                        weight: 80
-                    },
-                    {
-                        reps: 5,
-                        weight: 90
-                    }
-                ]
-            }
-        ]
-    }]
 
     const addExerciseData = (exercisesId: any) => {
         const _exerciseBlock: any = [...exercisesData]
@@ -443,8 +381,6 @@ export const AddWorkoutScreen = (props: any) => {
 
     }
 
-    // variables
-
     const formatNumber = (number: any) => `0${number}`.slice(-2);
 
     const toggle = () => {
@@ -521,11 +457,58 @@ export const AddWorkoutScreen = (props: any) => {
     const getDataStorage = async () => {
         try {
             const jsonValue = await AsyncStorage.getItem('workout')
-            console.log(jsonValue)
+            /* onsole.log(jsonValue) */
             return jsonValue != null ? JSON.parse(jsonValue) : null;
         } catch (e) {
-            // error reading value
+            return null;
         }
+    }
+   
+    const getDataStorage2 = (): any => {
+       
+        AsyncStorage.getItem('workout').then((result: any) => {
+         /*    console.log('resultad', result) */
+            let data = JSON.parse(result)
+            setWorkouts(data)
+            return data;
+         
+        }).catch((err: any) => {
+            console.log(err)
+        })
+    }
+
+    const searchPR = () => {
+        //Recoger el valor de todos los items de PR de async storage
+        //recoger el valor de todos los input
+        //Compararlos y decir si has sacadado un nuevo valor.
+        let result = []
+
+        AsyncStorage.getItem('pr').then((resultado: any) => {
+            if(resultado !== null){
+                let prData = JSON.parse(resultado)
+                console.log('El prdataaaaaaaaaaaaaaaaaaaaaaa',prData)
+            }else{
+             /*    console.log('resultadoooo null',resultado) */
+            }
+           }).catch((err: any) => {
+               console.log(err)
+               
+           })
+        
+        for(let i = 0; i < workouts.length;i++){
+            for(let j = 0; j < workouts[i].exercises.length;j++){
+              /*   console.log(workouts[i].exercises) */
+                for(let k = 0; k < workouts[i].exercises[j].series.length;k++){
+                    /* console.log(workouts[i].exercises[j].series[k].exerciseId, workouts[i].exercises[j].series[k].weight) */
+                    if(workouts[i].exercises[j].series[k].exerciseId === 4 && typeof workouts[i].exercises[j].series[k].exerciseId === 'number' ){
+
+                        result.push(parseInt(workouts[i].exercises[j].series[k].weight)) 
+                    }
+                }
+            } 
+        }
+        var m = Math.max(...result);
+        console.log('El valor maximo aurelio', m)
     }
 
 

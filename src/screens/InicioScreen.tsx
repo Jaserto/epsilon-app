@@ -58,7 +58,7 @@ export const InicioScreen = ({ navigation }: any) => {
       
         setWorkoutsFilter([])
         let fechaEqual = workouts.filter((workout:Workout) => new Date(workout.fechaISO).getDate() ===  new Date(date).getDate() )
-        console.log('fecha           ',fechaEqual)
+      /*   console.log('fecha           ',fechaEqual) */
         if(fechaEqual.length>0){
             getDates()
             for(let workout of fechaEqual){
@@ -71,8 +71,8 @@ export const InicioScreen = ({ navigation }: any) => {
             setWorkoutsFilter([])
         }
         
-        console.log('El filtro de los worokouts', workoutsFilter)
-        console.log('dayy', day)
+   /*      console.log('El filtro de los worokouts', workoutsFilter)
+        console.log('dayy', day) */
         setLastWorkouts(false)
         
       }
@@ -91,7 +91,7 @@ export const InicioScreen = ({ navigation }: any) => {
                        }
                     ]
                 })
-                console.log(markedDatesArray) 
+              /*   console.log(markedDatesArray)  */
             }
             setDates(markedDatesArray)
         }
@@ -104,6 +104,7 @@ export const InicioScreen = ({ navigation }: any) => {
          /*    console.log('resultad', result) */
             let data = JSON.parse(result)
             setWorkouts(data)
+          /*   console.log(data[0].exercises[0].series) */
             setWorkoutsFilter(data)
             setIsLoading(false)
         }).catch((err: any) => {
@@ -118,12 +119,15 @@ export const InicioScreen = ({ navigation }: any) => {
       try{
           getWorkoutsData()
           getDates()
+          searchPR()
       }catch(e){
         console.log(e)
         setIsLoading(false)
       }
 
     }, [])
+
+
 
     const refreshControl = () => {
         const onRefresh = () => {
