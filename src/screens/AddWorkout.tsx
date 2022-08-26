@@ -47,7 +47,7 @@ export const AddWorkoutScreen = (props: any) => {
 
         }
         getDataStorage2()
-        searchPR()
+    /*     searchPR() */
 
     }, [props.route.params])
 
@@ -64,17 +64,6 @@ export const AddWorkoutScreen = (props: any) => {
         let exercisesInfo: any = [];
         let seriesInfo: any = []
 
-
-        /*  for (let i = 0; i < _exerciseBlock.length; i++) {
- 
-             series = 
-             kilos += parseInt(inputs[i].value)
-             repeticiones += parseInt(inputs[i].value2) === undefined ? 0 : parseInt(inputs[i].value2)
-             seriesInfo.push({
-                 weight: inputs[i].value,
-                 reps: inputs[i].value2
-             })
-         } */
         for (let item of _exerciseBlock) {
             exercisesInfo.push({
                 exercise: exercises.filter(exercise => exercise.id === item.key)[0].nombre,
@@ -95,9 +84,7 @@ export const AddWorkoutScreen = (props: any) => {
                     setError(true)
                     return
                 }
-
             }
-
 
 
             series = item.inputsData.length;
@@ -117,18 +104,50 @@ export const AddWorkoutScreen = (props: any) => {
                     } else {
                         exercisesInfo[k].series = [seriesInfo[j]]
                     }
-
-
-                } else {
                 }
             }
         }
-     /*    console.log('Ejercicios', exercisesInfo)
- */
 
-        /*  console.log(exercisesInfo) */
         //se coge de los inputs
         let hora = new Date().getHours()
+
+  
+
+        /* setData(data) */
+       console.log('ExerciseData',_exerciseBlock)
+        if(exercisesData.length===0){
+            console.log('no hay nada')
+           
+            return;
+        }else{
+            let prStorage=[]
+            AsyncStorage.getItem('pr').then((result: any) => {
+                  let dataPR = JSON.parse(result)
+                  console.log('daaataaaPR', dataPR)
+                    if(dataPR !== null){
+                        console.log(dataPR)
+                        for (let i = 0; i<dataPR.length; i++){
+                            console.log('DataPR ', dataPR[i])
+                           /* if( dataPR.weight > funcionParametro(dataPR[i].exerciseId)){
+                            nuevo maximo
+                           } */
+                        }
+                    }else{
+                        for(let j = 0; j < exercisesData.length; j++){
+                            for(let k = 0; k < exercisesData[j].inputsData.length; k++){
+
+                                console.log(exercisesData[j].inputsData[k])
+                            }
+                            /* AsyncStorage.setItem('pr', jsonValue2).then((resultado: any) => console.log(resultado) */
+                        }
+                    }
+              
+                
+               }).catch((err: any) => {
+                   console.log(err)
+               })
+          
+        }
 
         const data: any = {
             id: 10,
@@ -144,15 +163,7 @@ export const AddWorkoutScreen = (props: any) => {
             exercises: exercisesInfo
         }
 
-       /*  console.log(data) */
-       console.log('ExerciseData',exercisesData)
-        /* setData(data) */
-        if(exercisesData.length===0){
-            console.log('no hy nada')
-            return;
-        }else{
-           /*  storeData(data) */
-        }
+        /*  La buena storeData(data) */
     }
 
 
