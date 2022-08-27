@@ -120,7 +120,7 @@ export const AddWorkoutScreen = (props: any) => {
            
             return;
         }else{
-            let prStorage=[]
+            let prStorage:any=[];
             AsyncStorage.getItem('pr').then((result: any) => {
                   let dataPR = JSON.parse(result)
                   console.log('daaataaaPR', dataPR)
@@ -135,10 +135,25 @@ export const AddWorkoutScreen = (props: any) => {
                     }else{
                         for(let j = 0; j < exercisesData.length; j++){
                             for(let k = 0; k < exercisesData[j].inputsData.length; k++){
-
+                                //cuando hay varias series de un ejercicio controlar que setea el maximo.
                                 console.log(exercisesData[j].inputsData[k])
+                                let pr = {
+                                    exerciseId: exercisesData[j].inputsData[k].exerciseId,
+                                    weight: exercisesData[j].inputsData[k].value
+                                }
+                                if(!prStorage.includes(exercisesData[j].inputsData[k].exerciseId)){
+                                    console.log('no lo incluye')
+                                }else{
+                                    let prStorageMatch = prStorage.filter((item:any)=> item.exerciseId === exercisesData[j].inputsData[k].exerciseId)[0]
+                                    if( exercisesData[j].inputsData[k].value > prStorageMatch.weight){
+                                        prStorage = [...prStorage, prStorageMatch];
+                                    }
+                                    console.log(prStorage)
+                                }
+                              /*   AsyncStorage.setItem('pr', pr).then((resultado: any) => console.log(resultado) */
+
                             }
-                            /* AsyncStorage.setItem('pr', jsonValue2).then((resultado: any) => console.log(resultado) */
+                            
                         }
                     }
               
@@ -166,6 +181,21 @@ export const AddWorkoutScreen = (props: any) => {
         /*  La buena storeData(data) */
     }
 
+    const putPr = () => {
+        let pr = {
+            exerciseId:4,
+            weight: 100
+        }
+        let prString = JSON.stringify(pr);
+            AsyncStorage.setItem('pr', prString).then((resultado: any) => console.log('Se agrego', resultado)).catch(error => console.log(error))
+    }
+    
+    const mostrarPR = () => {
+        AsyncStorage.getItem('pr').then((result: any) => {
+            let dataPR = JSON.parse(result)
+            console.log(dataPR)
+        }).catch(err => console.log(err))
+    }
 
     const addExerciseData = (exercisesId: any) => {
         const _exerciseBlock: any = [...exercisesData]
@@ -645,6 +675,16 @@ export const AddWorkoutScreen = (props: any) => {
                                 onPress={() => {
                                     clearDatabase()
                                 }} />
+                                   <Button
+                                        title="Set PR"
+                                        onPress={() => {
+                                          putPr()
+                                        }} />
+                               <Button
+                                        title="Show PR"
+                                        onPress={() => {
+                                          mostrarPR()
+                                        }} />
                         </View>
                     </View>
                 </View>
