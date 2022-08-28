@@ -122,6 +122,7 @@ export const AddWorkoutScreen = (props: any) => {
         }else{
             let prStorage:any=[];
             let storagePr:any=[];
+            let storagePr2:any=[];
             AsyncStorage.getItem('pr').then((result: any) => {
                   let dataPR = JSON.parse(result)
                   console.log('daaataaaPR', dataPR)
@@ -172,31 +173,34 @@ export const AddWorkoutScreen = (props: any) => {
                                 weight: prStorage[i].weight
                             }
                             for(let p = 0; p < storagePr.length; p++){
-                                console.log('El pr storageeee', prStorage)
+
+                                console.log('El pr storageeee', prStorage[i])
                           
                           
                                 if(storagePr[p].exerciseId === prStorage[i].exerciseId && prStorage[i].weight > storagePr[p].weight){
-                                   /*  console.log(storagePr[i].exerciseId)
-                                    console.log('Es mayor') */
+                                    console.log(storagePr[p].exerciseId)
+                                    console.log('Es mayor')
                                     console.log('El QUE SE HA QUEDADO     ',storagePr)
                                     storagePr = storagePr.filter((item:any)=> item.exerciseId !== prStorage[i].exerciseId)
                                     storagePr.push(pr)
+                                  /*   storagePr2.push(pr) */
                                     console.log('El eliminado     ',storagePr) 
-                                   /*  console.log(pr) */
+                                    console.log(pr)
                                 }else if(storagePr[p].exerciseId !== prStorage[i].exerciseId ){
-                                    storagePr = storagePr.filter((item:any)=> item.exerciseId !== prStorage[i].exerciseId)
-                                    console.log(prStorage[i].exerciseId, prStorage[i].weight )
-                                    storagePr.push(pr)
+                                 /*    storagePr = storagePr.filter((item:any)=> item.exerciseId !== prStorage[i].exerciseId) */
+                                 
+                                   /*  storagePr2.push(pr) */
+                                    storagePr2.push(pr)
                                     console.log('Es diferente', storagePr)
                                 }
                               
                             }
                         }
+                        storagePr = [...storagePr, ...storagePr2]
                         console.log(storagePr)
                         console.log('------------------------------------------')
-                        props.navigation.navigate('newPr', {
-                            storagePr
-                        })
+                        console.log(storagePr2)
+                        props.navigation.navigate('NewPr', { storagePr })
 
                     }else{
                         for(let j = 0; j < exercisesData.length; j++){

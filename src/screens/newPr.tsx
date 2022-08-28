@@ -6,7 +6,7 @@ import { exercises } from '../utils/exercices/data';
 
 const { width, height } = Dimensions.get("window");
 
-const newPr = (props:any) => {
+export const NewPr = (props:any) => {
 
 
 let animation = useRef<LottieView>(null);
@@ -30,8 +30,8 @@ let animation = useRef<LottieView>(null);
         <View style={{marginTop:10, padding:20}}>
                 <Text style={{color:'white'}}>Estos son los nuevos record que has conseguido en este entrenamiento:</Text>
            {
-            props.route.params.storagePr.map((record:any) => (
-                <View style={{marginTop:10, display:'flex', flexDirection:'row'}}>
+            props.route.params.storagePr.map((record:any, id:number) => (
+                <View key={id} style={{marginTop:10, display:'flex', flexDirection:'row'}}>
                     <Text style={{color:'white', fontWeight:'bold'}}>{exercises.filter((item:any) => item.id === record.exerciseId)[0].nombre} </Text>
                     <Text style={{color:'white'}}>{record.weight} kgs</Text>
                     </View>
@@ -44,7 +44,7 @@ let animation = useRef<LottieView>(null);
   );
 };
 
-export default newPr;
+
 
 const styles = StyleSheet.create({
   
