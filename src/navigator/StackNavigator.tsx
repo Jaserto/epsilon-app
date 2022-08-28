@@ -15,6 +15,7 @@ import { WorkoutScreen } from '../screens/WorkoutScreen';
 import { AddExerciseScreen } from '../screens/AddExerciseScreen';
 import { ExerciseScreen } from '../screens/ExerciseScreen';
 import { OnboardingScreen } from '../screens/OnboardingScreen';
+import newPr from '../screens/newPr';
 
 const Stack = createNativeStackNavigator();
 
@@ -57,6 +58,7 @@ useEffect( () => {
             <Stack.Screen name="Workout" component={WorkoutScreen}/>
             <Stack.Screen name="AddExerciseScreen" component={AddExerciseScreen} options={{ headerShown: false }}/>
             <Stack.Screen name="ExerciseScreen" component={ExerciseScreen} options={{ headerShown: false }}/>
+            <Stack.Screen name="newPr" component={newPr} options={{ headerShown: false }}/>
         </>
     </Stack.Navigator>
     )

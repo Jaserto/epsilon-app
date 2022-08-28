@@ -119,7 +119,7 @@ export const InicioScreen = ({ navigation }: any) => {
       try{
           getWorkoutsData()
           getDates()
-          searchPR()
+         
       }catch(e){
         console.log(e)
         setIsLoading(false)

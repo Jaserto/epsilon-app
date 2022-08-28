@@ -194,7 +194,9 @@ export const AddWorkoutScreen = (props: any) => {
                         }
                         console.log(storagePr)
                         console.log('------------------------------------------')
-
+                        props.navigation.navigate('newPr', {
+                            storagePr
+                        })
 
                     }else{
                         for(let j = 0; j < exercisesData.length; j++){
