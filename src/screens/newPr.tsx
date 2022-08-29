@@ -25,7 +25,7 @@ let animation = useRef<LottieView>(null);
                             autoPlay
                             loop
                     />
-        <Text style={{color:'white', fontSize: 23}}>Has consguido nuevos Record</Text>
+        <Text style={{color:'white', fontSize: 23}}>Has conseguido nuevos Record</Text>
         <Text style={{color:'white', fontSize: 25, fontWeight:'bold'}}>Enhorabuena!!</Text>
         <View style={{marginTop:10, padding:20}}>
                 <Text style={{color:'white'}}>Estos son los nuevos record que has conseguido en este entrenamiento:</Text>

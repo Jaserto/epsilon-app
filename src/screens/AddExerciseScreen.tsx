@@ -47,7 +47,7 @@ export const AddExerciseScreen = ({ navigation }: any) => {
         <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, alignItems: 'flex-end', justifyContent:'flex-end' }}>
           <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate('AddWorkout', {
+                  navigation.replace('AddWorkout', {
                      selectedExercices: selectedExercises,
                   })
               }}

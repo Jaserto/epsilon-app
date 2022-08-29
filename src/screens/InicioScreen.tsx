@@ -304,7 +304,7 @@ export const InicioScreen = ({ navigation }: any) => {
             {isLoading &&
                 (<ActivityIndicator size='large' color="purple"/>)
             }
-            {lastWorkouts && workoutsFilter.length>0 ? (<View style={{marginTop:13}}>
+            {lastWorkouts && workoutsFilter !== null && workoutsFilter.length > 0 ? (<View style={{marginTop:13}}>
                 <Text style={styles.h3}>Últimos entrenamientos</Text>
             </View>) :
                 (<View style={{marginTop:13, display:'flex', flexDirection:'row'}}>
