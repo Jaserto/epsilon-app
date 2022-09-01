@@ -6192,6 +6192,11 @@ react-native-tooltip-menu@^3.0.3:
   resolved "https://registry.yarnpkg.com/react-native-tooltip-menu/-/react-native-tooltip-menu-3.0.3.tgz#5b3e27d0d026dc948cb4eb7953109f6d46f6978b"
   integrity sha512-cUPueL3W4N2GCauV30xAa99dmTpQldzp1e95IuaTI8wCrPuMMS8wU7CumwHT3NhwbhiCKFAmiFxRRgt8T+P1RA==
 
+react-native-uuid@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-uuid/-/react-native-uuid-2.0.1.tgz#ed4e2dfb1683eddb66967eb5dca140dfe1abddb9"
+  integrity sha512-cptnoIbL53GTCrWlb/+jrDC6tvb7ypIyzbXNJcpR3Vab0mkeaaVd5qnB3f0whXYzS+SMoSQLcUUB0gEWqkPC0g==
+
 react-native@^0.69.1:
   version "0.69.2"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.69.2.tgz#a554cc97700270a51af10bc4bbff73f1ba296617"

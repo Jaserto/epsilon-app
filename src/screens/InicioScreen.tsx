@@ -327,7 +327,7 @@ export const InicioScreen = ({ navigation }: any) => {
                         }}>
                             
                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
-                            <Text style={{ fontWeight: 'bold', marginBottom: 5, color: '#111111', fontSize: 16 }}>{workout.title}{workout.id}</Text>
+                            <Text style={{ fontWeight: 'bold', marginBottom: 5, color: '#111111', fontSize: 16 }}>{workout.title}</Text>
                             <TouchableOpacity onPress={() => deleteWorkout(workout.id)}>
                             <Svg
                                     width={23}

@@ -10,6 +10,7 @@ import Svg, { Polyline } from 'react-native-svg';
 import { WorkoutContext } from '../context/WorkoutContext/WorkoutContext';
 import { exercises } from '../utils/exercices/data';
 import { Exercise } from '../utils/models/Exercise';
+import uuid from 'react-native-uuid';
 
 const { width, height } = Dimensions.get("window");
 
@@ -266,7 +267,7 @@ export const AddWorkoutScreen = (props: any) => {
         }
 
         const data: any = {
-            id: 12,
+            id: uuid.v4(),
             dia: new Date().getDate(),
             fecha: new Date().getDate() + '-' + new Date().getMonth() + '-' + new Date().getFullYear(),
             fechaISO: new Date().toISOString(),
@@ -279,7 +280,8 @@ export const AddWorkoutScreen = (props: any) => {
             exercises: exercisesInfo
         }
 
-     /*  storeData(data) */
+      storeData(data)
+      
     }
 
     const putPr = () => {
