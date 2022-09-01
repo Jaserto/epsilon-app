@@ -266,7 +266,7 @@ export const AddWorkoutScreen = (props: any) => {
         }
 
         const data: any = {
-            id: 10,
+            id: 12,
             dia: new Date().getDate(),
             fecha: new Date().getDate() + '-' + new Date().getMonth() + '-' + new Date().getFullYear(),
             fechaISO: new Date().toISOString(),
@@ -279,7 +279,7 @@ export const AddWorkoutScreen = (props: any) => {
             exercises: exercisesInfo
         }
 
-        /*  La buena storeData(data) */
+     /*  storeData(data) */
     }
 
     const putPr = () => {

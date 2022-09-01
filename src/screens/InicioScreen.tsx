@@ -165,7 +165,8 @@ export const InicioScreen = ({ navigation }: any) => {
         ));
     }
 
-    const deleteWorkout = () => {
+    const deleteWorkout = (id:number) => {
+       
         Alert.alert(
             "Eliminar el entrenamiento",
             "¿Estás seguro de elimininar este entrenamiento?",
@@ -176,27 +177,30 @@ export const InicioScreen = ({ navigation }: any) => {
                 style: "cancel"
               },
               { text: "Eliminar", onPress: async() => {
-           
+                    console.log(id)
                 // setWorkouts
 
-            /*     try {
-                    let respuesta;
+                try {
+                    let workoutToDelete;
                     const jsonValue = await AsyncStorage.getItem('workout')
                     if (jsonValue !== null) {
-                        console.log('nopooooooo es nullllll')
                         const jsonParse = JSON.parse(jsonValue)
-                        let newArray = [...jsonParse, data]
-                        console.log('El Json',jsonParse)
+                        /* console.log('El Json',jsonParse) */
+                      //  let workoutToDelete = jsonParse.find((workout:any) => workout.id === id);
+                      //  let newArray = [...jsonParse, data]
+                        let newArray = jsonParse.filter((workout:any) => workout.id !== id);
+                        console.log(newArray)
                         await AsyncStorage.setItem('workout',JSON.stringify(newArray));
+                        getWorkoutsData()
                     }else{
-                        let datos=[]
+                        /* let datos=[]
                         datos.push(data)
                         const jsonValue2 = JSON.stringify(datos)
-                        await AsyncStorage.setItem('workout', jsonValue2)
+                        await AsyncStorage.setItem('workout', jsonValue2) */
                     }
                 } catch (e) {
                     console.log('Ha habido un error eliminando el workout')
-                } */
+                }
                 
                 }
               }
@@ -295,8 +299,8 @@ export const InicioScreen = ({ navigation }: any) => {
                     highlightDateNumberStyle={{color: 'white'}}
                     highlightDateNameStyle={{color: 'white'}}
                     disabledDateNameStyle={{color: 'grey'}}
-                        disabledDateNumberStyle={{color: 'grey'}}
-                        iconContainer={{flex: 0.1}}
+                    disabledDateNumberStyle={{color: 'grey'}}
+                    iconContainer={{flex: 0.1}}
                     dateNameStyle={{ color: 'white' }}
                     iconStyle={{ tintColor: 'white' }}
                 />
@@ -323,8 +327,8 @@ export const InicioScreen = ({ navigation }: any) => {
                         }}>
                             
                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
-                            <Text style={{ fontWeight: 'bold', marginBottom: 5, color: '#111111', fontSize: 16 }}>{workout.title}</Text>
-                            <TouchableOpacity onPress={deleteWorkout}>
+                            <Text style={{ fontWeight: 'bold', marginBottom: 5, color: '#111111', fontSize: 16 }}>{workout.title}{workout.id}</Text>
+                            <TouchableOpacity onPress={() => deleteWorkout(workout.id)}>
                             <Svg
                                     width={23}
                                     height={23}
