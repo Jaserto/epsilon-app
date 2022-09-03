@@ -32,6 +32,10 @@
 
 <br />
 
+**Epsilon** is an app made in *ReactNative* to track your workouts. It consists in registering your data and your training, and the app will be in charge of showing the progression in the exercises you have registered. It will be displayed in different graphs and forms, segmented by muscle group, volume, and intensity. 
+
+It also allows the calculation of different metrics: RM calculation, speed, etc.
+
 
 **Epsilon** es una app hecha en *ReactNative* para hacer seguimiento de los entrenamientos. Consiste en registrar tus datos y tu entrenamiento, y la app se encargará de mostrar la progresión en los ejercicios que hayas registrado. Se mostrará en diferentes gráficos y formas, segmentando por grupo muscular, volumen, e intensidad. 
 
