@@ -17,14 +17,17 @@ import {
 
 import { LogBox } from 'react-native';
 import { WorkoutProvider } from './src/context/WorkoutContext/WorkoutContext';
+import { UserProvider } from './src/context/UserContext/UserContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const AppState = ({ children }: {children: JSX.Element | JSX.Element[]}) => {
   return (
-    <WorkoutProvider>
-      {children}
-    </WorkoutProvider>
+    <UserProvider>
+      <WorkoutProvider>
+        {children}
+      </WorkoutProvider>
+    </UserProvider>
   )
 }
 

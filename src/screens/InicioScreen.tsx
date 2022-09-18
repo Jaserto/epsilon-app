@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { ActivityIndicator, Alert, Button, Dimensions, Image, LogBox, Platform, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { Path, Svg, Circle, Line, Polyline } from 'react-native-svg';
@@ -22,11 +22,13 @@ export const InicioScreen = ({ navigation }: any) => {
 
     
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const calendar = useRef<any>(null);
     const [workouts, setWorkouts] = useState<Array<Workout>>([])
     const [workoutsFilter, setWorkoutsFilter] = useState<Array<Workout>>([])
     const [dates, setDates] = useState<Array<Date>>([])
     const [day, setDay] = useState<number>(new Date().getDate())
     const [lastWorkouts, setLastWorkouts] = useState<boolean>(true)
+    
 
       // Marked dates array format
 
@@ -52,7 +54,8 @@ export const InicioScreen = ({ navigation }: any) => {
       ];
  */
       const onDateSelectedd = (date:any) => {
-         
+         console.log('el date',date)
+        console.log('la fecha',  calendar.current.getSelectedDate())
         let workoutFilter = []
         setDay(new Date(date).getDate())
       
@@ -66,6 +69,7 @@ export const InicioScreen = ({ navigation }: any) => {
               
                 console.log('.................................................' + workout)
             }
+            console.log(workoutFilter)
             setWorkoutsFilter(workoutFilter)
         }else{
             setWorkoutsFilter([])
@@ -115,7 +119,6 @@ export const InicioScreen = ({ navigation }: any) => {
 
     useEffect(() => {
         setIsLoading(true)
-
       try{
           getWorkoutsData()
           getDates()
@@ -188,10 +191,16 @@ export const InicioScreen = ({ navigation }: any) => {
                         /* console.log('El Json',jsonParse) */
                       //  let workoutToDelete = jsonParse.find((workout:any) => workout.id === id);
                       //  let newArray = [...jsonParse, data]
+                    
                         let newArray = jsonParse.filter((workout:any) => workout.id !== id);
                         console.log(newArray)
                         await AsyncStorage.setItem('workout',JSON.stringify(newArray));
-                        getWorkoutsData()
+                        if(calendar.current.getSelectedDate() !== undefined ){
+                            getWorkoutsData()
+                            calendar.current.getSelectedDate(day)
+                        }else{
+                            getWorkoutsData()
+                        }
                     }else{
                         /* let datos=[]
                         datos.push(data)
@@ -208,6 +217,7 @@ export const InicioScreen = ({ navigation }: any) => {
           );
         
     }
+
 
     const getBestSeries = (exercises: any) => {
 
@@ -286,9 +296,9 @@ export const InicioScreen = ({ navigation }: any) => {
             <View style={{ flex: 1 }}>
                 <CalendarStrip
                     scrollable
+                    ref={calendar}
                     markedDates={dates}
                     onDateSelected={onDateSelectedd}
-                  /*   selectedDate={new Date()} */
                     calendarAnimation={{type: 'sequence', duration: 30}}
                     daySelectionAnimation={{type:'background', duration: 200, highlightColor:'purple'}}
                     style={[{ height: 80, marginTop:15, paddingTop: 10, paddingBottom: 10, borderRadius:6}, styles.shadowProp]}

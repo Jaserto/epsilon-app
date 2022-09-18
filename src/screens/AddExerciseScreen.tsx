@@ -28,6 +28,21 @@ export const AddExerciseScreen = ({ navigation }: any) => {
   return (
     <>
     <View style={styles.view}>
+    <View style={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+            <TouchableOpacity onPress={() => { navigation.pop() }}>
+                <Svg
+                    width={25}
+                    height={25}
+                    viewBox="0 0 25 25"
+                    stroke="white"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round">
+                    <Line x1="19" y1="12" x2="5" y2="12" />
+                    <Polyline points="12 19 5 12 12 5" />
+                </Svg>
+            </TouchableOpacity>
+        </View>
       <View style={{ marginVertical: 10 }}>
         <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold' }}>Ejercicios</Text>
       </View>
@@ -47,7 +62,7 @@ export const AddExerciseScreen = ({ navigation }: any) => {
         <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, alignItems: 'flex-end', justifyContent:'flex-end' }}>
           <TouchableOpacity
                 onPress={() => {
-                  navigation.replace('AddWorkout', {
+                  navigation.push('AddWorkout', {
                      selectedExercices: selectedExercises,
                   })
               }}

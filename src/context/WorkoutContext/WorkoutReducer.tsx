@@ -17,6 +17,7 @@ type WorkourAction =
     | { type: 'addError', payload: string }
     | { type: 'removeError' }
     | { type: 'setInputsData', payload: { inputsData: any | null} }
+    | { type: 'clearInputsData' }
     | { type: 'getInputsData', payload: { inputsData: any | null} }
     | { type: 'addWorkout', payload: { workout:any | null} }
     | { type: 'clearDatabase'}
@@ -61,6 +62,11 @@ type WorkourAction =
                     return {
                         ...state,
                         inputsData: action.payload,
+                }
+            case 'clearInputsData':
+                return {
+                    ...state,
+                    inputsData: []
                 }
             default:
                 return state;

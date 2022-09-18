@@ -2,7 +2,7 @@
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Alert, Button, Dimensions, Image, LogBox, Platform, Pressable, RefreshControl, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { FlatList, GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler'
-import BottomSheet from '@gorhom/bottom-sheet';
+import KeepAwake from '@sayem314/react-native-keep-awake';
 import BackgroundTimer from 'react-native-background-timer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Workout } from '../utils/models/Workout';
@@ -11,21 +11,24 @@ import { WorkoutContext } from '../context/WorkoutContext/WorkoutContext';
 import { exercises } from '../utils/exercices/data';
 import { Exercise } from '../utils/models/Exercise';
 import uuid from 'react-native-uuid';
+import { UserContext } from '../context/UserContext/UserContext';
 
 const { width, height } = Dimensions.get("window");
 
 
 export const AddWorkoutScreen = (props: any) => {
 
-
+    
     const { workout, getData, clearDatabase, inputsData, setInputsData } = useContext(WorkoutContext);
-
+    const { keepAwakeScreen, setKeepAwakeScreen } = useContext(UserContext);
+    
     //States
     const [data, setData] = useState<number>(0);
     const [hora, setHora] = useState<number>(0);
 
-    const [error, setError] = useState<boolean>(false);
+    const [error, setError] = useState<any>([]);
     const [notes, setNotes] = useState('');
+    const [keepAwake, setKeepAwake] = useState<boolean>(keepAwakeScreen);
     const [secondsLeft, setSecondsLeft] = useState(3600);
     const [remainingSecs, setRemainingSecs] = useState(0);
     const [isActive, setIsActive] = useState(false);
@@ -40,12 +43,10 @@ export const AddWorkoutScreen = (props: any) => {
         setHora(new Date().getHours())
         inputsData !== null && setExercisesData(inputsData.inputsData)
       /*   console.log('La conchadelaverga entro de nuevo', inputsData) */
+      /*  console.log(props.route.params.selectedExercices) */
         if (props.route.params) {
-           /*  console.log(props.route.params.selectedExercices) */
             setSelectedExercises(props.route.params.selectedExercices)
-
             addExerciseData(props.route.params.selectedExercices)
-
         }
         getDataStorage2()
     /*     searchPR() */
@@ -55,23 +56,24 @@ export const AddWorkoutScreen = (props: any) => {
     const finalizeWorkout = () => {
         const _exerciseBlock: any = [...exercisesData]
         console.log('terminando')
-        /*   console.log('line 58',_exerciseBlock) */
-        //console.log(kilos, repeticiones, series)
-
         let kilos: number = 0;
         let series: number = inputs.length;
         let repeticiones: number = 0
         let time = mins + ':' + secs;
         let exercisesInfo: any = [];
         let seriesInfo: any = []
-
+        let emptySerie = []
+        setError([])
         for (let item of _exerciseBlock) {
             exercisesInfo.push({
                 exercise: exercises.filter(exercise => exercise.id === item.key)[0].nombre,
                 idExercise: item.key
             });
-
+         
             for (let serie of item.inputsData) {
+              
+            
+                console.log(serie)
                 if (serie.value != '' && serie.value2 != '') {
                     kilos += parseInt(serie.value) * parseInt(serie.value2);
                     seriesInfo.push({
@@ -79,10 +81,22 @@ export const AddWorkoutScreen = (props: any) => {
                         reps: serie.value2,
                         exerciseId: serie.exerciseId
                     })
-                    setError(false)
+              
                 } else {
+                 
                     console.log('inserta los datos de la serie')
-                    setError(true)
+                    if(serie.value === '' || serie.value2===''){
+                        console.log('entro')
+                        emptySerie.push({
+                            exerciseId: serie.exerciseId,
+                            error: true,
+                            msg: 'Debes introducir todos los campos.'
+                        })
+                      
+                        setError(emptySerie)
+               
+                    }
+                    console.log(error)
                     return
                 }
             }
@@ -201,7 +215,8 @@ export const AddWorkoutScreen = (props: any) => {
                         console.log(storagePr)
                         console.log('------------------------------------------')
                         console.log(storagePr2)
-                        props.navigation.navigate('NewPr', { storagePr })
+                        props.navigation.replace('NewPr', { storagePr })
+                   
 
                     }else{
                         for(let j = 0; j < exercisesData.length; j++){
@@ -338,34 +353,12 @@ export const AddWorkoutScreen = (props: any) => {
                 }
                 setExercisesData(_exerciseBlock)
 
-
             }
 
-            /*        setExercisesData(inputsData.inputsData) */
+           
         }
 
-        /* 
-                console.log('123123', inputsData)
-                console.log('entrando con el exerciseData ',_exerciseBlock )
-                console.log('entrando ',exercisesId ) */
 
-
-        /* 
-                if(_exerciseBlock === undefined ){
-                    console.log('entro en el block')
-                    _exerciseBlock.push({ key: exerciseId, inputsData: [{ key: '', value: '', value2: '', exerciseId: exerciseId, exerciseName: 'Ejercicio' }] })            
-                }else{
-                    console.log('no entro en el block')
-                } */
-
-
-        // _exerciseBlock?.find((exercise:any) => exercise.key === exerciseId ).push({ key: exerciseId, inputsData: [{ key: '', value: '', value2: '', exerciseId, exerciseName: 'Ejercicio' }] })
-        /*             _exerciseBlock.push({ key: exerciseeId, inputsData: [{ key: '', value: '', value2: '', exerciseId: exerciseeId, exerciseName: 'Ejercicio' }] })      */
-
-        /* 
-                setInputsData(_exerciseBlock)
-                setExercisesData(_exerciseBlock)
-                console.log('guardado') */
     }
 
     const addSerie = (exerciseId: any) => {
@@ -380,32 +373,10 @@ export const AddWorkoutScreen = (props: any) => {
 
     const deleteSerie = (exerciseId: any, index: any) => {
         const _exerciseBlock = [...inputsData.inputsData]
-        /*    console.log('eeeeeeeeeeeeeeeeeeeeeeeeee',exerciseId)
-           console.log('aaaaaaaaaaaaaaaaaaaaaaaaaa',index)
-           console.log('000000000000000000000000000000000000000000000000000000',_exerciseBlock)
-           console.log('------------------------------------------------------',exercisesData) */
+      
         if (inputsData !== undefined) {
 
-            /*        if(ex !== undefined){
-                const result = _exerciseBlock.reduce((prev:any, curr:any) => {
-                    const aux = curr.inputsData.filter((i:any) => i.key != index )
-                    console.log('auziliar' ,aux)
-                    if (aux.length > 0) {
-                        const add = { ...curr, inputsData: aux }
-                        prev.push(add)
-                    }
-                    
-                    return prev
-                }, [])  
-                console.log('filterData', result) */
-            /*   setExercisesData(result) */
-
-            /* 
-                  console.log('exxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',ex)
-                  let filterData = _exerciseBlock.filter((x:any, i:any, o:any) => (o[i].inputsData = x.inputsData.filter((y:any) => y.key !== index  )) && x.inputsData.length);
-                  
-                  console.log('el filterrrrrrrrrrrrr',filterData); */
-
+          
             let nuevo = []
             for (let op of _exerciseBlock) {
                 if (op.key === exerciseId) {
@@ -416,23 +387,26 @@ export const AddWorkoutScreen = (props: any) => {
             }
             console.log('hito', nuevo)
             let ex = _exerciseBlock.find((exerciseData: any) => exerciseData.key === exerciseId);
-
-            let res = ex.inputsData.filter((exercisee: any) => exercisee.key != index)
-            /* ex.inputsData.push(res) */
-            console.log(res)
-            console.log('¡nuevoooooo', _exerciseBlock)
-
-            setExercisesData(nuevo)
+            if(ex !==undefined){
+                console.log('se quedo vacio')
+                let res = ex.inputsData.filter((exercisee: any) => exercisee.key != index)
+                console.log(res)
+                console.log('¡nuevoooooo', _exerciseBlock)
+    
+                setExercisesData(nuevo)
+            }else{
+                setSelectedExercises([])
+                setExercisesData([])
+            }
+           
+     
+        
             /*  setInputsData(_exerciseBlock) */
         }
-        /*     const _exercisesData = exercisesData.filter((input: any, index: any) => index != exerciseId); */
-        //  let filtrado = ex.inputsData.filter((inputsData:any) =>  inputsData.key ===exerciseId )
-
-        // console.log('Filtrado', filtrado)
-        //   setExercisesData(ex)
-        /*   setInputsData(ex) */
+     
     }
 
+    //TODO
     const deleteExerciseData = (key: any) => {
         const _exercisesData = exercisesData.filter((input: any, index: any) => index != key);
         setExercisesData(_exercisesData);
@@ -440,6 +414,7 @@ export const AddWorkoutScreen = (props: any) => {
     }
 
     const exerciseDataHandler = (text: any, text2: any, index: any, exerciseId: any, exerciseName: any) => {
+
         console.log('Lineeee', 'text: ', text, 'text2: ', text2, 'key: ', index, 'exerciseId: ', exerciseId, 'nameEercuse: ', exerciseName)
         const _exerciseBlock = [...exercisesData]
         console.log(_exerciseBlock)
@@ -462,14 +437,10 @@ export const AddWorkoutScreen = (props: any) => {
         _exercisesData.filter((exercisesInputs: any) => exercisesInputs.exer)
     }
 
-
-
-
-
-    async function funcion(): Promise<void> {
+/*     async function funcion(): Promise<void> {
         console.log(inputsData.inputsData)
 
-    }
+    } */
 
 
     const deleteHandler = (key: any) => {
@@ -485,47 +456,6 @@ export const AddWorkoutScreen = (props: any) => {
         _inputs[key].key = exerciseId;
 
         setInputs(_inputs);
-        /*   console.log(text, text2, key) */
-
-        /*        let kilos: number = 0;
-               let series: number = inputs.length;
-               let seriesInfo: any = []
-               let repeticiones: number = 0
-               let time = mins + ':' + secs;
-       
-               for (let i = 0; i < inputs.length; i++) {
-       
-                   series =
-                       kilos += parseInt(inputs[i].value)
-                   repeticiones += parseInt(inputs[i].value2) === undefined ? 0 : parseInt(inputs[i].value2)
-                   seriesInfo.push({
-                       weight: inputs[i].value,
-                       reps: inputs[i].value2
-                   })
-               } */
-
-        //console.log(kilos, repeticiones, series)
-        /* 
-              let hora = new Date().getHours()
-              const data:any = {
-                  id: 10,
-                  dia: Date.now(),
-                  title: 
-                  tiempo: time,
-                  notes: 'Almost die with 1090000RPe',
-                  pr: 2,
-                  totalWeight: kilos,
-                  mes: 7,
-                  exercises: [
-                      {
-                          id: 12304,
-                          exercise: 'Barbell Squat',
-                          series: seriesInfo
-                      }
-                  ]
-              }
-      
-              setData(data) */
 
     }
 
@@ -562,6 +492,22 @@ export const AddWorkoutScreen = (props: any) => {
     }, [secondsLeft]);
 
     useEffect(() => {
+
+        AsyncStorage.getItem('keepScreenEnabled').then((result: any) => {
+            let data = JSON.parse(result)
+            if ( data.toString() == 'true'){
+                setKeepAwake(true)
+                setKeepAwakeScreen(true)
+            }
+            else {
+                setKeepAwake(false)
+                setKeepAwakeScreen(false)
+            console.log(keepAwake)
+        }
+        }).catch((err: any) => {
+            console.log(err)
+        })
+
         if (isActive) startTimer();
         else BackgroundTimer.stopBackgroundTimer();
         return () => {
@@ -672,9 +618,6 @@ export const AddWorkoutScreen = (props: any) => {
 
                 <TextInput placeholderTextColor='white' keyboardType='numeric' placeholder={"Repeticiones"} style={styles.input} value={inputData.value2}
                     onChangeText={(text2) => exerciseDataHandler(inputData.value, text2, index, inputData.exerciseId, inputData.exerciseName)} />
-                {/*  <TouchableOpacity onPress={() => deleteExerciseData(inputData.key)} style={{backgroundColor:'red', padding:3, borderRadius:4}}>
-                <Text style={{ color: "white", fontSize: 13 }}>Borrar</Text>
-            </TouchableOpacity> */}
                 <TouchableOpacity onPress={() => deleteSerie(inputData.exerciseId, inputData.key)} style={{ backgroundColor: 'red', padding: 3, borderRadius: 4 }}>
                     <Text style={{ color: "white", fontSize: 13 }}>Borrar</Text>
                 </TouchableOpacity>
@@ -701,8 +644,9 @@ export const AddWorkoutScreen = (props: any) => {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <ScrollView style={styles.view}>
+           {keepAwakeScreen &&  <KeepAwake />}
                 <View style={{ marginVertical: 10 }}>
-                    <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold' }}>Añade un nuevo entrenamiento</Text>
+                    <Text style={{ color: 'whsite', fontSize: 25, fontWeight: 'bold' }}>Añade un nuevo entrenamiento</Text>
                 </View>
                 <View style={{ marginBottom: 25 }}>
                     <View style={{ marginVertical: 5 }}>
@@ -737,7 +681,7 @@ export const AddWorkoutScreen = (props: any) => {
 
                             <View style={{ marginBottom: 20, width: '100%' }}>
 
-                                {exercisesData.map((inputsData: any) => (
+                                {exercisesData !== undefined && exercisesData.map((inputsData: any, index:number) => (
                                     <View key={inputsData.key} style={{ display: 'flex' }}>
                                         <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>{exercises.filter((exercise: Exercise) => exercise.id === inputsData.key)[0].nombre}</Text>
                                         {/* 
@@ -745,8 +689,9 @@ export const AddWorkoutScreen = (props: any) => {
                                           
                                         ))} */}
                                         {inputsData !== undefined && renderInput(inputsData.inputsData)}
-                                        {error && (
+                                        {error.length>0 && error[0].exerciseId ===inputsData.inputsData[0].exerciseId && (
                                             <View>
+                                                 {/*  console.log('El input',inputsData.inputsData[0].inputsData[0].exerciseId) */}
                                                 <Text style={{ color: 'red' }}>Error: Inserta todos los datos de la serie</Text>
                                             </View>
                                         )}

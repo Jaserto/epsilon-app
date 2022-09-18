@@ -2,45 +2,91 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Alert, Dimensions, Image, LogBox, Platform, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { FlatList, ScrollView, Switch } from 'react-native-gesture-handler'
 import 'react-native-get-random-values';
+import { activateKeepAwake, deactivateKeepAwake } from "@sayem314/react-native-keep-awake";
 import RNFetchBlob from 'rn-fetch-blob'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { UserContext } from '../context/UserContext/UserContext';
 const { width, height } = Dimensions.get("window");
 
 export const SettingsScreen = ({ navigation }: any) => {
 
+    const { keepAwakeScreen, setKeepAwakeScreen } = useContext(UserContext);
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isEnabled, setIsEnabled] = useState<boolean>(keepAwakeScreen);
+    const [existKeepAwake, setExistKeepAwake] = useState<boolean>();
+
+    const toggleSwitch = async () => {
+        /*  setIsEnabled(previousState => !previousState) */
+        /*   let exist =  */
+
+        if (existKeepAwake) {
+            console.log(!isEnabled)
+            setIsEnabled(!isEnabled)
+            await AsyncStorage.setItem('keepScreenEnabled', JSON.stringify(!isEnabled))
+                .then(() => {
+                    setKeepAwakeScreen(!isEnabled)
+                    /*      setIsEnabled(!isEnabled) */
+                })
+                .catch(error => console.log(error))
+
+        } else {
+            console.log(!isEnabled)
+            setIsEnabled(!isEnabled)
+            await AsyncStorage.mergeItem('keepScreenEnabled', JSON.stringify(!isEnabled))
+                .then(() => {
+                    setKeepAwakeScreen(!isEnabled)
+                    /*      setIsEnabled(!isEnabled) */
+                })
+                .catch(error => console.log(error))
+        }
+
+    }
+
 
 
     const downloadCsv = () => {
-
         // send http request in a new thread (using native code)
         RNFetchBlob.fetch('GET', 'http://www.example.com/images/img1.png', {
-            Authorization : 'Bearer access-token...',
+            Authorization: 'Bearer access-token...',
             // more headers  ..
         })
-        .then((res) => {
-            let status = res.info().status;
-            
-            if(status == 200) {
-            // the conversion is done in native code
-            let base64Str = res.base64()
-            // the following conversions are done in js, it's SYNC
-            let text = res.text()
-            let json = res.json()
-            } else {
-            // handle other status codes
-            }
-        })
-        // Something went wrong:
-        .catch((errorMessage:any) => {
-            // error handling
-            console.log(errorMessage)
-        })
+            .then((res) => {
+                let status = res.info().status;
+
+                if (status == 200) {
+                    // the conversion is done in native code
+                    let base64Str = res.base64()
+                    // the following conversions are done in js, it's SYNC
+                    let text = res.text()
+                    let json = res.json()
+                } else {
+                    // handle other status codes
+                }
+            })
+            // Something went wrong:
+            .catch((errorMessage: any) => {
+                // error handling
+                console.log(errorMessage)
+            })
     }
 
     useEffect(() => {
+        AsyncStorage.getItem('keepScreenEnabled').then((result: any) => {
+            console.log('El resutlado', result)
+            let data = JSON.parse(result)
+            if (data !== null) setExistKeepAwake(true)
+            else setExistKeepAwake(false)
 
+            console.log('eeeeee', data)
+            if (data.toString() == 'true') {
+                setIsEnabled(true)
+                console.log('Eldata', data.toString())
+            }
+            else setIsEnabled(false)
+        }).catch((err: any) => {
+            console.log(err)
+        })
     }, [])
 
     const refreshControl = () => {
@@ -83,7 +129,13 @@ export const SettingsScreen = ({ navigation }: any) => {
                 <View style={{ marginBottom: 10 }}>
                     <Text style={styles.titleCat}>Perfil</Text>
                     <View style={styles.spacer}>
-                        <Text style={styles.text}>Editar</Text>
+                        <Text style={styles.text}>Nombre</Text>
+                    </View>
+                    <View style={styles.spacer}>
+                        <Text style={styles.text}>Peso</Text>
+                    </View>
+                    <View style={styles.spacer}>
+                        <Text style={styles.text}>Altura</Text>
                     </View>
                 </View>
                 {/*   linea  -----------------------------------------------------------*/}
@@ -96,10 +148,6 @@ export const SettingsScreen = ({ navigation }: any) => {
                     </View>
                     <View style={styles.spacer}>
                         <Text style={styles.text}>Distancia</Text>
-                        <Switch
-                            trackColor={{ false: "#767577", true: "#81b0ff" }}
-                            ios_backgroundColor="#3e3e3e"
-                        />
                     </View>
                     <View style={styles.spacer}>
                         <Text style={styles.text}>Tamaño</Text>
@@ -107,26 +155,24 @@ export const SettingsScreen = ({ navigation }: any) => {
                 </View>
                 {/*   linea  -----------------------------------------------------------*/}
 
-                <View style={styles.cat}/>
+                <View style={styles.cat} />
 
                 <View style={{ marginBottom: 10 }}>
                     <Text style={styles.titleCat}>General</Text>
                     <View style={styles.spacer}>
                         <Text style={styles.text}>Mantener la pantalla encendida durante el entrenamiento</Text>
                         <Switch
-                            trackColor={{ false: "#767577", true: "#81b0ff" }}
-                            ios_backgroundColor="#3e3e3e"
+                            trackColor={{ false: "#A23DFF", true: "#A23DFF" }}
+                            /*   activeThumbColor="#fff" */
+                            thumbColor="#fff"
+                            /*     activeTrackColor="#1DA1F2" */
+                            /*     ios_backgroundColor="#F0F8FF" */
+                            onValueChange={toggleSwitch}
+                            value={isEnabled}
                         />
                     </View>
                     <View style={styles.spacer}>
                         <Text style={styles.text}>Exportar datos</Text>
-                        <Switch
-                            trackColor={{ false: "#767577", true: "#81b0ff" }}
-                            ios_backgroundColor="#3e3e3e"
-                        />
-                    </View>
-                    <View style={styles.spacer}>
-                        <Text style={{ color: 'white', marginBottom: 3,  fontSize:15 }}>Tema</Text>
                     </View>
                 </View>
 
@@ -136,20 +182,30 @@ export const SettingsScreen = ({ navigation }: any) => {
                     style={styles.cat}
                 />
                 <View style={{ marginBottom: 10 }}>
-                    <Text style={styles.titleCat}>Avanzado</Text>
-                    <Text style={styles.text}>Mantener la pantalla encendida durante el entrenamiento</Text>
-                    <Text style={styles.text}>Exportar datos</Text>
-                    <Text style={styles.text}>Tema</Text>
+                    <View style={styles.spacer}>
+                        <Text style={styles.titleCat}>Avanzado</Text>
+                    </View>
+                    <View style={styles.spacer}>
+                        <Text style={styles.text}>Mantener la pantalla encendida durante el entrenamiento</Text>
+                    </View>
+                    <View style={styles.spacer}>
+                        <Text style={styles.text}>Exportar datos</Text>
+                    </View>
                 </View>
+                <View
+                    style={styles.cat}
+                />
                 <View style={{ marginBottom: 10 }}>
-                    <Text style={styles.titleCat}>Otros servicios</Text>
-                    <Text style={styles.text}>Google Fit</Text>
-                </View>
-                <View style={{ marginBottom: 10 }}>
-                    <Text style={styles.titleCat}>Contacto y soporte</Text>
-                    <Text style={{ padding:8, backgroundColor: 'purple', borderRadius:4, color:'white', marginBottom:10 }}>Si quieres informar sobre un problema puedes contactarme a través de las siguientes redes sociales. </Text>
-                    <Text style={styles.text}>Twitter @serdev_es</Text>
-                    <Text style={styles.text}>Instagram @serdev_es</Text>
+                    <View style={styles.spacer}>
+                        <Text style={styles.titleCat}>Contacto y soporte</Text>
+                    </View>
+                    <Text style={{ padding: 8, backgroundColor: 'purple', borderRadius: 4, color: 'white', marginBottom: 16 }}>Si quieres informar sobre un problema puedes contactarme a través de las siguientes redes sociales. </Text>
+                    <View style={styles.spacer}>
+                        <Text style={styles.text}>Twitter @serdev_es</Text>
+                    </View>
+                    <View style={styles.spacer}>
+                        <Text style={styles.text}>Instagram @serdev_es</Text>
+                    </View>
                 </View>
 
             </View>
@@ -161,7 +217,6 @@ export const SettingsScreen = ({ navigation }: any) => {
     )
 }
 const styles = StyleSheet.create({
-
     view: {
         display: 'flex',
         flexDirection: 'column',
@@ -170,9 +225,9 @@ const styles = StyleSheet.create({
         width: width,
         padding: 15
     },
-    titleCat: 
+    titleCat:
         { color: 'white', fontSize: 17, fontWeight: 'bold', marginBottom: 12 },
-    cat:{
+    cat: {
         width: '100%',
         borderBottomColor: 'white',
         borderBottomWidth: StyleSheet.hairlineWidth,
@@ -203,7 +258,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
     },
     text: {
-        lineHeight:20,
+        lineHeight: 20,
         fontSize: 15,
         color: 'white',
         marginBottom: 10

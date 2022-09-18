@@ -33,7 +33,7 @@ export const OnboardingScreen = ({ navigation }: any) => {
             id:3,
             image: require('../assets/images/reloj.png'),
             title: 'Gestiona tus descansos',
-            subtitle: 'Podrás llevar un control de los descansos entre series.',
+            subtitle: 'Podrás llevar un control de los descansos entre series con el reloj que incorporamos.',
         },
 
     ]
@@ -54,14 +54,14 @@ export const OnboardingScreen = ({ navigation }: any) => {
     }
 
     const Slide = ({item}:any) => {
-        return  <View style={{alignItems:'center',justifyContent:'center',width, }}>
-
-           <Image source={item.image} style={{height:'55%', width, resizeMode:'contain'}}  resizeMode="cover" />
-            <Text style={{color:'white', fontSize:19, fontWeight:'bold', marginTop:20}}>{item.title}</Text>
-            <Text style={{color:'white', fontSize:16}}>{item.subtitle}</Text>
-        
-   
+        return  <View style={{alignItems:'center',justifyContent:'center',width: width*0.9, marginHorizontal:5 }}>
+        <Image source={item.image} style={{height:'55%', width: width*0.5, resizeMode:'contain'}}  resizeMode="cover" />
+        <View>
+         <Text style={{color:'white', fontSize:19, fontWeight:'bold', marginTop:40}}>{item.title}</Text>
+         <Text style={{color:'white', fontSize:15, marginTop:5}}>{item.subtitle}</Text>
         </View>
+     </View>
+       
     }
 
     const updateCurrentSlideIndex = (e:any) => {
@@ -74,7 +74,7 @@ export const OnboardingScreen = ({ navigation }: any) => {
     const goNextSlide = () => {
         const nextSlideIndex = currentSlideIndex + 1;
        if(nextSlideIndex != slides.length){
-        const offset = nextSlideIndex * width;
+        const offset = nextSlideIndex * width -20;
         ref?.current?.scrollToOffset({offset});
         setCurrentSlideIndex(nextSlideIndex)
        }
@@ -90,7 +90,7 @@ export const OnboardingScreen = ({ navigation }: any) => {
 
     return (
         <SafeAreaView
-          style={{flex:1, backgroundColor:'#111111'}}>
+          style={{flex:1, backgroundColor:'#111111', padding:15}}>
         <StatusBar backgroundColor="#111111" />
         <FlatList
             ref={ref}
@@ -106,18 +106,18 @@ export const OnboardingScreen = ({ navigation }: any) => {
         <View style={{ marginBottom:15}}>
             {
                 currentSlideIndex == slides.length - 1 ?
-                (<View style={{height:50, marginBottom: 10}}>
+                (<View style={{height:40}}>
                 <TouchableOpacity style={styles.btn} onPress={() => navigation.replace('InicioScreen')}>
-                         <Text style={{fontSize:17, color:'black'}}>Empieza ya</Text>
-                     </TouchableOpacity>
+                         <Text style={{fontSize:17, color:'#333333'}}>Empieza ya</Text>
+                </TouchableOpacity>
                 </View>) : (
                          <View style={{flexDirection:'row'}}>    
                          <TouchableOpacity style={styles.btn} onPress={skip}>
-                             <Text style={{fontSize:17}}>Saltar</Text>
+                             <Text style={{fontSize:17, color:'#333333'}}>Saltar</Text>
                          </TouchableOpacity>
                          <View style={{width:15}} />
                          <TouchableOpacity style={styles.btn} onPress={goNextSlide}>
-                             <Text style={{fontSize:17}}>Siguiente</Text>
+                             <Text style={{fontSize:17, color:'#333333'}}>Siguiente</Text>
                          </TouchableOpacity>
                      </View>
                 )
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     },
     btn: {
         flex:1,
-        height:50,
+        height:40,
         borderRadius:5,
         backgroundColor:'white',
         alignItems:'center',

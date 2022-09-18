@@ -1,18 +1,36 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Image, Pressable, StatusBar, SafeAreaView, Dimensions } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import LottieView from 'lottie-react-native';
 import { exercises } from '../utils/exercices/data';
+import { BackHandler } from 'react-native';
+import { WorkoutContext } from '../context/WorkoutContext/WorkoutContext';
 
 const { width, height } = Dimensions.get("window");
 
 export const NewPr = (props:any) => {
 
+const { workout, getData, clearDatabase, inputsData, setInputsData } = useContext(WorkoutContext);
 
 let animation = useRef<LottieView>(null);
   useEffect(() => {
     console.log(props.route.params.storagePr)
   }, [])
+
+  useEffect(() => {
+    const backAction = () => {
+      /* setInputsData([]) */
+      props.navigation.replace('InicioScreen');
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   return (
     <SafeAreaView style={{ height: '100%', backgroundColor:'#181818' }}>

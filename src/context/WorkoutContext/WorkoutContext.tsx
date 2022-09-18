@@ -12,7 +12,7 @@ type WorkoutContextProps ={
     getData: () => void;
     storeData: ( workout : any) => void;
     setInputsData: ( inputsData: any) => void;
- /*    getInputsData: () => void; */
+    clearInputs: () => void;
     clearDatabase: () => void;
     removeError: () => void;
 }
@@ -85,6 +85,18 @@ export const WorkoutProvider = ({children}: any) => {
       dispatch({ type: 'addError', payload: 'Hubo un problema. ' + e || 'Informacion incorrecta'})
     }
   }
+
+  const clearInputs = async () => {
+    try {
+      console.log('Storing Inputs');
+      dispatch({ 
+        type: 'clearInputsData'
+      });
+     } catch(e) {
+       // error reading value
+       dispatch({ type: 'addError', payload: 'Hubo un problema. ' + e || 'Informacion incorrecta'})
+     }
+  }
   
   const getData = async () => {
     try {
@@ -110,7 +122,7 @@ export const WorkoutProvider = ({children}: any) => {
             ...state,
             storeData,
             setInputsData,
-           /*  getInputsData, */
+            clearInputs,
             getData,
             clearDatabase,
             removeError
