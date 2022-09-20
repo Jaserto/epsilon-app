@@ -113,7 +113,7 @@ export const Tabs = () => {
             }} 
             />
        
-            <Tab.Screen name="Profile" component={ProfileScreen} 
+         {/*    <Tab.Screen name="Profile" component={ProfileScreen} 
             options={{ 
                 headerShown: false,
                 tabBarIcon: ({ color }) => (
@@ -130,7 +130,7 @@ export const Tabs = () => {
                         <Circle cx="12" cy="7" r="4" />
                     </Svg>
                 )
-            }} />
+            }} /> */}
         </Tab.Navigator>
     );
 }

@@ -126,7 +126,7 @@ export const SettingsScreen = ({ navigation }: any) => {
             }} style={styles.view}>
             <Text style={styles.h3}>Ajustes</Text>
             <View style={{ marginBottom: 10, display: 'flex' }}>
-                <View style={{ marginBottom: 10 }}>
+               {/*  <View style={{ marginBottom: 10 }}>
                     <Text style={styles.titleCat}>Perfil</Text>
                     <View style={styles.spacer}>
                         <Text style={styles.text}>Nombre</Text>
@@ -137,9 +137,9 @@ export const SettingsScreen = ({ navigation }: any) => {
                     <View style={styles.spacer}>
                         <Text style={styles.text}>Altura</Text>
                     </View>
-                </View>
+                </View> */}
                 {/*   linea  -----------------------------------------------------------*/}
-                <View style={styles.cat}
+          {/*       <View style={styles.cat}
                 />
                 <View style={{ marginBottom: 10 }}>
                     <Text style={styles.titleCat}>Unidades y localización</Text>
@@ -152,7 +152,7 @@ export const SettingsScreen = ({ navigation }: any) => {
                     <View style={styles.spacer}>
                         <Text style={styles.text}>Tamaño</Text>
                     </View>
-                </View>
+                </View> */}
                 {/*   linea  -----------------------------------------------------------*/}
 
                 <View style={styles.cat} />
@@ -177,21 +177,6 @@ export const SettingsScreen = ({ navigation }: any) => {
                 </View>
 
 
-                {/*   linea  -----------------------------------------------------------*/}
-                <View
-                    style={styles.cat}
-                />
-                <View style={{ marginBottom: 10 }}>
-                    <View style={styles.spacer}>
-                        <Text style={styles.titleCat}>Avanzado</Text>
-                    </View>
-                    <View style={styles.spacer}>
-                        <Text style={styles.text}>Mantener la pantalla encendida durante el entrenamiento</Text>
-                    </View>
-                    <View style={styles.spacer}>
-                        <Text style={styles.text}>Exportar datos</Text>
-                    </View>
-                </View>
                 <View
                     style={styles.cat}
                 />
