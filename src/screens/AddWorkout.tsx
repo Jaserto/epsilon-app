@@ -71,8 +71,6 @@ export const AddWorkoutScreen = (props: any) => {
             });
          
             for (let serie of item.inputsData) {
-              
-            
                 console.log(serie)
                 if (serie.value != '' && serie.value2 != '') {
                     kilos += parseInt(serie.value) * parseInt(serie.value2);
@@ -81,9 +79,7 @@ export const AddWorkoutScreen = (props: any) => {
                         reps: serie.value2,
                         exerciseId: serie.exerciseId
                     })
-              
                 } else {
-                 
                     console.log('inserta los datos de la serie')
                     if(serie.value === '' || serie.value2===''){
                         console.log('entro')
@@ -91,29 +87,20 @@ export const AddWorkoutScreen = (props: any) => {
                             exerciseId: serie.exerciseId,
                             error: true,
                             msg: 'Debes introducir todos los campos.'
-                        })
-                      
+                        })     
                         setError(emptySerie)
-               
                     }
                     console.log(error)
                     return
                 }
             }
 
-
             series = item.inputsData.length;
-
         }
       /*   console.log('Series', seriesInfo) */
         for (let j = 0; j < seriesInfo.length; j++) {
-            //seriesInfo[j].exerciseId === exercisesInfo[j].key && exercisesInfo[j].series = seriesInfo[j];
             for (let k = 0; k < exercisesInfo.length; k++) {
-
                 if (seriesInfo[j].exerciseId === exercisesInfo[k].idExercise) {
-                 /*    console.log(exercisesInfo[k].series) */
-
-                  /*   console.log('lac comprobacion', exercisesInfo[0]) */
                     if (Array.isArray(exercisesInfo[k].series)) {
                         exercisesInfo[k].series.push(seriesInfo[j])
                     } else {
@@ -125,8 +112,6 @@ export const AddWorkoutScreen = (props: any) => {
 
         //se coge de los inputs
         let hora = new Date().getHours()
-
-  
 
         /* setData(data) */
        console.log('ExerciseData',_exerciseBlock)
@@ -146,8 +131,6 @@ export const AddWorkoutScreen = (props: any) => {
                         console.log('---------------------------------',dataPR)
                         console.log('lo',dataPR)
                         storagePr = dataPR
-
-                      //  console.log(storagePr)
                     
                            for(let j = 0; j < exercisesData.length; j++){
                             for(let k = 0; k < exercisesData[j].inputsData.length; k++){
@@ -157,33 +140,12 @@ export const AddWorkoutScreen = (props: any) => {
                                     exerciseId: exercisesData[j].inputsData[k].exerciseId,
                                     weight: exercisesData[j].inputsData[k].value
                                 }
-                                prStorage.push(pr)
-                            /*     if(prStorage.length > 0){
-                                   
-                                    for(let dup of prStorage){
-                                        if(dup.exerciseId === exercisesData[j].inputsData[k].exerciseId){
-                                            let prStorageMatch = prStorage.filter((item:any)=> item.exerciseId === exercisesData[j].inputsData[k].exerciseId)[0]
-                                            if( exercisesData[j].inputsData[k].value > prStorageMatch.weight){
-                                                prStorage = prStorage.filter((item:any)=> item.exerciseId !== exercisesData[j].inputsData[k].exerciseId)
-                                                prStorage.push(pr)
-                                            }else{
-                                            }
-                                        }else{
-                                            prStorage.push(pr)
-                                        }
-                                    }
-    
-                                }else{
-                                    prStorage.push(pr)
-                                  
-                                }  */
+                                prStorage.push(pr)  
                             }
                         }
-                                
                         let result = prStorage.filter((item:any,index:any)=>{
                             return prStorage.indexOf(item) === index;
                           })
-                        console.log('RESULTADO',result)
                         prStorage = result;
                         for (let i = 0; i < prStorage.length; i++){
                             let pr = {
@@ -194,7 +156,10 @@ export const AddWorkoutScreen = (props: any) => {
                                 console.log('El pr storageeee', prStorage[i])
 
                                 if(storagePr[p].exerciseId === prStorage[i].exerciseId){
-                                    console.log('mismitooooooooo',storagePr[p].exerciseId, storagePr[p].weight)
+                                    if(Number(prStorage[i].weight) > Number(storagePr[p].weight) ){
+                                        storagePr2.push(pr)
+                                    }
+                
                                 }else{
                                    if(storagePr2.some((element:any) => element.exerciseId === prStorage[i].exerciseId)){
                                    // let object = storagePr2.find((element:any) => element.exerciseId === prStorage[i].exerciseId)
@@ -204,55 +169,16 @@ export const AddWorkoutScreen = (props: any) => {
                                     }else{
                                     storagePr2.push(pr)
                                    }
-                                }
-
-
-            
-                           /*      if(storagePr[p].exerciseId === prStorage[i].exerciseId){
-                                    console.log('ES EL MISMO',storagePr[p].exerciseId  )
-                                   if( prStorage[i].weight > storagePr[p].weight){
-                                    console.log(storagePr[p].exerciseId)
-                                    console.log('Es mayor', prStorage[i].weight )
-                                    console.log('El QUE SE HA QUEDADO ',storagePr)
-                                    storagePr = storagePr.filter((item:any)=> item.exerciseId !== prStorage[i].exerciseId)
-                                   
-                                    storagePr2.push(pr)
-                                    console.log('El eliminado     ',storagePr) 
-                                    console.log(pr)
-                                   }else{
-                                    console.log('no es mayor')
-                                   }
-                                   
-                                
-                                }else if(storagePr[p].exerciseId !== prStorage[i].exerciseId ){
-                                 
-                                 
-                                    storagePr.push(pr)
-                                    storagePr2.push(pr)
-                                    console.log('Es diferente', storagePr)
-                                } */
-                              
+                                }         
                             }
                         }
-
-
-                   /*      storagePr = [...storagePr, ...storagePr2] */
-                     /*    storagePr = [...storagePr2] */
+               
+                        console.log('------------------------------------------')
                         console.log(storagePr)
-                        console.log('------------------------------------------')
                         console.log(storagePr2)
-                        let tabla ={} as any;
-                
-                       /*  const unicos = storagePr.filter((indice:any) => {
-                            return tabla.hasOwnProperty(indice) ? false : (tabla[indice] = true);
-                            }); */
-                    
-                        console.log('------------------------------------------')
-                        console.log('pr')
                         let mayor = storagePr2.filter((valorActual:any, indiceActual:any, arreglo:any) => arreglo.exerciseId !== valorActual.exerciseId);
 
                         let sinRepetidos = storagePr2.filter((valorActual:any, indiceActual:any, arreglo:any) => {
-                            //Podríamos omitir el return y hacerlo en una línea, pero se vería menos legible
                             return arreglo.findIndex((valorDelArreglo:any) => JSON.stringify(valorDelArreglo.exerciseId) === JSON.stringify(valorActual.exerciseId)) === indiceActual
                         });
                         
@@ -262,7 +188,6 @@ export const AddWorkoutScreen = (props: any) => {
                         storagePr = sinRepetidos;
                         props.navigation.replace('NewPr', { storagePr })
                    
-
                     }else{
                         for(let j = 0; j < exercisesData.length; j++){
                             for(let k = 0; k < exercisesData[j].inputsData.length; k++){
