@@ -176,16 +176,31 @@ export const AddWorkoutScreen = (props: any) => {
                         console.log('------------------------------------------')
                         console.log(storagePr)
                         console.log(storagePr2)
-                        let mayor = storagePr2.filter((valorActual:any, indiceActual:any, arreglo:any) => arreglo.exerciseId !== valorActual.exerciseId);
-
+                       /*  let mayor = storagePr2.filter((valorActual:any, indiceActual:any, arreglo:any) => arreglo.exerciseId !== valorActual.exerciseId);
+ */
                         let sinRepetidos = storagePr2.filter((valorActual:any, indiceActual:any, arreglo:any) => {
                             return arreglo.findIndex((valorDelArreglo:any) => JSON.stringify(valorDelArreglo.exerciseId) === JSON.stringify(valorActual.exerciseId)) === indiceActual
                         });
                         
-                        console.log("Sin repetidos es:", sinRepetidos);
+                     /*    console.log("Sin repetidos es:", sinRepetidos);
                         console.log("Mayor:", mayor);
-                        console.log("--------------------");
+                        console.log("--------------------"); */
                         storagePr = sinRepetidos;
+                        console.log(storagePr)
+                        let nuevosYaDentro = dataPR
+                        if(storagePr.length>0){
+                            for (let k = 0; k < sinRepetidos.length; k++){
+                                console.log('iterando',nuevosYaDentro.findIndex((item:any) => item.exerciseId === sinRepetidos[k].exerciseId ) )
+                               let exist = nuevosYaDentro.findIndex((item:any) => item.exerciseId === sinRepetidos[k].exerciseId )
+                               if( exist !== undefined || exist !== -1 ){
+                                nuevosYaDentro[exist] = sinRepetidos[k]
+                               }
+                               nuevosYaDentro.push(sinRepetidos[k])
+                            }
+                        console.log('Nuevos ', nuevosYaDentro)
+                        }
+
+
                         props.navigation.replace('NewPr', { storagePr })
                    
                     }else{
@@ -269,7 +284,7 @@ export const AddWorkoutScreen = (props: any) => {
             exercises: exercisesInfo
         }
 
-    /*   storeData(data) */
+      /* storeData(data) */
       
     }
 

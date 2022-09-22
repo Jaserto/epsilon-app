@@ -107,7 +107,7 @@ export const InicioScreen = ({ navigation }: any) => {
         AsyncStorage.getItem('workout').then((result: any) => {
          /*    console.log('resultad', result) */
             let data = JSON.parse(result)
-            setWorkouts(data)
+            setWorkouts(data.reverse())
           /*   console.log(data[0].exercises[0].series) */
             setWorkoutsFilter(data)
             setIsLoading(false)
