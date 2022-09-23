@@ -1,4 +1,5 @@
 import { Exercise } from "./Exercise";
+import { Serie } from "./Serie";
 
 export interface Series {
     id: number,
@@ -8,7 +9,3 @@ export interface Series {
     series: Array<Serie>
 }
 
-export interface Serie {
-    reps:number,
-    weight:number,
-}

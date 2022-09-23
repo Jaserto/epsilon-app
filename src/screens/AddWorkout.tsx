@@ -12,6 +12,7 @@ import { exercises } from '../utils/exercices/data';
 import { Exercise } from '../utils/models/Exercise';
 import uuid from 'react-native-uuid';
 import { UserContext } from '../context/UserContext/UserContext';
+import { PersonalRecord } from '../utils/models';
 
 const { width, height } = Dimensions.get("window");
 
@@ -27,10 +28,11 @@ export const AddWorkoutScreen = (props: any) => {
     const [hora, setHora] = useState<number>(0);
 
     const [error, setError] = useState<any>([]);
+    const [pr, setPr] = useState<Array<PersonalRecord>>([]);
     const [notes, setNotes] = useState('');
     const [keepAwake, setKeepAwake] = useState<boolean>(keepAwakeScreen);
     const [secondsLeft, setSecondsLeft] = useState(3600);
-    const [remainingSecs, setRemainingSecs] = useState(0);
+    const [remainingSecs, setRemainingSecs] = useState<number>(0);
     const [isActive, setIsActive] = useState(false);
     const [inputs, setInputs] = useState<any>([]);
     const [selectedExercises, setSelectedExercises] = useState<any>([])
@@ -187,6 +189,7 @@ export const AddWorkoutScreen = (props: any) => {
                         console.log("--------------------"); */
                         storagePr = sinRepetidos;
                         console.log(storagePr)
+                     
                         let nuevosYaDentro = dataPR
                         if(storagePr.length>0){
                             for (let k = 0; k < sinRepetidos.length; k++){
@@ -201,7 +204,26 @@ export const AddWorkoutScreen = (props: any) => {
                             // Arary con nuevos
                         console.log('Nuevos ', nuevosYaDentro)
                         }
+                        
+       /*                  setPr(storagePr) */
 
+                        console.log('El pr delicioso',pr)
+                        const data: any = {
+                            id: uuid.v4(),
+                            dia: new Date().getDate(),
+                            fecha: new Date().getDate() + '-' + new Date().getMonth() + '-' + new Date().getFullYear(),
+                            fechaISO: new Date().toISOString(),
+                            title: hora > 12 && hora < 18 ? 'Entrenamiento de tarde' : hora > 18 && hora < 24 ? 'Entrenamiento de noche' : 'Entrenamiento de mañana',
+                            tiempo: time,
+                            notes: notes,
+                            pr: storagePr.length,
+                            totalWeight: kilos,
+                            mes: new Date().getMonth(),
+                            exercises: exercisesInfo
+                        }
+                
+
+                           storeData(data)
 
                         props.navigation.replace('NewPr', { storagePr })
                    
@@ -264,6 +286,23 @@ export const AddWorkoutScreen = (props: any) => {
                             return tabla.hasOwnProperty(indice) ? false : (tabla[indice] = true);
                             });
                             console.log(unicos, '---')
+
+
+
+                            const data: any = {
+                                id: uuid.v4(),
+                                dia: new Date().getDate(),
+                                fecha: new Date().getDate() + '-' + new Date().getMonth() + '-' + new Date().getFullYear(),
+                                fechaISO: new Date().toISOString(),
+                                title: hora > 12 && hora < 18 ? 'Entrenamiento de tarde' : hora > 18 && hora < 24 ? 'Entrenamiento de noche' : 'Entrenamiento de mañana',
+                                tiempo: time,
+                                notes: notes,
+                                pr: storagePr.length,
+                                totalWeight: kilos,
+                                mes: new Date().getMonth(),
+                                exercises: exercisesInfo
+                            }
+                            storeData(data)
                     }
                 
                }).catch((err: any) => {
@@ -271,7 +310,7 @@ export const AddWorkoutScreen = (props: any) => {
                })
           
         }
-
+     /*    console.log('El pr delicioso',pr)
         const data: any = {
             id: uuid.v4(),
             dia: new Date().getDate(),
@@ -280,13 +319,13 @@ export const AddWorkoutScreen = (props: any) => {
             title: hora > 12 && hora < 18 ? 'Entrenamiento de tarde' : hora > 18 && hora < 24 ? 'Entrenamiento de noche' : 'Entrenamiento de mañana',
             tiempo: time,
             notes: notes,
-            pr: storagePr.length,
+            pr: pr.length,
             totalWeight: kilos,
             mes: new Date().getMonth(),
             exercises: exercisesInfo
         }
-
-      /* storeData(data) */
+ */
+    /*   storeData(data) */
       
     }
 
@@ -314,12 +353,9 @@ export const AddWorkoutScreen = (props: any) => {
         const _exerciseBlock: any = [...exercisesData]
 
         if (inputsData === null) {
-
             for (let exerciseeId of exercisesId) {
-
                 _exerciseBlock.push({ key: exerciseeId, inputsData: [{ key: 0, value: '', value2: '', exerciseId: exerciseeId, exerciseName: 'Ejercicio' }] })
             }
-
 
             setInputsData(_exerciseBlock)
             setExercisesData(_exerciseBlock)
@@ -699,7 +735,7 @@ export const AddWorkoutScreen = (props: any) => {
                                 <Text style={{ color: 'white', fontWeight: 'bold' }}>Terminar entrenamiento</Text>
                             </TouchableOpacity>
                             {/*            DEBUG           */}
-                            <Button
+                    {/*         <Button
 
                                 title="Guardar entrenamiento"
                                 onPress={() => {
@@ -710,7 +746,6 @@ export const AddWorkoutScreen = (props: any) => {
                                 title="Mostrar entrenamiento CLG"
                                 onPress={() => {
                                     getDataStorage()
-                                    /* funcion() */
                                 }} />
                             <Button
 
@@ -732,7 +767,7 @@ export const AddWorkoutScreen = (props: any) => {
                                         title="Delete PR"
                                         onPress={() => {
                                           deletePR()
-                                        }} />
+                                        }} /> */}
                         </View>
                     </View>
                 </View>
