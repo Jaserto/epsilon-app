@@ -197,6 +197,8 @@ export const AddWorkoutScreen = (props: any) => {
                                }
                                nuevosYaDentro.push(sinRepetidos[k])
                             }
+
+                            // Arary con nuevos
                         console.log('Nuevos ', nuevosYaDentro)
                         }
 
@@ -278,7 +280,7 @@ export const AddWorkoutScreen = (props: any) => {
             title: hora > 12 && hora < 18 ? 'Entrenamiento de tarde' : hora > 18 && hora < 24 ? 'Entrenamiento de noche' : 'Entrenamiento de mañana',
             tiempo: time,
             notes: notes,
-            pr: 3,
+            pr: storagePr.length,
             totalWeight: kilos,
             mes: new Date().getMonth(),
             exercises: exercisesInfo
