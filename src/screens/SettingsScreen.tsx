@@ -3,7 +3,7 @@ import { Alert, Dimensions, Image, LogBox, Platform, RefreshControl, StyleSheet,
 import { FlatList, ScrollView, Switch } from 'react-native-gesture-handler'
 import 'react-native-get-random-values';
 import { activateKeepAwake, deactivateKeepAwake } from "@sayem314/react-native-keep-awake";
-import RNFetchBlob from 'rn-fetch-blob'
+/* import RNFetchBlob from 'rn-fetch-blob' */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext } from '../context/UserContext/UserContext';
 const { width, height } = Dimensions.get("window");
@@ -44,42 +44,40 @@ export const SettingsScreen = ({ navigation }: any) => {
     }
 
 
-
+/* 
     const downloadCsv = () => {
-        // send http request in a new thread (using native code)
+        send http request in a new thread (using native code)
         RNFetchBlob.fetch('GET', 'http://www.example.com/images/img1.png', {
             Authorization: 'Bearer access-token...',
-            // more headers  ..
+            more headers  ..
         })
             .then((res) => {
                 let status = res.info().status;
 
                 if (status == 200) {
-                    // the conversion is done in native code
+                   the conversion is done in native code
                     let base64Str = res.base64()
-                    // the following conversions are done in js, it's SYNC
+                    the following conversions are done in js, it's SYNC
                     let text = res.text()
                     let json = res.json()
                 } else {
-                    // handle other status codes
+                    handle other status codes
                 }
             })
-            // Something went wrong:
+             Something went wrong:
             .catch((errorMessage: any) => {
-                // error handling
+               error handling
                 console.log(errorMessage)
             })
-    }
+    } */
 
     useEffect(() => {
         AsyncStorage.getItem('keepScreenEnabled').then((result: any) => {
-            console.log('El resutlado', result)
             let data = JSON.parse(result)
             if (data !== null) setExistKeepAwake(true)
             else setExistKeepAwake(false)
 
-            console.log('eeeeee', data)
-            if (data.toString() == 'true') {
+            if (data !== null && data.toString() === 'true') {
                 setIsEnabled(true)
                 console.log('Eldata', data.toString())
             }

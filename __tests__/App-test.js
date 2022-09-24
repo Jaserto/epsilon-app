@@ -8,8 +8,8 @@ import React from 'react';
 // Note: test renderer must be required after react-native.
 import  { render, act, fireEvent, waitFor, screen } from '@testing-library/react-native'
 import { OnboardingScreen } from '../src/screens/OnboardingScreen';
-/* import { InicioScreen } from '../src/screens/InicioScreen';
- */
+import { SettingsScreen } from '../src/screens/SettingsScreen';
+
 
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 
@@ -53,7 +53,7 @@ describe("<Onboarding />", () => {
     });
     act( ()=> {
       fireEvent(buttonNext, "press");
-     });
+    });
  
   waitFor(() => {
 
@@ -69,24 +69,31 @@ describe("<Onboarding />", () => {
   });
 });
 
-/* describe("<InicioScreen />", () => {
+describe("<SettinsScreen />", () => {
 
   beforeEach(() => {
-    component = render(<InicioScreen />)
+   component = render(<SettingsScreen />) 
   });
 
-  it("Renderiza correctamente y esta el boton de saltar", () => {
-   expect(component).toBeDefined();
-   expect(component.getByTestId('skipButton')).toBeDefined();
+  it("Renderiza correctamente SETTINGS", () => {
+
+   waitFor(() => {
+      expect(component).toBeDefined();
+      expect(component.getAllByText('Ajustes')).toBeDefined()
+      expect(component.getAllByText('Ajustes').length).toBe(1)
+    });
+
   })
 
+
+/* 
   it("Esta el boton de saltar", () => {
     expect(component.getByTestId('nextButton')).toBeDefined();
   })
 
   it("Hay 3 imagenes y se renderizan", () => {
     expect(component.queryAllByTestId('images').length).toEqual(3);
-  })
+  }) */
 
 })
- */
+

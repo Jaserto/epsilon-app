@@ -8,7 +8,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Series } from '../utils/models/Series';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Workout } from '../utils/models/Workout';
-import { toast, Toasts } from '@backpackapp-io/react-native-toast';
 import 'moment';
 import 'moment/locale/es';
 
@@ -142,9 +141,6 @@ export const InicioScreen = ({ navigation }: any) => {
                     const jsonValue = await AsyncStorage.getItem('workout')
                     if (jsonValue !== null) {
                         const jsonParse = JSON.parse(jsonValue)
-                        toast("¡Eliminado!", {
-                            duration: 2000,
-                        });
                         let newArray = jsonParse.filter((workout:any) => workout.id !== id);
                         await AsyncStorage.setItem('workout',JSON.stringify(newArray));
                      
@@ -156,9 +152,6 @@ export const InicioScreen = ({ navigation }: any) => {
                         }
                     }
                 } catch (e) {
-                    toast("Hubo un error", {
-                        duration: 2000,
-                    });
                     console.log('Ha habido un error eliminando el workout')
                 }
                 }
@@ -384,7 +377,6 @@ export const InicioScreen = ({ navigation }: any) => {
             </View>
            
             </>}
-            <Toasts />
         </ScrollView>
     )
 }
