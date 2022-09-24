@@ -14,17 +14,15 @@ import uuid from 'react-native-uuid';
 import { UserContext } from '../context/UserContext/UserContext';
 import { PersonalRecord } from '../utils/models';
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 
 export const AddWorkoutScreen = (props: any) => {
-
     
-    const { workout, getData, clearDatabase, inputsData, setInputsData } = useContext(WorkoutContext);
+    const { inputsData, setInputsData } = useContext(WorkoutContext);
     const { keepAwakeScreen, setKeepAwakeScreen } = useContext(UserContext);
     
     //States
-    const [data, setData] = useState<number>(0);
     const [hora, setHora] = useState<number>(0);
 
     const [error, setError] = useState<any>([]);
@@ -39,20 +37,14 @@ export const AddWorkoutScreen = (props: any) => {
     const [exercisesData, setExercisesData] = useState<any>([])
     const [workouts, setWorkouts] = useState<any>([])
 
-
-
     useEffect(() => {
         setHora(new Date().getHours())
         inputsData !== null && setExercisesData(inputsData.inputsData)
-      /*   console.log('La conchadelaverga entro de nuevo', inputsData) */
-      /*  console.log(props.route.params.selectedExercices) */
         if (props.route.params) {
             setSelectedExercises(props.route.params.selectedExercices)
             addExerciseData(props.route.params.selectedExercices)
         }
         getDataStorage2()
-    /*     searchPR() */
-
     }, [props.route.params])
 
     const finalizeWorkout = () => {
@@ -60,7 +52,6 @@ export const AddWorkoutScreen = (props: any) => {
         console.log('terminando')
         let kilos: number = 0;
         let series: number = inputs.length;
-        let repeticiones: number = 0
         let time = mins + ':' + secs;
         let exercisesInfo: any = [];
         let seriesInfo: any = []
@@ -71,7 +62,6 @@ export const AddWorkoutScreen = (props: any) => {
                 exercise: exercises.filter(exercise => exercise.id === item.key)[0].nombre,
                 idExercise: item.key
             });
-         
             for (let serie of item.inputsData) {
                 console.log(serie)
                 if (serie.value != '' && serie.value2 != '') {
@@ -96,10 +86,8 @@ export const AddWorkoutScreen = (props: any) => {
                     return
                 }
             }
-
             series = item.inputsData.length;
         }
-      /*   console.log('Series', seriesInfo) */
         for (let j = 0; j < seriesInfo.length; j++) {
             for (let k = 0; k < exercisesInfo.length; k++) {
                 if (seriesInfo[j].exerciseId === exercisesInfo[k].idExercise) {
@@ -129,11 +117,8 @@ export const AddWorkoutScreen = (props: any) => {
                   let dataPR = JSON.parse(result)
                   console.log('daaataaaPR', dataPR)
                     if(dataPR !== null){
-                        /////////////////////////////////////////////////////////////////////////////////
                         console.log('---------------------------------',dataPR)
-                        console.log('lo',dataPR)
                         storagePr = dataPR
-                    
                            for(let j = 0; j < exercisesData.length; j++){
                             for(let k = 0; k < exercisesData[j].inputsData.length; k++){
                                 //cuando hay varias series de un ejercicio controlar que setea el maximo.
@@ -161,7 +146,6 @@ export const AddWorkoutScreen = (props: any) => {
                                     if(Number(prStorage[i].weight) > Number(storagePr[p].weight) ){
                                         storagePr2.push(pr)
                                     }
-                
                                 }else{
                                    if(storagePr2.some((element:any) => element.exerciseId === prStorage[i].exerciseId)){
                                    // let object = storagePr2.find((element:any) => element.exerciseId === prStorage[i].exerciseId)
@@ -174,19 +158,12 @@ export const AddWorkoutScreen = (props: any) => {
                                 }         
                             }
                         }
-               
                         console.log('------------------------------------------')
                         console.log(storagePr)
                         console.log(storagePr2)
-                       /*  let mayor = storagePr2.filter((valorActual:any, indiceActual:any, arreglo:any) => arreglo.exerciseId !== valorActual.exerciseId);
- */
                         let sinRepetidos = storagePr2.filter((valorActual:any, indiceActual:any, arreglo:any) => {
                             return arreglo.findIndex((valorDelArreglo:any) => JSON.stringify(valorDelArreglo.exerciseId) === JSON.stringify(valorActual.exerciseId)) === indiceActual
                         });
-                        
-                     /*    console.log("Sin repetidos es:", sinRepetidos);
-                        console.log("Mayor:", mayor);
-                        console.log("--------------------"); */
                         storagePr = sinRepetidos;
                         console.log(storagePr)
                      
@@ -200,12 +177,7 @@ export const AddWorkoutScreen = (props: any) => {
                                }
                                nuevosYaDentro.push(sinRepetidos[k])
                             }
-
-                            // Arary con nuevos
-                        console.log('Nuevos ', nuevosYaDentro)
                         }
-                        
-       /*                  setPr(storagePr) */
 
                         console.log('El pr delicioso',pr)
                         const data: any = {
@@ -222,9 +194,7 @@ export const AddWorkoutScreen = (props: any) => {
                             exercises: exercisesInfo
                         }
                 
-
-                           storeData(data)
-
+                        storeData(data)
                         props.navigation.replace('NewPr', { storagePr })
                    
                     }else{
@@ -262,16 +232,11 @@ export const AddWorkoutScreen = (props: any) => {
                                         }
                                     }
                                     console.log('no lo incluye, pero ya esta')
-                                    
-                                      
                                 //        prStorage.push(pr)
                                 }else{
                                     console.log('no lo incluye >0')
                                     prStorage.push(pr)
-                                  
                                 } 
-                      
-                            
                               
                               /*   AsyncStorage.setItem('pr', pr).then((resultado: any) => console.log(resultado) */
 
@@ -286,8 +251,6 @@ export const AddWorkoutScreen = (props: any) => {
                             return tabla.hasOwnProperty(indice) ? false : (tabla[indice] = true);
                             });
                             console.log(unicos, '---')
-
-
 
                             const data: any = {
                                 id: uuid.v4(),
@@ -308,25 +271,7 @@ export const AddWorkoutScreen = (props: any) => {
                }).catch((err: any) => {
                    console.log(err)
                })
-          
         }
-     /*    console.log('El pr delicioso',pr)
-        const data: any = {
-            id: uuid.v4(),
-            dia: new Date().getDate(),
-            fecha: new Date().getDate() + '-' + new Date().getMonth() + '-' + new Date().getFullYear(),
-            fechaISO: new Date().toISOString(),
-            title: hora > 12 && hora < 18 ? 'Entrenamiento de tarde' : hora > 18 && hora < 24 ? 'Entrenamiento de noche' : 'Entrenamiento de mañana',
-            tiempo: time,
-            notes: notes,
-            pr: pr.length,
-            totalWeight: kilos,
-            mes: new Date().getMonth(),
-            exercises: exercisesInfo
-        }
- */
-    /*   storeData(data) */
-      
     }
 
     const putPr = () => {
@@ -361,28 +306,20 @@ export const AddWorkoutScreen = (props: any) => {
             setExercisesData(_exerciseBlock)
 
         } else {
-
             if (inputsData !== undefined) {
-
-
                 const _exerciseBlock: any = [...inputsData.inputsData]
                 console.log('entrnadoooooooooooooooooooooooooooooooo', inputsData.inputsData)
                 let keyInput = [];
                 for (let inputos of inputsData.inputsData) {
                     keyInput.push(inputos.key)
                 }
-
                 for (let exerciseeId of exercisesId) {
                     if (!keyInput.includes(exerciseeId)) {
-
                         _exerciseBlock.push({ key: exerciseeId, inputsData: [{ key: 0, value: '', value2: '', exerciseId: exerciseeId, exerciseName: 'Ejercicio' }] })
                     }
                 }
                 setExercisesData(_exerciseBlock)
-
             }
-
-           
         }
 
 
@@ -402,7 +339,6 @@ export const AddWorkoutScreen = (props: any) => {
         const _exerciseBlock = [...inputsData.inputsData]
       
         if (inputsData !== undefined) {
-
           
             let nuevo = []
             for (let op of _exerciseBlock) {
@@ -419,29 +355,23 @@ export const AddWorkoutScreen = (props: any) => {
                 let res = ex.inputsData.filter((exercisee: any) => exercisee.key != index)
                 console.log(res)
                 console.log('¡nuevoooooo', _exerciseBlock)
-    
                 setExercisesData(nuevo)
             }else{
                 setSelectedExercises([])
                 setExercisesData([])
             }
-           
-     
-        
-            /*  setInputsData(_exerciseBlock) */
         }
      
     }
 
     //TODO
-    const deleteExerciseData = (key: any) => {
+  /*   const deleteExerciseData = (key: any) => {
         const _exercisesData = exercisesData.filter((input: any, index: any) => index != key);
         setExercisesData(_exercisesData);
         setInputsData(_exercisesData)
-    }
+    } */
 
     const exerciseDataHandler = (text: any, text2: any, index: any, exerciseId: any, exerciseName: any) => {
-
         console.log('Lineeee', 'text: ', text, 'text2: ', text2, 'key: ', index, 'exerciseId: ', exerciseId, 'nameEercuse: ', exerciseName)
         const _exerciseBlock = [...exercisesData]
         console.log(_exerciseBlock)
@@ -456,26 +386,19 @@ export const AddWorkoutScreen = (props: any) => {
             }
         }
         setExercisesData(_exerciseBlock);
-
     }
 
-    const addInputExerciseData = (exerciseId: any) => {
+  /*   const addInputExerciseData = (exerciseId: any) => {
         const _exercisesData = [...exercisesData];
         _exercisesData.filter((exercisesInputs: any) => exercisesInputs.exer)
-    }
-
-/*     async function funcion(): Promise<void> {
-        console.log(inputsData.inputsData)
-
     } */
-
-
+/* 
     const deleteHandler = (key: any) => {
         const _inputs = inputs.filter((input: any, index: any) => index != key);
         setInputs(_inputs);
-    }
+    } */
 
-    const inputHandler = (text: any, text2: any, key: any, exerciseId: any) => {
+  /*   const inputHandler = (text: any, text2: any, key: any, exerciseId: any) => {
         const _inputs = [...inputs];
         _inputs[key].value = text;
         _inputs[key].value2 = text2;
@@ -484,7 +407,7 @@ export const AddWorkoutScreen = (props: any) => {
 
         setInputs(_inputs);
 
-    }
+    } */
 
     const formatNumber = (number: any) => `0${number}`.slice(-2);
 
@@ -510,8 +433,9 @@ export const AddWorkoutScreen = (props: any) => {
     }
     const { mins, secs } = getRemaining(remainingSecs);
 
-
-
+    const cancel = () => {
+        
+    }
 
     useEffect(() => {
         if (remainingSecs === 0) BackgroundTimer.stopBackgroundTimer()
@@ -519,7 +443,6 @@ export const AddWorkoutScreen = (props: any) => {
     }, [secondsLeft]);
 
     useEffect(() => {
-
         AsyncStorage.getItem('keepScreenEnabled').then((result: any) => {
             let data = JSON.parse(result)
             if ( data.toString() == 'true'){
@@ -543,7 +466,7 @@ export const AddWorkoutScreen = (props: any) => {
     }, [isActive])
 
 
-    const saveData = async (data: any) => {
+/*     const saveData = async (data: any) => {
         AsyncStorage.getItem('workout')
             .then((workouts) => {
                 const c = workouts ? JSON.parse(workouts) : [];
@@ -551,7 +474,7 @@ export const AddWorkoutScreen = (props: any) => {
                 AsyncStorage.setItem('workout', JSON.stringify(c));
             });
     }
-
+ */
 
     const storeData = async (data: any) => {
         try {
@@ -575,15 +498,14 @@ export const AddWorkoutScreen = (props: any) => {
     }
 
 
-    const getDataStorage = async () => {
+   /*  const getDataStorage = async () => {
         try {
             const jsonValue = await AsyncStorage.getItem('workout')
-            /* onsole.log(jsonValue) */
             return jsonValue != null ? JSON.parse(jsonValue) : null;
         } catch (e) {
             return null;
         }
-    }
+    } */
    
     const getDataStorage2 = (): any => {
        
@@ -598,48 +520,11 @@ export const AddWorkoutScreen = (props: any) => {
         })
     }
 
-    const searchPR = () => {
-        //Recoger el valor de todos los items de PR de async storage
-        //recoger el valor de todos los input
-        //Compararlos y decir si has sacadado un nuevo valor.
-        let result = []
-
-        AsyncStorage.getItem('pr').then((resultado: any) => {
-            if(resultado !== null){
-                let prData = JSON.parse(resultado)
-                console.log('El prdataaaaaaaaaaaaaaaaaaaaaaa',prData)
-            }else{
-             /*    console.log('resultadoooo null',resultado) */
-            }
-           }).catch((err: any) => {
-               console.log(err)
-               
-           })
-        
-        for(let i = 0; i < workouts.length;i++){
-            for(let j = 0; j < workouts[i].exercises.length;j++){
-              /*   console.log(workouts[i].exercises) */
-                for(let k = 0; k < workouts[i].exercises[j].series.length;k++){
-                    /* console.log(workouts[i].exercises[j].series[k].exerciseId, workouts[i].exercises[j].series[k].weight) */
-                    if(workouts[i].exercises[j].series[k].exerciseId === 4 && typeof workouts[i].exercises[j].series[k].exerciseId === 'number' ){
-
-                        result.push(parseInt(workouts[i].exercises[j].series[k].weight)) 
-                    }
-                }
-            } 
-        }
-        var m = Math.max(...result);
-        console.log('El valor maximo aurelio', m)
-    }
-
 
     const renderInput = (inputsData: any) => {
         return inputsData.map((inputData: any, index: any) => (
             <View key={index} style={styles.inputContainer}>
                 <Text style={{ color: 'white' }}>Serie {index + 1}</Text>
-                {/* <Text style={{ color: 'white' }}>{inputData.exerciseId}</Text>
-            <Text style={{ color: 'white' }}>{inputData.key}</Text> */}
-
                 <TextInput placeholderTextColor='white' keyboardType='numeric' placeholder={"kg"} style={styles.input} value={inputData.value}
                     onChangeText={(text) => exerciseDataHandler(text, inputData.value2, index, inputData.exerciseId, inputData.exerciseName)} />
 
@@ -689,13 +574,11 @@ export const AddWorkoutScreen = (props: any) => {
                                 style={[styles.button, { backgroundColor: "#663EE3" }]}>
                                 <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center' }}>Añadir ejercicio</Text>
                             </TouchableOpacity>
-                            <View style={[styles.button, { backgroundColor: 'purple' }]}>
+                            <TouchableOpacity onPress={cancel} style={[styles.button, { backgroundColor: 'purple' }]}>
                                 <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center' }}>Cancelar</Text>
-                            </View>
+                            </TouchableOpacity>
                         </View>
-
                         <View style={{ display: 'flex', alignItems: 'center', marginVertical: 2 }}>
-
                             <View style={{ display: 'flex', alignItems: 'center' }}>
                                 <Text style={styles.timerText}>{`${mins}:${secs}`}</Text>
                                 <View style={{ display: 'flex', alignItems: 'center', flexDirection: 'row', width: width * 0.77, justifyContent: 'space-around', marginBottom: 30 }}>
@@ -707,16 +590,11 @@ export const AddWorkoutScreen = (props: any) => {
                                     </TouchableOpacity>
                                 </View>
                             </View>
-
                             <View style={{ marginBottom: 20, width: '100%' }}>
 
                                 {exercisesData !== undefined && exercisesData.map((inputsData: any, index:number) => (
                                     <View key={inputsData.key} style={{ display: 'flex' }}>
                                         <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>{exercises.filter((exercise: Exercise) => exercise.id === inputsData.key)[0].nombre}</Text>
-                                        {/* 
-                                        {inputsData !== undefined && inputsData.map((input: any) => (
-                                          
-                                        ))} */}
                                         {inputsData !== undefined && renderInput(inputsData.inputsData)}
                                         {error.length>0 && error[0].exerciseId ===inputsData.inputsData[0].exerciseId && (
                                             <View>
@@ -730,7 +608,6 @@ export const AddWorkoutScreen = (props: any) => {
                                     </View>
                                 ))}
                             </View>
-
                             <TouchableOpacity style={{ backgroundColor: '#FF3D3D', marginVertical: 10, width: width * 0.7, height: 40, borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                                 onPress={() => finalizeWorkout()}
                             >
@@ -777,7 +654,6 @@ export const AddWorkoutScreen = (props: any) => {
         </GestureHandlerRootView>
     )
 }
-
 
 
 const styles = StyleSheet.create({

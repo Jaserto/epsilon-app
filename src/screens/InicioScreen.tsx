@@ -8,6 +8,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Series } from '../utils/models/Series';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Workout } from '../utils/models/Workout';
+import { toast, Toasts } from '@backpackapp-io/react-native-toast';
 import 'moment';
 import 'moment/locale/es';
 
@@ -93,9 +94,9 @@ export const InicioScreen = ({ navigation }: any) => {
     useEffect(() => {
         setIsLoading(true)
       try{
-          getWorkoutsData()
-          getDates()
-         
+        getWorkoutsData()
+        getDates()
+        setIsLoading(false)
       }catch(e){
         console.log(e)
         setIsLoading(false)
@@ -123,7 +124,6 @@ export const InicioScreen = ({ navigation }: any) => {
             <View key={index} style={{ borderColor: 'purple', borderWidth: 1, display: 'flex', flexDirection: 'column', marginTop: 3, borderRadius: 5, padding: 3 }}>
                 <Text style={{ color: 'purple' }}>{exercise.series.length} x {exercise.exercise}</Text>
             </View>
-
         ));
     }
 
@@ -138,28 +138,27 @@ export const InicioScreen = ({ navigation }: any) => {
                 style: "cancel"
               },
               { text: "Eliminar", onPress: async() => {
-
                 try {
                     const jsonValue = await AsyncStorage.getItem('workout')
                     if (jsonValue !== null) {
                         const jsonParse = JSON.parse(jsonValue)
-
+                        toast("¡Eliminado!", {
+                            duration: 2000,
+                        });
                         let newArray = jsonParse.filter((workout:any) => workout.id !== id);
-    
                         await AsyncStorage.setItem('workout',JSON.stringify(newArray));
+                     
                         if(calendar.current.getSelectedDate() !== undefined ){
                             getWorkoutsData()
                             calendar.current.getSelectedDate(day)
                         }else{
                             getWorkoutsData()
                         }
-                    }else{
-                        /* let datos=[]
-                        datos.push(data)
-                        const jsonValue2 = JSON.stringify(datos)
-                        await AsyncStorage.setItem('workout', jsonValue2) */
                     }
                 } catch (e) {
+                    toast("Hubo un error", {
+                        duration: 2000,
+                    });
                     console.log('Ha habido un error eliminando el workout')
                 }
                 }
@@ -294,6 +293,7 @@ export const InicioScreen = ({ navigation }: any) => {
                                 </Svg>
                             </TouchableOpacity>
                         </View>
+                      
                         <Text style={{ fontWeight: 'bold' }}>{workout.fecha}</Text>
                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: 9, width: '100%' }}>
                             <View style={{ flex: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
@@ -382,7 +382,9 @@ export const InicioScreen = ({ navigation }: any) => {
                 </View>)
             }
             </View>
+           
             </>}
+            <Toasts />
         </ScrollView>
     )
 }
