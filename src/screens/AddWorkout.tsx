@@ -679,7 +679,9 @@ export const AddWorkoutScreen = (props: any) => {
                     <View style={{ marginVertical: 5 }}>
                         <Text style={{ fontSize: 20, color: 'white', fontWeight: 'bold', marginBottom: 6 }}>{hora > 12 && hora < 18 ? 'Entrenamiento de tarde' : hora > 18 && hora < 24 ? 'Entrenamiento de noche' : 'Entrenamiento de mañana'}</Text>
                         <View style={{ marginVertical: 6 }}>
-                            <TextInput placeholderTextColor='white' placeholder={'Notas del entrenamiento'} value={notes} style={styles.input} maxLength={40} />
+                            <TextInput placeholderTextColor='white' placeholder={'Notas del entrenamiento'} value={notes} style={styles.input} maxLength={40}
+                             onChangeText={(text) => setNotes(text)}
+                            />
                         </View>
                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                             <TouchableOpacity

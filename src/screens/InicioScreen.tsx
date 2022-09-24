@@ -301,14 +301,13 @@ export const InicioScreen = ({ navigation }: any) => {
                                     width={15}
                                     height={15}
                                     viewBox="0 0 25 25"
-                                    stroke=""
+                                    stroke="black"
                                     strokeWidth={2}
                                     strokeLinecap="round"
                                     strokeLinejoin="round">
                                     <Circle cx="12" cy="12" r="10" />
                                     <Polyline points="12 6 12 12 16 14" />
                                 </Svg>
-
                                 <Text style={{ textAlign: 'center', marginLeft: 5, color: '#111111' }}>{workout.tiempo}</Text>
                             </View>
                             <View style={{ flex: 3, flexDirection: 'row', alignItems: 'center' }}>
