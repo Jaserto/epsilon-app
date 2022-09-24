@@ -55,7 +55,7 @@ export const OnboardingScreen = ({ navigation }: any) => {
 
     const Slide = ({item}:any) => {
         return  <View style={{alignItems:'center',justifyContent:'center',width: width*0.9, marginHorizontal:5 }}>
-        <Image source={item.image} style={{height:'55%', width: width*0.5, resizeMode:'contain'}}  resizeMode="cover" />
+        <Image testID="images" source={item.image} style={{height:'55%', width: width*0.5, resizeMode:'contain'}}  resizeMode="cover" />
         <View>
          <Text style={{color:'white', fontSize:19, fontWeight:'bold', marginTop:40}}>{item.title}</Text>
          <Text style={{color:'white', fontSize:15, marginTop:5}}>{item.subtitle}</Text>
@@ -100,23 +100,23 @@ export const OnboardingScreen = ({ navigation }: any) => {
             contentContainerStyle={{height: '100%'}}
             horizontal
             showsHorizontalScrollIndicator={false}
-            renderItem={({item}) => <Slide item={item} />}
+            renderItem={({item}:any) => <Slide item={item} />}
         />
         <Footer />
         <View style={{ marginBottom:15}}>
             {
                 currentSlideIndex == slides.length - 1 ?
                 (<View style={{height:40}}>
-                <TouchableOpacity style={styles.btn} onPress={() => navigation.replace('InicioScreen')}>
+                <TouchableOpacity style={styles.btn} onPress={() => navigation.replace('InicioScreen')}  testID="startNow">
                          <Text style={{fontSize:17, color:'#333333'}}>Empieza ya</Text>
                 </TouchableOpacity>
                 </View>) : (
                          <View style={{flexDirection:'row'}}>    
-                         <TouchableOpacity style={styles.btn} onPress={skip}>
+                         <TouchableOpacity style={styles.btn} onPress={skip} testID="skipButton">
                              <Text style={{fontSize:17, color:'#333333'}}>Saltar</Text>
                          </TouchableOpacity>
                          <View style={{width:15}} />
-                         <TouchableOpacity style={styles.btn} onPress={goNextSlide}>
+                         <TouchableOpacity style={styles.btn} onPress={goNextSlide} testID="nextButton">
                              <Text style={{fontSize:17, color:'#333333'}}>Siguiente</Text>
                          </TouchableOpacity>
                      </View>
