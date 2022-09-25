@@ -39,7 +39,7 @@ export const AddWorkoutScreen = (props: any) => {
 
     useEffect(() => {
         setHora(new Date().getHours())
-        inputsData !== null && setExercisesData(inputsData.inputsData)
+        inputsData !== null && setExercisesData(inputsData !== undefined && inputsData.inputsData)
         if (props.route.params) {
             setSelectedExercises(props.route.params.selectedExercices)
             addExerciseData(props.route.params.selectedExercices)

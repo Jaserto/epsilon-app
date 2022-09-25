@@ -10,8 +10,7 @@ const { width, height } = Dimensions.get("window");
 
 export const AddExerciseScreen = ({ navigation }: any) => {
   
-  const { getData, workout } = useContext(WorkoutContext);
-  const [selectedExercises, setSelectedExercises] = useState<any>([])
+  const [selectedExercises, setSelectedExercises] = useState<Array<number>>([])
 
   const onPressExercise = (exercise: any) => {
     if (selectedExercises.includes(exercise.id)) {

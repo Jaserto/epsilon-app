@@ -70,6 +70,7 @@
   },
   "jest": {
     "preset": "react-native",
+    "testEnvironment": "jsdom",
     "setupFiles": [
       "./node_modules/react-native-gesture-handler/jestSetup.js",
       "./jestSetupFile.js"

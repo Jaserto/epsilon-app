@@ -9,9 +9,12 @@ import React from 'react';
 import  { render, act, fireEvent, waitFor, screen } from '@testing-library/react-native'
 import { OnboardingScreen } from '../src/screens/OnboardingScreen';
 import { SettingsScreen } from '../src/screens/SettingsScreen';
+import { AddWorkoutScreen } from '../src/screens/AddWorkout';
 
 
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
+jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
+jest.useFakeTimers()
 
 let component;
 
@@ -27,7 +30,7 @@ describe("<Onboarding />", () => {
    expect(component.getByTestId('skipButton')).toBeDefined();
   })
 
-  it("Esta el boton de saltar", () => {
+  it("Esta el boton de siguiente", () => {
     expect(component.getByTestId('nextButton')).toBeDefined();
   })
 
@@ -76,7 +79,6 @@ describe("<SettinsScreen />", () => {
   });
 
   it("Renderiza correctamente SETTINGS", () => {
-
    waitFor(() => {
       expect(component).toBeDefined();
       expect(component.getAllByText('Ajustes')).toBeDefined()
@@ -85,15 +87,77 @@ describe("<SettinsScreen />", () => {
 
   })
 
-
-/* 
-  it("Esta el boton de saltar", () => {
-    expect(component.getByTestId('nextButton')).toBeDefined();
-  })
-
-  it("Hay 3 imagenes y se renderizan", () => {
-    expect(component.queryAllByTestId('images').length).toEqual(3);
-  }) */
+  it("Esta el contacto 2 veces y las redes", () => {
+    waitFor(() => {
+       expect(component.getAllByText('@serdev_es').length).toBe(2)
+       expect(component.getAllByText('Contacto y soporte')).toBeDefined()
+       expect(component.getAllByText('Instagram')).toBeDefined()
+       expect(component.getAllByText('Twitter')).toBeDefined()
+     });
+ 
+   })
 
 })
 
+describe("<SettinsScreen />", () => {
+
+  beforeEach(() => {
+   component = render(<SettingsScreen />) 
+  });
+
+  it("Renderiza correctamente SETTINGS", () => {
+   waitFor(() => {
+      expect(component).toBeDefined();
+      expect(component.getAllByText('Ajustes')).toBeDefined()
+      expect(component.getAllByText('Ajustes').length).toBe(1)
+    });
+
+  })
+
+  it("Esta el contacto 2 veces y las redes", () => {
+    waitFor(() => {
+       expect(component.getAllByText('@serdev_es').length).toBe(2)
+       expect(component.getAllByText('Contacto y soporte')).toBeDefined()
+       expect(component.getAllByText('Instagram')).toBeDefined()
+       expect(component.getAllByText('Twitter')).toBeDefined()
+     });
+ 
+   })
+
+})
+
+
+describe("<AddWorkout />", () => {
+  console.error = jest.fn()
+  jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+  jest.mock('react-native-background-timer',() =>{
+    return{
+      runBackgroundTimer: jest.fn(),
+      stopBackgroundTimer : jest.fn()
+    }
+  })
+  
+
+
+  const mockedParams = {
+    route: { params: { selectedExercices: [3,4,5] } },
+    navigation: ''
+  };
+
+
+
+  beforeEach(() => {
+   components = render(<AddWorkoutScreen  {...mockedParams}/>) 
+  });
+
+  it("Renderiza correctamente Workout", () => {
+   waitFor(() => {
+      /* expect(components).toBeDefined(); */
+      expect(component.getAllByText('Añadir un nuevo entrenamiento')).toBeDefined()
+      expect(component.getAllByText('Añadir un nuevo entrenamiento').length).toBe(1)
+    });
+
+  })
+
+})
