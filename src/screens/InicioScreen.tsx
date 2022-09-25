@@ -121,7 +121,7 @@ export const InicioScreen = ({ navigation }: any) => {
     const getExercises = (exercises: any) => {
         return exercises.map((exercise: Series, index: number) => (
             <View key={index} style={{ borderColor: 'purple', borderWidth: 1, display: 'flex', flexDirection: 'column', marginTop: 3, borderRadius: 5, padding: 3 }}>
-                <Text style={{ color: 'purple' }}>{exercise.series.length} x {exercise.exercise}</Text>
+                { exercise.series !== undefined && <Text style={{ color: 'purple' }}>{exercise.series.length} x {exercise.exercise}</Text> }
             </View>
         ));
     }
@@ -163,7 +163,7 @@ export const InicioScreen = ({ navigation }: any) => {
     const getBestSeries = (exercises: any) => {
         return exercises.map((exercise: any, index: number) => (
             <View key={index} style={{ borderColor: 'purple', borderWidth: 1, display: 'flex', flexDirection: 'column', marginTop: 3, borderRadius: 5, padding: 3 }}>
-                {
+                { exercise.series !== undefined &&
                     <Text style={{ color: 'purple' }}>{Math.max(...exercise.series.map((serie: any) => serie.weight))} kg x {exercise.series[0].reps} reps</Text>
                 }
             </View>

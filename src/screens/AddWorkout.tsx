@@ -38,12 +38,23 @@ export const AddWorkoutScreen = (props: any) => {
     const [workouts, setWorkouts] = useState<any>([])
 
     useEffect(() => {
+ 
         setHora(new Date().getHours())
-        inputsData !== null && setExercisesData(inputsData !== undefined && inputsData.inputsData)
+        if(inputsData !== null){
+            console.log('EL INPUT ENTRO',inputsData.inputsData)
+            let idd = inputsData.inputsData.filter((item:any) => item.inputsData.length > 0)
+            console.log('El idd',idd)
+            setExercisesData(idd !== undefined && idd)
+        }
+     //   inputsData !== null && setExercisesData(inputsData !== undefined && inputsData.inputsData)
+        
         if (props.route.params) {
+            console.log(props.route.params.selectedExercices)
             setSelectedExercises(props.route.params.selectedExercices)
             addExerciseData(props.route.params.selectedExercices)
         }
+              /*  console.log('LOSS INPUTS QUE COMIENZAN A PONERSE',inputsData)
+        console.log('LOSS INPUTS QUE COMIENZAN A PONERS3333E',inputsData.inputsData) */
         getDataStorage2()
     }, [props.route.params])
 
@@ -63,7 +74,7 @@ export const AddWorkoutScreen = (props: any) => {
                 idExercise: item.key
             });
             for (let serie of item.inputsData) {
-                console.log(serie)
+                console.log('La serie', serie)
                 if (serie.value != '' && serie.value2 != '') {
                     kilos += parseInt(serie.value) * parseInt(serie.value2);
                     seriesInfo.push({
@@ -89,9 +100,13 @@ export const AddWorkoutScreen = (props: any) => {
             series = item.inputsData.length;
         }
         for (let j = 0; j < seriesInfo.length; j++) {
+            console.log('la serie del exercise',seriesInfo[j])
+          
             for (let k = 0; k < exercisesInfo.length; k++) {
-                if (seriesInfo[j].exerciseId === exercisesInfo[k].idExercise) {
+                console.log('la serie del exercise2',exercisesInfo[k].series)
+                if (seriesInfo[j].exerciseId === exercisesInfo[k].idExercise && exercisesInfo[k].series === undefined ) {
                     if (Array.isArray(exercisesInfo[k].series)) {
+                      
                         exercisesInfo[k].series.push(seriesInfo[j])
                     } else {
                         exercisesInfo[k].series = [seriesInfo[j]]
@@ -105,7 +120,8 @@ export const AddWorkoutScreen = (props: any) => {
 
         /* setData(data) */
        console.log('ExerciseData',_exerciseBlock)
-        if(exercisesData.length===0){
+       console.log('ExercisesInfo ##########',exercisesInfo)
+        if(exercisesData.length === 0){
             console.log('no hay nada')
            
             return;
@@ -180,6 +196,9 @@ export const AddWorkoutScreen = (props: any) => {
                         }
 
                         console.log('El pr delicioso',pr)
+       
+
+                    
                         const data: any = {
                             id: uuid.v4(),
                             dia: new Date().getDate(),
@@ -193,8 +212,9 @@ export const AddWorkoutScreen = (props: any) => {
                             mes: new Date().getMonth(),
                             exercises: exercisesInfo
                         }
-                
+                        
                         storeData(data)
+                 
                         props.navigation.replace('NewPr', { storagePr })
                    
                     }else{
@@ -336,10 +356,11 @@ export const AddWorkoutScreen = (props: any) => {
 
 
     const deleteSerie = (exerciseId: any, index: any) => {
-        const _exerciseBlock = [...inputsData.inputsData]
-      
+    /*     const _exerciseBlock = [...inputsData.inputsData] */
+        const _exerciseBlock = [...exercisesData]
+        console.log('mandando el exer', exerciseId)
+        console.log('mandando el exer2', _exerciseBlock)
         if (inputsData !== undefined) {
-          
             let nuevo = []
             for (let op of _exerciseBlock) {
                 if (op.key === exerciseId) {
@@ -349,16 +370,37 @@ export const AddWorkoutScreen = (props: any) => {
                 nuevo.push(op)
             }
             console.log('hito', nuevo)
+
             let ex = _exerciseBlock.find((exerciseData: any) => exerciseData.key === exerciseId);
-            if(ex !==undefined){
+            let ex2 = nuevo.filter((exerciseData: any) => exerciseData.key !== exerciseId);
+            if(ex !== undefined){
+                console.log('ex', ex)
+                console.log('ex2', ex2)
+             
                 console.log('se quedo vacio')
-                let res = ex.inputsData.filter((exercisee: any) => exercisee.key != index)
-                console.log(res)
                 console.log('¡nuevoooooo', _exerciseBlock)
-                setExercisesData(nuevo)
+
+                if(ex.inputsData.length > 0){
+                    setExercisesData(nuevo)
+                    setInputsData(nuevo)
+                }else{
+                    setExercisesData(ex2)
+                  /*   setInputsData(ex2) */
+                }
+    
+            
+               /*      setInputsData(nuevo) */
+               
+              
+
+              
+               /*  setInputsData(res) */
             }else{
-                setSelectedExercises([])
-                setExercisesData([])
+                console.log('ex del undefined', ex)
+                setExercisesData(nuevo)
+                setInputsData(nuevo)
+              /*   setSelectedExercises([])
+                setExercisesData([]) */
             }
         }
      
@@ -445,7 +487,7 @@ export const AddWorkoutScreen = (props: any) => {
     useEffect(() => {
         AsyncStorage.getItem('keepScreenEnabled').then((result: any) => {
             let data = JSON.parse(result)
-            if ( data.toString() == 'true'){
+            if ( data !== null && data.toString() == 'true'){
                 setKeepAwake(true)
                 setKeepAwakeScreen(true)
             }
@@ -484,7 +526,7 @@ export const AddWorkoutScreen = (props: any) => {
                 console.log('nopooooooo es nullllll')
                 const jsonParse = JSON.parse(jsonValue)
                 let newArray = [...jsonParse, data]
-                console.log('El Json',jsonParse)
+               /*  console.log('El Json',jsonParse) */
                 await AsyncStorage.setItem('workout',JSON.stringify(newArray));
             }else{
                 let datos=[]

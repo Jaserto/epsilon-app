@@ -126,7 +126,7 @@ describe("<SettinsScreen />", () => {
 
 })
 
-
+/* 
 describe("<AddWorkout />", () => {
   console.error = jest.fn()
   jest.spyOn(console, 'warn').mockImplementation(() => {});
@@ -153,11 +153,10 @@ describe("<AddWorkout />", () => {
 
   it("Renderiza correctamente Workout", () => {
    waitFor(() => {
-      /* expect(components).toBeDefined(); */
       expect(component.getAllByText('Añadir un nuevo entrenamiento')).toBeDefined()
       expect(component.getAllByText('Añadir un nuevo entrenamiento').length).toBe(1)
     });
 
   })
 
-})
+}) */

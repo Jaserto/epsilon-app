@@ -61,9 +61,11 @@ export const AddExerciseScreen = ({ navigation }: any) => {
         <View style={{ position: 'absolute', left: 0, right: 0, bottom: 0, alignItems: 'flex-end', justifyContent:'flex-end' }}>
           <TouchableOpacity
                 onPress={() => {
-                  navigation.push('AddWorkout', {
+                  navigation.replace('AddWorkout', {
                      selectedExercices: selectedExercises,
                   })
+                  console.log('selecccteddd', selectedExercises)
+                  setSelectedExercises([])
               }}
           
           style={{ width: 50, alignItems:'center', justifyContent:'center', display:'flex', height: 50, borderRadius: 100, backgroundColor: '#C49CFF', margin: 20 }}>
