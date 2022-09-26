@@ -49,14 +49,14 @@ export const AddWorkoutScreen = (props: any) => {
      //   inputsData !== null && setExercisesData(inputsData !== undefined && inputsData.inputsData)
         
         if (props.route.params) {
-            console.log(props.route.params.selectedExercices)
+            console.log('el params', props.route.params.selectedExercices)
             setSelectedExercises(props.route.params.selectedExercices)
             addExerciseData(props.route.params.selectedExercices)
         }
               /*  console.log('LOSS INPUTS QUE COMIENZAN A PONERSE',inputsData)
         console.log('LOSS INPUTS QUE COMIENZAN A PONERS3333E',inputsData.inputsData) */
         getDataStorage2()
-    }, [props.route.params])
+    }, [])
 
     const finalizeWorkout = () => {
         const _exerciseBlock: any = [...exercisesData]
