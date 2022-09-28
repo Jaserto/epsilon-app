@@ -24,9 +24,6 @@ export const CalculatorRM = () => {
         ]
     })
 
-    useEffect(()=> {
-
-    },[])
 
     const calculateRM = () => {
        if(!rm || !reps)return
@@ -78,7 +75,7 @@ export const CalculatorRM = () => {
                         />
                     </View>
 
-                    <TouchableOpacity style={{ marginTop: 14 }} onPress={() => calculateRM()}>
+                    <TouchableOpacity style={{ marginTop: 14 }} onPress={calculateRM}>
                         <View style={{ width: 160, height: 40, backgroundColor: '#663EE3', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <Text style={{ color: 'white' }}>Calcular RM</Text>
                         </View>

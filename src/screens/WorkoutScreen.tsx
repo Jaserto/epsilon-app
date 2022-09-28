@@ -88,9 +88,7 @@ export const WorkoutScreen = (props: any) => {
         }
     };
 
-
     return (
-
         <ScrollView
             refreshControl={refreshControl()}
             scrollEventThrottle={1}
@@ -221,14 +219,14 @@ export const WorkoutScreen = (props: any) => {
 
                 </View>
 
-                <TouchableOpacity
+           {/*      <TouchableOpacity
                 >
                     <LinearGradient start={{ x: 0.0, y: 0.25 }} end={{ x: 0.5, y: 1.0 }} colors={['#673ab7', '#512da8']} style={styles.linearGradient}>
                         <Text style={styles.buttonText}>
                             Realizar de nuevo
                         </Text>
                     </LinearGradient>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         </ScrollView>
 

@@ -106,7 +106,7 @@ export const AddWorkoutScreen = (props: any) => {
                 console.log('la serie del exercise2',exercisesInfo[k].series)
                 if (seriesInfo[j].exerciseId === exercisesInfo[k].idExercise && exercisesInfo[k].series === undefined ) {
                     if (Array.isArray(exercisesInfo[k].series)) {
-                      
+                        
                         exercisesInfo[k].series.push(seriesInfo[j])
                     } else {
                         exercisesInfo[k].series = [seriesInfo[j]]
@@ -114,6 +114,7 @@ export const AddWorkoutScreen = (props: any) => {
                 }
             }
         }
+
 
         //se coge de los inputs
         let hora = new Date().getHours()
@@ -196,8 +197,6 @@ export const AddWorkoutScreen = (props: any) => {
                         }
 
                         console.log('El pr delicioso',pr)
-       
-
                     
                         const data: any = {
                             id: uuid.v4(),
@@ -257,12 +256,14 @@ export const AddWorkoutScreen = (props: any) => {
                                     console.log('no lo incluye >0')
                                     prStorage.push(pr)
                                 } 
-                              
+                          
+                             
                               /*   AsyncStorage.setItem('pr', pr).then((resultado: any) => console.log(resultado) */
 
                             }
                         }
-                                
+                        props.navigation.replace('NewPr', { storagePr })
+
                         let result = prStorage.filter((item:any,index:any)=>{
                             return prStorage.indexOf(item) === index;
                           })
@@ -285,6 +286,7 @@ export const AddWorkoutScreen = (props: any) => {
                                 mes: new Date().getMonth(),
                                 exercises: exercisesInfo
                             }
+                            setInputsData([])
                             storeData(data)
                     }
                 

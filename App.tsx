@@ -38,6 +38,7 @@ const App = () => {
   LogBox.ignoreLogs([
     "Require cycle: node_modules/victory",
   ]);
+  LogBox.ignoreLogs(['Invalid prop textStyle of type array supplied to Cell']);
 
   useEffect(()=> {  
     SplashScreen.hide()
