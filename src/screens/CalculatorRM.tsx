@@ -1,30 +1,26 @@
 import React, { useEffect, useState } from 'react';
-
-import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
-
+import { Table, Row, Rows } from 'react-native-table-component';
 import { StyleSheet, Text, View, SafeAreaView, Dimensions, TextInput, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-
 const { width, height } = Dimensions.get("window");
 
-export const CalculatorRM = (props: any) => {
+export const CalculatorRM = () => {
     const [rm, setRM] = useState<string>()
     const [reps, setReps] = useState<string>()
-    const [maximum, setMaximum] = useState<number | string>()
     const [tableState, setTableState] = useState<any>({
         tableHead: ['Repeticiones', 'Intensidad\n(/%1RM)'],
         tableData: [
-            ['1', '2'],
-            ['2', 'b'],
-            ['3', '2'],
-            ['4', 'b'],
-            ['5', 'b'],
-            ['6', 'b'],
-            ['7', 'b'],
-            ['8', 'b'],
-            ['9', 'b'],
-            ['10', 'b'],
+            ['1', 'Introduce RM'],
+            ['2', 'Introduce RM'],
+            ['3', 'Introduce RM'],
+            ['4', 'Introduce RM'],
+            ['5', 'Introduce RM'],
+            ['6', 'Introduce RM'],
+            ['7', 'Introduce RM'],
+            ['8', 'Introduce RM'],
+            ['9', 'Introduce RM'],
+            ['10', 'Introduce RM'],
         ]
     })
 
@@ -32,58 +28,26 @@ export const CalculatorRM = (props: any) => {
 
     },[])
 
-    const calculateRM = (number: string, reps: string) => {
-       if(!number || !reps)return
+    const calculateRM = () => {
+       if(!rm || !reps)return
+       if(Number(reps) > 30)return
 
-        let value = Number(number);
-        console.log(value);
+        let value = Number(rm);
         let maximumRepetition = value / (1.0278 - 0.0278 * Number(reps));
-    
-        console.log(maximumRepetition.toFixed(2))
-        setMaximum(maximumRepetition.toFixed(2))
-  
-     /*    let obj = {
-            tableHead: ['Repeticiones', 'Intensidad\n(/%1RM)'],
+        setTableState({
+            tableHead: ['Repeticiones', 'Intensidad\n(%1RM)'],
             tableData: [
                 ['1', maximumRepetition.toFixed(2) + ' kg'],
-                ['2', mathFunction(2,value).toFixed(2)+ ' kg'],
-                ['3', mathFunction(3,value).toFixed(2)+ ' kg'],
-                ['4', mathFunction(4,value).toFixed(2)+ ' kg'],
-                ['5', mathFunction(5,value).toFixed(2)+ ' kg'],
-                ['6', mathFunction(6,value).toFixed(2)+ ' kg'],
-                ['7', mathFunction(7,value).toFixed(2)+ ' kg'],
-                ['8', mathFunction(8,value).toFixed(2)+ ' kg'],
-                ['9', mathFunction(9,value).toFixed(2)+ ' kg'],
-                ['10', mathFunction(10,value).toFixed(2) + ' kg'],
+                ['2', mathFunctionReverse(2,maximumRepetition.toFixed(2)).toFixed(2)+ ' kg'],
+                ['3', mathFunctionReverse(3,maximumRepetition.toFixed(2)).toFixed(2)+ ' kg'],
+                ['4', mathFunctionReverse(4,maximumRepetition.toFixed(2)).toFixed(2)+ ' kg'],
+                ['5', mathFunctionReverse(5,maximumRepetition.toFixed(2)).toFixed(2)+ ' kg'],
+                ['6', mathFunctionReverse(6,maximumRepetition.toFixed(2)).toFixed(2)+ ' kg'],
+                ['7', mathFunctionReverse(7,maximumRepetition.toFixed(2)).toFixed(2)+ ' kg'],
+                ['8', mathFunctionReverse(8,maximumRepetition.toFixed(2)).toFixed(2)+ ' kg'],
+                ['9', mathFunctionReverse(9,maximumRepetition.toFixed(2)).toFixed(2)+ ' kg'],
+                ['10', mathFunctionReverse(10,maximumRepetition.toFixed(2)).toFixed(2) + ' kg'],
             ]
-        }
-        if(Number(reps)>0){
-        obj.tableData[Number(reps)-1][1] =  maximumRepetition.toFixed(2) + ' kg';
-        obj.tableData[Number(reps)-1][1] =  maximumRepetition.toFixed(2) + ' kg';
-        obj.tableData[Number(reps)-1][1] =  maximumRepetition.toFixed(2) + ' kg';
-        obj.tableData[Number(reps)-1][1] =  maximumRepetition.toFixed(2) + ' kg';
-        }else{
-
-        } */
-      /*   setTableState({}) */
-
-
-        setTableState(
-      /*       obj */
-            {
-            tableHead: ['Repeticiones', 'Intensidad\n(/%1RM)'],
-        tableData: [
-            ['1', maximumRepetition.toFixed(2) + ' kg'],
-            ['2', mathFunctionReverse(2,maximumRepetition.toFixed(2)).toFixed(2)+ ' kg'],
-            ['3', mathFunctionReverse(3,maximumRepetition.toFixed(2)).toFixed(2)+ ' kg'],
-            ['4', mathFunctionReverse(4,maximumRepetition.toFixed(2)).toFixed(2)+ ' kg'],
-            ['5', mathFunctionReverse(5,maximumRepetition.toFixed(2)).toFixed(2)+ ' kg'],
-            ['6', mathFunctionReverse(6,maximumRepetition.toFixed(2)).toFixed(2)+ ' kg'],
-            ['7', mathFunctionReverse(7,maximumRepetition.toFixed(2)).toFixed(2)+ ' kg'],
-            ['8', mathFunctionReverse(8,maximumRepetition.toFixed(2)).toFixed(2)+ ' kg'],
-            ['9', mathFunctionReverse(9,maximumRepetition.toFixed(2)).toFixed(2)+ ' kg'],
-            ['10', mathFunctionReverse(10,maximumRepetition.toFixed(2)).toFixed(2) + ' kg'],
-        ]
         })
 
     }
@@ -105,16 +69,16 @@ export const CalculatorRM = (props: any) => {
                     <Text style={{ color: 'white' }}>Introduce tu RM</Text>
                     <View style={{ display: 'flex', flexDirection: 'row', marginTop: 15 }}>
                         <TextInput placeholderTextColor='white' keyboardType='numeric'
-                            placeholder={'Kilos'} value={rm} style={styles.input} maxLength={40}
+                            placeholder={'Kilos'} value={rm} style={styles.input} maxLength={10}
                             onChangeText={(text) => setRM(text)}
                         />
                         <TextInput placeholderTextColor='white' keyboardType='numeric'
-                            placeholder={'Reps'} value={reps} style={styles.input} maxLength={40}
-                            onChangeText={(text) => setRM(text)}
+                            placeholder={'Reps'} value={reps} style={styles.input} maxLength={10}
+                            onChangeText={(text) => setReps(text)}
                         />
                     </View>
 
-                    <TouchableOpacity style={{ marginTop: 14 }} onPress={() => calculateRM('72.5', '3')}>
+                    <TouchableOpacity style={{ marginTop: 14 }} onPress={() => calculateRM()}>
                         <View style={{ width: 160, height: 40, backgroundColor: '#663EE3', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <Text style={{ color: 'white' }}>Calcular RM</Text>
                         </View>
