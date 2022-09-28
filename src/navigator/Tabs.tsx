@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Image, StyleSheet } from 'react-native'
 import { InicioScreen } from '../screens/InicioScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
+import { CalculatorRM } from '../screens/CalculatorRM';
 import { AnalysisScreen } from '../screens/AnalysisScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import Svg, { Circle, Line, Path, Polyline } from 'react-native-svg'
@@ -113,7 +114,7 @@ export const Tabs = () => {
             }} 
             />
        
-         {/*    <Tab.Screen name="Profile" component={ProfileScreen} 
+            <Tab.Screen name="Calculator" component={CalculatorRM} 
             options={{ 
                 headerShown: false,
                 tabBarIcon: ({ color }) => (
@@ -130,7 +131,7 @@ export const Tabs = () => {
                         <Circle cx="12" cy="7" r="4" />
                     </Svg>
                 )
-            }} /> */}
+            }} />
         </Tab.Navigator>
     );
 }

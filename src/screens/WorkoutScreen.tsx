@@ -11,15 +11,14 @@ import LinearGradient from 'react-native-linear-gradient';
 const { width, height } = Dimensions.get("window");
 
 
+
 export const WorkoutScreen = (props: any) => {
 
 
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
-    useEffect(() => {
 
-    }, [])
 
     const refreshControl = () => {
         const onRefresh = () => {
@@ -139,7 +138,7 @@ export const WorkoutScreen = (props: any) => {
                                 <Line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
                             </Svg>
                         </TouchableOpacity>
-                        <Svg
+                    {/*     <Svg
                             width={25}
                             height={25}
                             viewBox="0 0 25 25"
@@ -150,7 +149,7 @@ export const WorkoutScreen = (props: any) => {
                             <Circle cx="12" cy="12" r="1" />
                             <Circle cx="12" cy="5" r="1" />
                             <Circle cx="12" cy="19" r="1" />
-                        </Svg>
+                        </Svg> */}
                     </View>
                 </View>
                 <View>
@@ -158,8 +157,9 @@ export const WorkoutScreen = (props: any) => {
                         <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold' }}>{props.route.params.title}</Text>
                     </View>
                     <View style={{ marginVertical: 7 }}>
-                        <Text style={{ color: 'white', fontSize: 16 }}>{props.route.params.fechaISO}</Text>
-                    </View>
+                    <Text style={{ color: 'white', fontSize: 16 }}>{new Date(props.route.params.fechaISO).getDate()  + '/'+ new Date(props.route.params.fechaISO).getMonth() + '/' + new Date(props.route.params.fechaISO).getFullYear()}</Text>
+                        <Text style={{ color: 'white', fontSize: 16 }}>{new Date(props.route.params.fechaISO).getHours()+ ':'+ new Date(props.route.params.fechaISO).getMinutes()}</Text>
+                   </View>
                     <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: 20, width: '100%' }}>
                         <View style={{ flex: 3, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                             <Svg
@@ -173,7 +173,6 @@ export const WorkoutScreen = (props: any) => {
                                 <Circle cx="12" cy="12" r="10" />
                                 <Polyline points="12 6 12 12 16 14" />
                             </Svg>
-
                             <Text style={{ textAlign: 'center', marginLeft: 5, color: 'white',fontSize: 16 }}>{props.route.params.time}</Text>
                         </View>
                         <View style={{ flex: 3, flexDirection: 'row', alignItems: 'center' }}>

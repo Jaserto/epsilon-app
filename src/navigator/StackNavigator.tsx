@@ -16,6 +16,7 @@ import { AddExerciseScreen } from '../screens/AddExerciseScreen';
 import { ExerciseScreen } from '../screens/ExerciseScreen';
 import { OnboardingScreen } from '../screens/OnboardingScreen';
 import { NewPr } from '../screens/NewPr';
+import { CalculatorRM } from '../screens/CalculatorRM';
 
 const Stack = createNativeStackNavigator();
 
@@ -59,6 +60,7 @@ useEffect( () => {
             <Stack.Screen name="AddExerciseScreen" component={AddExerciseScreen} options={{ headerShown: false }}/>
             <Stack.Screen name="ExerciseScreen" component={ExerciseScreen} options={{ headerShown: false }}/>
             <Stack.Screen name="NewPr" component={NewPr} options={{ headerShown: false }}/>
+            <Stack.Screen name="CalculatorRM" component={CalculatorRM} options={{ headerShown: false }}/>
         </>
     </Stack.Navigator>
     )
