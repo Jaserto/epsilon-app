@@ -75,7 +75,7 @@ export const AddWorkoutScreen = (props: any) => {
 
     const finalizeWorkout = () => {
         const _exerciseBlock: any = [...exercisesData]
-        console.log('terminando')
+
         let kilos: number = 0;
         let series: number = inputs.length;
         let time = mins + ':' + secs;
@@ -98,7 +98,7 @@ export const AddWorkoutScreen = (props: any) => {
                         exerciseId: serie.exerciseId
                     })
                 } else {
-                    console.log('inserta los datos de la serie')
+
                     if (serie.value === '' || serie.value2 === '') {
                         console.log('entro')
                         emptySerie.push({
@@ -114,40 +114,18 @@ export const AddWorkoutScreen = (props: any) => {
             }
             series = item.inputsData.length;
         }
-        console.log('ExercisesInfo--', exercisesInfo[0],exercisesInfo.length)
-   /*      for (let j = 0; j < seriesInfo.length; j++) {
+        console.log('ExercisesInfo--', exercisesInfo[0], exercisesInfo.length)
+        for (let j = 0; j < seriesInfo.length; j++) {
             console.log('la serie del exercise', seriesInfo[j])
 
             for (let k = 0; k < exercisesInfo.length; k++) {
-                console.log('la serie del exercise2', exercisesInfo[k].series)
-                if (seriesInfo[j].exerciseId === exercisesInfo[k].idExercise && exercisesInfo[k].series === undefined) {
-                    if (Array.isArray(exercisesInfo[k].series)) {
-
-                        exercisesInfo[k].series.push(seriesInfo[j])
-                    } else {
-                        exercisesInfo[k].series = [seriesInfo[j]]
-                    }
+                if (seriesInfo[j].exerciseId === exercisesInfo[k].idExercise && exercisesInfo[k].series !== undefined) {
+                    exercisesInfo[k].series.push(seriesInfo[j])
+                } else if (seriesInfo[j].exerciseId === exercisesInfo[k].idExercise && exercisesInfo[k].series === undefined) {
+                    exercisesInfo[k].series = [seriesInfo[j]]
                 }
             }
-        } */
 
-        for (let j = 0; j < exercisesInfo.length;j++) {
-            console.log('la serie del exercise', seriesInfo[j])
-
-            for (let k = 0; k < seriesInfo.length; k++) {
-                console.log('la serie del exercise2', exercisesInfo[j].series)
-                if (seriesInfo[k].exerciseId === exercisesInfo[j].idExercise && exercisesInfo[j].series === undefined) {
-                    console.log('es undefined')
-                    if (Array.isArray(exercisesInfo[j].series)) {
-                        
-                        exercisesInfo[j].series.push(seriesInfo[j])
-                    } else {
-                        exercisesInfo[j].series = [seriesInfo[j]]
-                        
-                    /*     exercisesInfo[j].series.push(seriesInfo[j]) */
-                    }
-                }
-            }
         }
 
 
@@ -168,6 +146,8 @@ export const AddWorkoutScreen = (props: any) => {
             AsyncStorage.getItem('pr').then((result: any) => {
                 let dataPR = JSON.parse(result)
                 console.log('daaataaaPR', dataPR)
+
+                //No data async storage
                 if (dataPR !== null) {
                     console.log('---------------------------------', dataPR)
                     storagePr = dataPR
@@ -247,10 +227,14 @@ export const AddWorkoutScreen = (props: any) => {
                         exercises: exercisesInfo
                     }
 
-                    /*    storeData(data) */
-                    /*        props.navigation.replace('NewPr', { storagePr }) */
+                    storeData(data)
+                    props.navigation.replace('NewPr', { storagePr })
 
+
+                    //No existen records en el async storage
                 } else {
+                    let newRecords:any = []
+                    let storagePr:any = []
                     for (let j = 0; j < exercisesData.length; j++) {
                         for (let k = 0; k < exercisesData[j].inputsData.length; k++) {
                             //cuando hay varias series de un ejercicio controlar que setea el maximo.
@@ -259,15 +243,17 @@ export const AddWorkoutScreen = (props: any) => {
                                 exerciseId: exercisesData[j].inputsData[k].exerciseId,
                                 weight: exercisesData[j].inputsData[k].value
                             }
-                            if (prStorage.length > 0) {
-                                for (let dup of prStorage) {
+                            if (newRecords.length > 0) {
+                                for (let dup of newRecords) {
                                     console.log('El dup ', dup)
-                                    console.log('El prStorage mid ', prStorage)
+                                    console.log('El prStorage mid ', newRecords)
                                     if (dup.exerciseId === exercisesData[j].inputsData[k].exerciseId) {
-                                        console.log('El exerciseId esta presente')
-                                        let prStorageMatch = prStorage.filter((item: any) => item.exerciseId === exercisesData[j].inputsData[k].exerciseId)[0]
-                                        if (exercisesData[j].inputsData[k].value > prStorageMatch.weight) {
-                                            console.log(exercisesData[j].inputsData[k].value, '>', prStorageMatch.weight)
+                                        console.log('El exerciseId esta presente ', dup.exerciseId )
+                                     //   let prStorageMatch = newRecords.filter((item: any) => item.exerciseId === exercisesData[j].inputsData[k].exerciseId)[0]
+                                       console.log('VALUE1---- ',exercisesData[j].inputsData[k].value)
+                                       console.log('VALUE2---- ', dup.weight)
+                                     if (Number(exercisesData[j].inputsData[k].value) > Number(dup.weight)) {
+                                            console.log(exercisesData[j].inputsData[k].value, '>', dup.weight)
                                             let prStorageMatch1 = {
                                                 exerciseId: exercisesData[j].inputsData[k].exerciseId,
                                                 weight: exercisesData[j].inputsData[k].value
@@ -275,20 +261,21 @@ export const AddWorkoutScreen = (props: any) => {
                                             //prStorage = [Object.assign(prStorageMatch,prStorageMatch1)];
 
                                             console.log('Es mayor')
-                                            prStorage = prStorage.filter((item: any) => item.exerciseId !== exercisesData[j].inputsData[k].exerciseId)
-                                            prStorage.push(pr)
+                                            newRecords = newRecords.filter((item: any) => item.exerciseId !== exercisesData[j].inputsData[k].exerciseId)
+                                            newRecords.push(pr)
                                         } else {
                                             console.log('Es menor')
                                         }
                                     } else {
-                                        prStorage.push(pr)
+                                        newRecords = newRecords.filter((item: any) => item.exerciseId !== exercisesData[j].inputsData[k].exerciseId)
+                                        newRecords.push(pr)
                                     }
                                 }
                                 console.log('no lo incluye, pero ya esta')
                                 //        prStorage.push(pr)
                             } else {
                                 console.log('no lo incluye >0')
-                                prStorage.push(pr)
+                                newRecords.push(pr)
                             }
 
 
@@ -297,15 +284,16 @@ export const AddWorkoutScreen = (props: any) => {
                         }
                     }
 
-                    let result = prStorage.filter((item: any, index: any) => {
-                        return prStorage.indexOf(item) === index;
+                    let result = newRecords.filter((item: any, index: any) => {
+                        return newRecords.indexOf(item) === index;
                     })
-                    const tabla = {} as any;
+           /*          const tabla = {} as any;
                     const unicos = result.filter((indice: any) => {
                         return tabla.hasOwnProperty(indice) ? false : (tabla[indice] = true);
                     });
-                    console.log(unicos, '---')
-
+                    */
+                    console.log(newRecords.length, '---')
+                    console.log(newRecords, '-------')
                     const data: any = {
                         id: uuid.v4(),
                         dia: new Date().getDate(),
@@ -314,16 +302,17 @@ export const AddWorkoutScreen = (props: any) => {
                         title: hora > 12 && hora < 18 ? 'Entrenamiento de tarde' : hora > 18 && hora < 24 ? 'Entrenamiento de noche' : 'Entrenamiento de mañana',
                         tiempo: time,
                         notes: notes,
-                        pr: storagePr.length,
+                        pr: newRecords.length,
                         totalWeight: kilos,
                         mes: new Date().getMonth(),
                         exercises: exercisesInfo
                     }
 
-                    storagePr
-                 /*    setInputsData([]) */
-                    /*   storeData(data) */
-                    /*     props.navigation.replace('NewPr', { storagePr }) */
+                    /* storagePr */
+                    /*    setInputsData([]) */
+                    storagePr = newRecords;
+                    storeData(data)
+                        props.navigation.replace('NewPr', { storagePr })
                 }
 
             }).catch((err: any) => {
