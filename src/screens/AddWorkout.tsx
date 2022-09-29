@@ -13,15 +13,16 @@ import { Exercise } from '../utils/models/Exercise';
 import uuid from 'react-native-uuid';
 import { UserContext } from '../context/UserContext/UserContext';
 import { PersonalRecord } from '../utils/models';
+import { BackHandler } from "react-native";
 
 const { width } = Dimensions.get("window");
 
 
 export const AddWorkoutScreen = (props: any) => {
-    
+
     const { inputsData, setInputsData } = useContext(WorkoutContext);
     const { keepAwakeScreen, setKeepAwakeScreen } = useContext(UserContext);
-    
+
     //States
     const [hora, setHora] = useState<number>(0);
 
@@ -38,25 +39,39 @@ export const AddWorkoutScreen = (props: any) => {
     const [workouts, setWorkouts] = useState<any>([])
 
     useEffect(() => {
- 
+
         setHora(new Date().getHours())
-        if(inputsData !== null){
-            console.log('EL INPUT ENTRO',inputsData.inputsData)
-            let idd = inputsData.inputsData.filter((item:any) => item.inputsData.length > 0)
-            console.log('El idd',idd)
+        if (inputsData !== null) {
+            console.log('EL INPUT ENTRO', inputsData.inputsData)
+            let idd = inputsData.inputsData.filter((item: any) => item.inputsData.length > 0)
+            console.log('El idd', idd)
             setExercisesData(idd !== undefined && idd)
         }
-     //   inputsData !== null && setExercisesData(inputsData !== undefined && inputsData.inputsData)
-        
+        //   inputsData !== null && setExercisesData(inputsData !== undefined && inputsData.inputsData)
+
         if (props.route.params) {
             console.log('el params', props.route.params.selectedExercices)
             setSelectedExercises(props.route.params.selectedExercices)
             addExerciseData(props.route.params.selectedExercices)
         }
-              /*  console.log('LOSS INPUTS QUE COMIENZAN A PONERSE',inputsData)
-        console.log('LOSS INPUTS QUE COMIENZAN A PONERS3333E',inputsData.inputsData) */
+        /*  console.log('LOSS INPUTS QUE COMIENZAN A PONERSE',inputsData)
+  console.log('LOSS INPUTS QUE COMIENZAN A PONERS3333E',inputsData.inputsData) */
         getDataStorage2()
     }, [])
+
+
+
+    function handleBackButtonClick() {
+        props.navigation.replace('InicioScreen')
+        return true;
+    }
+
+    useEffect(() => {
+        BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
+        return () => {
+            BackHandler.removeEventListener("hardwareBackPress", handleBackButtonClick);
+        };
+    }, []);
 
     const finalizeWorkout = () => {
         const _exerciseBlock: any = [...exercisesData]
@@ -74,7 +89,7 @@ export const AddWorkoutScreen = (props: any) => {
                 idExercise: item.key
             });
             for (let serie of item.inputsData) {
-                console.log('La serie', serie)
+                console.log('------------------La serie', serie)
                 if (serie.value != '' && serie.value2 != '') {
                     kilos += parseInt(serie.value) * parseInt(serie.value2);
                     seriesInfo.push({
@@ -84,13 +99,13 @@ export const AddWorkoutScreen = (props: any) => {
                     })
                 } else {
                     console.log('inserta los datos de la serie')
-                    if(serie.value === '' || serie.value2===''){
+                    if (serie.value === '' || serie.value2 === '') {
                         console.log('entro')
                         emptySerie.push({
                             exerciseId: serie.exerciseId,
                             error: true,
                             msg: 'Debes introducir todos los campos.'
-                        })     
+                        })
                         setError(emptySerie)
                     }
                     console.log(error)
@@ -99,17 +114,37 @@ export const AddWorkoutScreen = (props: any) => {
             }
             series = item.inputsData.length;
         }
-        for (let j = 0; j < seriesInfo.length; j++) {
-            console.log('la serie del exercise',seriesInfo[j])
-          
+        console.log('ExercisesInfo--', exercisesInfo[0],exercisesInfo.length)
+   /*      for (let j = 0; j < seriesInfo.length; j++) {
+            console.log('la serie del exercise', seriesInfo[j])
+
             for (let k = 0; k < exercisesInfo.length; k++) {
-                console.log('la serie del exercise2',exercisesInfo[k].series)
-                if (seriesInfo[j].exerciseId === exercisesInfo[k].idExercise && exercisesInfo[k].series === undefined ) {
+                console.log('la serie del exercise2', exercisesInfo[k].series)
+                if (seriesInfo[j].exerciseId === exercisesInfo[k].idExercise && exercisesInfo[k].series === undefined) {
                     if (Array.isArray(exercisesInfo[k].series)) {
-                        
+
                         exercisesInfo[k].series.push(seriesInfo[j])
                     } else {
                         exercisesInfo[k].series = [seriesInfo[j]]
+                    }
+                }
+            }
+        } */
+
+        for (let j = 0; j < exercisesInfo.length;j++) {
+            console.log('la serie del exercise', seriesInfo[j])
+
+            for (let k = 0; k < seriesInfo.length; k++) {
+                console.log('la serie del exercise2', exercisesInfo[j].series)
+                if (seriesInfo[k].exerciseId === exercisesInfo[j].idExercise && exercisesInfo[j].series === undefined) {
+                    console.log('es undefined')
+                    if (Array.isArray(exercisesInfo[j].series)) {
+                        
+                        exercisesInfo[j].series.push(seriesInfo[j])
+                    } else {
+                        exercisesInfo[j].series = [seriesInfo[j]]
+                        
+                    /*     exercisesInfo[j].series.push(seriesInfo[j]) */
                     }
                 }
             }
@@ -120,201 +155,183 @@ export const AddWorkoutScreen = (props: any) => {
         let hora = new Date().getHours()
 
         /* setData(data) */
-       console.log('ExerciseData',_exerciseBlock)
-       console.log('ExercisesInfo ##########',exercisesInfo)
-        if(exercisesData.length === 0){
+        console.log('ExerciseData', seriesInfo)
+        console.log('ExercisesInfo ##########', exercisesInfo[0])
+        if (exercisesData.length === 0) {
             console.log('no hay nada')
-           
+
             return;
-        }else{
-            let prStorage:any=[];
-            let storagePr:any=[];
-            let storagePr2:any=[];
+        } else {
+            let prStorage: any = [];
+            let storagePr: any = [];
+            let storagePr2: any = [];
             AsyncStorage.getItem('pr').then((result: any) => {
-                  let dataPR = JSON.parse(result)
-                  console.log('daaataaaPR', dataPR)
-                    if(dataPR !== null){
-                        console.log('---------------------------------',dataPR)
-                        storagePr = dataPR
-                           for(let j = 0; j < exercisesData.length; j++){
-                            for(let k = 0; k < exercisesData[j].inputsData.length; k++){
-                                //cuando hay varias series de un ejercicio controlar que setea el maximo.
-                                console.log('INPUTS CON INFO ',exercisesData[j].inputsData[k])
-                                let pr = {
-                                    exerciseId: exercisesData[j].inputsData[k].exerciseId,
-                                    weight: exercisesData[j].inputsData[k].value
-                                }
-                                prStorage.push(pr)  
-                            }
-                        }
-                        let result = prStorage.filter((item:any,index:any)=>{
-                            return prStorage.indexOf(item) === index;
-                          })
-                        prStorage = result;
-                        for (let i = 0; i < prStorage.length; i++){
+                let dataPR = JSON.parse(result)
+                console.log('daaataaaPR', dataPR)
+                if (dataPR !== null) {
+                    console.log('---------------------------------', dataPR)
+                    storagePr = dataPR
+                    for (let j = 0; j < exercisesData.length; j++) {
+                        for (let k = 0; k < exercisesData[j].inputsData.length; k++) {
+                            //cuando hay varias series de un ejercicio controlar que setea el maximo.
+                            console.log('INPUTS CON INFO ', exercisesData[j].inputsData[k])
                             let pr = {
-                                exerciseId: prStorage[i].exerciseId,
-                                weight: prStorage[i].weight
+                                exerciseId: exercisesData[j].inputsData[k].exerciseId,
+                                weight: exercisesData[j].inputsData[k].value
                             }
-                            for(let p = 0; p < storagePr.length; p++){
-                                console.log('El pr storageeee', prStorage[i])
-
-                                if(storagePr[p].exerciseId === prStorage[i].exerciseId){
-                                    if(Number(prStorage[i].weight) > Number(storagePr[p].weight) ){
-                                        storagePr2.push(pr)
-                                    }
-                                }else{
-                                   if(storagePr2.some((element:any) => element.exerciseId === prStorage[i].exerciseId)){
-                                   // let object = storagePr2.find((element:any) => element.exerciseId === prStorage[i].exerciseId)
-                                    let index = storagePr2.findIndex( (x:any) => x.exerciseId === prStorage[i].exerciseId );
-                                    storagePr2.splice( index, 1 );
-                                    storagePr2.push(pr)
-                                    }else{
-                                    storagePr2.push(pr)
-                                   }
-                                }         
-                            }
+                            prStorage.push(pr)
                         }
-                        console.log('------------------------------------------')
-                        console.log(storagePr)
-                        console.log(storagePr2)
-                        let sinRepetidos = storagePr2.filter((valorActual:any, indiceActual:any, arreglo:any) => {
-                            return arreglo.findIndex((valorDelArreglo:any) => JSON.stringify(valorDelArreglo.exerciseId) === JSON.stringify(valorActual.exerciseId)) === indiceActual
-                        });
-                        storagePr = sinRepetidos;
-                        console.log(storagePr)
-                     
-                        let nuevosYaDentro = dataPR
-                        if(storagePr.length>0){
-                            for (let k = 0; k < sinRepetidos.length; k++){
-                                console.log('iterando',nuevosYaDentro.findIndex((item:any) => item.exerciseId === sinRepetidos[k].exerciseId ) )
-                               let exist = nuevosYaDentro.findIndex((item:any) => item.exerciseId === sinRepetidos[k].exerciseId )
-                               if( exist !== undefined || exist !== -1 ){
-                                nuevosYaDentro[exist] = sinRepetidos[k]
-                               }
-                               nuevosYaDentro.push(sinRepetidos[k])
-                            }
-                        }
-
-                        console.log('El pr delicioso',pr)
-                    
-                        const data: any = {
-                            id: uuid.v4(),
-                            dia: new Date().getDate(),
-                            fecha: new Date().getDate() + '-' + new Date().getMonth() + '-' + new Date().getFullYear(),
-                            fechaISO: new Date().toISOString(),
-                            title: hora > 12 && hora < 18 ? 'Entrenamiento de tarde' : hora > 18 && hora < 24 ? 'Entrenamiento de noche' : 'Entrenamiento de mañana',
-                            tiempo: time,
-                            notes: notes,
-                            pr: storagePr.length,
-                            totalWeight: kilos,
-                            mes: new Date().getMonth(),
-                            exercises: exercisesInfo
-                        }
-                        
-                        storeData(data)
-                 
-                        props.navigation.replace('NewPr', { storagePr })
-                   
-                    }else{
-                        for(let j = 0; j < exercisesData.length; j++){
-                            for(let k = 0; k < exercisesData[j].inputsData.length; k++){
-                                //cuando hay varias series de un ejercicio controlar que setea el maximo.
-                                console.log('INPUTSSSS CON INFO ',exercisesData[j].inputsData[k])
-                                let pr = {
-                                    exerciseId: exercisesData[j].inputsData[k].exerciseId,
-                                    weight: exercisesData[j].inputsData[k].value
-                                }
-                                if(prStorage.length > 0){
-                                    for(let dup of prStorage){
-                                        console.log('El dup ', dup)
-                                        console.log('El prStorage mid ', prStorage)
-                                        if(dup.exerciseId === exercisesData[j].inputsData[k].exerciseId){
-                                            console.log('El exerciseId esta presente')
-                                            let prStorageMatch = prStorage.filter((item:any)=> item.exerciseId === exercisesData[j].inputsData[k].exerciseId)[0]
-                                            if( exercisesData[j].inputsData[k].value > prStorageMatch.weight){
-                                                console.log(exercisesData[j].inputsData[k].value, '>',prStorageMatch.weight)
-                                                let prStorageMatch1= {
-                                                    exerciseId: exercisesData[j].inputsData[k].exerciseId,
-                                                    weight: exercisesData[j].inputsData[k].value
-                                                }
-                                                //prStorage = [Object.assign(prStorageMatch,prStorageMatch1)];
-
-                                                console.log('Es mayor')
-                                                prStorage = prStorage.filter((item:any)=> item.exerciseId !== exercisesData[j].inputsData[k].exerciseId)
-                                                prStorage.push(pr)
-                                            }else{
-                                                console.log('Es menor')
-                                            }
-                                        }else{
-                                            prStorage.push(pr)
-                                        }
-                                    }
-                                    console.log('no lo incluye, pero ya esta')
-                                //        prStorage.push(pr)
-                                }else{
-                                    console.log('no lo incluye >0')
-                                    prStorage.push(pr)
-                                } 
-                          
-                             
-                              /*   AsyncStorage.setItem('pr', pr).then((resultado: any) => console.log(resultado) */
-
-                            }
-                        }
-                        props.navigation.replace('NewPr', { storagePr })
-
-                        let result = prStorage.filter((item:any,index:any)=>{
-                            return prStorage.indexOf(item) === index;
-                          })
-                          const tabla = {} as any;
-                          const unicos = result.filter((indice:any) => {
-                            return tabla.hasOwnProperty(indice) ? false : (tabla[indice] = true);
-                            });
-                            console.log(unicos, '---')
-
-                            const data: any = {
-                                id: uuid.v4(),
-                                dia: new Date().getDate(),
-                                fecha: new Date().getDate() + '-' + new Date().getMonth() + '-' + new Date().getFullYear(),
-                                fechaISO: new Date().toISOString(),
-                                title: hora > 12 && hora < 18 ? 'Entrenamiento de tarde' : hora > 18 && hora < 24 ? 'Entrenamiento de noche' : 'Entrenamiento de mañana',
-                                tiempo: time,
-                                notes: notes,
-                                pr: storagePr.length,
-                                totalWeight: kilos,
-                                mes: new Date().getMonth(),
-                                exercises: exercisesInfo
-                            }
-                            setInputsData([])
-                            storeData(data)
                     }
-                
-               }).catch((err: any) => {
-                   console.log(err)
-               })
+                    let result = prStorage.filter((item: any, index: any) => {
+                        return prStorage.indexOf(item) === index;
+                    })
+                    prStorage = result;
+                    for (let i = 0; i < prStorage.length; i++) {
+                        let pr = {
+                            exerciseId: prStorage[i].exerciseId,
+                            weight: prStorage[i].weight
+                        }
+                        for (let p = 0; p < storagePr.length; p++) {
+                            console.log('El pr storageeee', prStorage[i])
+
+                            if (storagePr[p].exerciseId === prStorage[i].exerciseId) {
+                                if (Number(prStorage[i].weight) > Number(storagePr[p].weight)) {
+                                    storagePr2.push(pr)
+                                }
+                            } else {
+                                if (storagePr2.some((element: any) => element.exerciseId === prStorage[i].exerciseId)) {
+                                    // let object = storagePr2.find((element:any) => element.exerciseId === prStorage[i].exerciseId)
+                                    let index = storagePr2.findIndex((x: any) => x.exerciseId === prStorage[i].exerciseId);
+                                    storagePr2.splice(index, 1);
+                                    storagePr2.push(pr)
+                                } else {
+                                    storagePr2.push(pr)
+                                }
+                            }
+                        }
+                    }
+                    console.log('------------------------------------------')
+                    console.log(storagePr)
+                    console.log(storagePr2)
+                    let sinRepetidos = storagePr2.filter((valorActual: any, indiceActual: any, arreglo: any) => {
+                        return arreglo.findIndex((valorDelArreglo: any) => JSON.stringify(valorDelArreglo.exerciseId) === JSON.stringify(valorActual.exerciseId)) === indiceActual
+                    });
+                    storagePr = sinRepetidos;
+                    console.log(storagePr)
+
+                    let nuevosYaDentro = dataPR
+                    if (storagePr.length > 0) {
+                        for (let k = 0; k < sinRepetidos.length; k++) {
+                            console.log('iterando', nuevosYaDentro.findIndex((item: any) => item.exerciseId === sinRepetidos[k].exerciseId))
+                            let exist = nuevosYaDentro.findIndex((item: any) => item.exerciseId === sinRepetidos[k].exerciseId)
+                            if (exist !== undefined || exist !== -1) {
+                                nuevosYaDentro[exist] = sinRepetidos[k]
+                            }
+                            nuevosYaDentro.push(sinRepetidos[k])
+                        }
+                    }
+
+                    console.log('El pr delicioso', pr)
+
+                    const data: any = {
+                        id: uuid.v4(),
+                        dia: new Date().getDate(),
+                        fecha: new Date().getDate() + '-' + new Date().getMonth() + '-' + new Date().getFullYear(),
+                        fechaISO: new Date().toISOString(),
+                        title: hora > 12 && hora < 18 ? 'Entrenamiento de tarde' : hora > 18 && hora < 24 ? 'Entrenamiento de noche' : 'Entrenamiento de mañana',
+                        tiempo: time,
+                        notes: notes,
+                        pr: storagePr.length,
+                        totalWeight: kilos,
+                        mes: new Date().getMonth(),
+                        exercises: exercisesInfo
+                    }
+
+                    /*    storeData(data) */
+                    /*        props.navigation.replace('NewPr', { storagePr }) */
+
+                } else {
+                    for (let j = 0; j < exercisesData.length; j++) {
+                        for (let k = 0; k < exercisesData[j].inputsData.length; k++) {
+                            //cuando hay varias series de un ejercicio controlar que setea el maximo.
+                            console.log('INPUTSSSS CON INFO ', exercisesData[j].inputsData[k])
+                            let pr = {
+                                exerciseId: exercisesData[j].inputsData[k].exerciseId,
+                                weight: exercisesData[j].inputsData[k].value
+                            }
+                            if (prStorage.length > 0) {
+                                for (let dup of prStorage) {
+                                    console.log('El dup ', dup)
+                                    console.log('El prStorage mid ', prStorage)
+                                    if (dup.exerciseId === exercisesData[j].inputsData[k].exerciseId) {
+                                        console.log('El exerciseId esta presente')
+                                        let prStorageMatch = prStorage.filter((item: any) => item.exerciseId === exercisesData[j].inputsData[k].exerciseId)[0]
+                                        if (exercisesData[j].inputsData[k].value > prStorageMatch.weight) {
+                                            console.log(exercisesData[j].inputsData[k].value, '>', prStorageMatch.weight)
+                                            let prStorageMatch1 = {
+                                                exerciseId: exercisesData[j].inputsData[k].exerciseId,
+                                                weight: exercisesData[j].inputsData[k].value
+                                            }
+                                            //prStorage = [Object.assign(prStorageMatch,prStorageMatch1)];
+
+                                            console.log('Es mayor')
+                                            prStorage = prStorage.filter((item: any) => item.exerciseId !== exercisesData[j].inputsData[k].exerciseId)
+                                            prStorage.push(pr)
+                                        } else {
+                                            console.log('Es menor')
+                                        }
+                                    } else {
+                                        prStorage.push(pr)
+                                    }
+                                }
+                                console.log('no lo incluye, pero ya esta')
+                                //        prStorage.push(pr)
+                            } else {
+                                console.log('no lo incluye >0')
+                                prStorage.push(pr)
+                            }
+
+
+                            /*   AsyncStorage.setItem('pr', pr).then((resultado: any) => console.log(resultado) */
+
+                        }
+                    }
+
+                    let result = prStorage.filter((item: any, index: any) => {
+                        return prStorage.indexOf(item) === index;
+                    })
+                    const tabla = {} as any;
+                    const unicos = result.filter((indice: any) => {
+                        return tabla.hasOwnProperty(indice) ? false : (tabla[indice] = true);
+                    });
+                    console.log(unicos, '---')
+
+                    const data: any = {
+                        id: uuid.v4(),
+                        dia: new Date().getDate(),
+                        fecha: new Date().getDate() + '-' + new Date().getMonth() + '-' + new Date().getFullYear(),
+                        fechaISO: new Date().toISOString(),
+                        title: hora > 12 && hora < 18 ? 'Entrenamiento de tarde' : hora > 18 && hora < 24 ? 'Entrenamiento de noche' : 'Entrenamiento de mañana',
+                        tiempo: time,
+                        notes: notes,
+                        pr: storagePr.length,
+                        totalWeight: kilos,
+                        mes: new Date().getMonth(),
+                        exercises: exercisesInfo
+                    }
+
+                    storagePr
+                 /*    setInputsData([]) */
+                    /*   storeData(data) */
+                    /*     props.navigation.replace('NewPr', { storagePr }) */
+                }
+
+            }).catch((err: any) => {
+                console.log(err)
+            })
         }
     }
 
-    const putPr = () => {
-        let pr = [{
-            exerciseId:4,
-            weight: 45
-        }]
-        let prString = JSON.stringify(pr);
-            AsyncStorage.setItem('pr', prString).then((resultado: any) => console.log('Se agrego', resultado)).catch(error => console.log(error))
-    }
-    
-    const mostrarPR = () => {
-        AsyncStorage.getItem('pr').then((result: any) => {
-            let dataPR = JSON.parse(result)
-            console.log(dataPR)
-        }).catch(err => console.log(err))
-    }
-
-    const deletePR = async() => {
-            await AsyncStorage.removeItem('pr').then(result => console.log(result)).catch(err => console.log(err))
-    }
 
     const addExerciseData = (exercisesId: any) => {
         const _exerciseBlock: any = [...exercisesData]
@@ -358,7 +375,7 @@ export const AddWorkoutScreen = (props: any) => {
 
 
     const deleteSerie = (exerciseId: any, index: any) => {
-    /*     const _exerciseBlock = [...inputsData.inputsData] */
+        /*     const _exerciseBlock = [...inputsData.inputsData] */
         const _exerciseBlock = [...exercisesData]
         console.log('mandando el exer', exerciseId)
         console.log('mandando el exer2', _exerciseBlock)
@@ -375,45 +392,29 @@ export const AddWorkoutScreen = (props: any) => {
 
             let ex = _exerciseBlock.find((exerciseData: any) => exerciseData.key === exerciseId);
             let ex2 = nuevo.filter((exerciseData: any) => exerciseData.key !== exerciseId);
-            if(ex !== undefined){
+            if (ex !== undefined) {
                 console.log('ex', ex)
                 console.log('ex2', ex2)
-             
+
                 console.log('se quedo vacio')
                 console.log('¡nuevoooooo', _exerciseBlock)
 
-                if(ex.inputsData.length > 0){
+                if (ex.inputsData.length > 0) {
                     setExercisesData(nuevo)
                     setInputsData(nuevo)
-                }else{
+                } else {
                     setExercisesData(ex2)
-                  /*   setInputsData(ex2) */
+                    setInputsData(ex2)
                 }
-    
-            
-               /*      setInputsData(nuevo) */
-               
-              
-
-              
-               /*  setInputsData(res) */
-            }else{
+            } else {
                 console.log('ex del undefined', ex)
                 setExercisesData(nuevo)
                 setInputsData(nuevo)
-              /*   setSelectedExercises([])
-                setExercisesData([]) */
+
             }
         }
-     
-    }
 
-    //TODO
-  /*   const deleteExerciseData = (key: any) => {
-        const _exercisesData = exercisesData.filter((input: any, index: any) => index != key);
-        setExercisesData(_exercisesData);
-        setInputsData(_exercisesData)
-    } */
+    }
 
     const exerciseDataHandler = (text: any, text2: any, index: any, exerciseId: any, exerciseName: any) => {
         console.log('Lineeee', 'text: ', text, 'text2: ', text2, 'key: ', index, 'exerciseId: ', exerciseId, 'nameEercuse: ', exerciseName)
@@ -432,26 +433,6 @@ export const AddWorkoutScreen = (props: any) => {
         setExercisesData(_exerciseBlock);
     }
 
-  /*   const addInputExerciseData = (exerciseId: any) => {
-        const _exercisesData = [...exercisesData];
-        _exercisesData.filter((exercisesInputs: any) => exercisesInputs.exer)
-    } */
-/* 
-    const deleteHandler = (key: any) => {
-        const _inputs = inputs.filter((input: any, index: any) => index != key);
-        setInputs(_inputs);
-    } */
-
-  /*   const inputHandler = (text: any, text2: any, key: any, exerciseId: any) => {
-        const _inputs = [...inputs];
-        _inputs[key].value = text;
-        _inputs[key].value2 = text2;
-        _inputs[key].key = key;
-        _inputs[key].key = exerciseId;
-
-        setInputs(_inputs);
-
-    } */
 
     const formatNumber = (number: any) => `0${number}`.slice(-2);
 
@@ -478,8 +459,25 @@ export const AddWorkoutScreen = (props: any) => {
     const { mins, secs } = getRemaining(remainingSecs);
 
     const cancel = () => {
-        
+
     }
+    useEffect(() => {
+        AsyncStorage.getItem('keepScreenEnabled').then((result: any) => {
+            let data = JSON.parse(result)
+            if (data !== null && data.toString() == 'true') {
+                setKeepAwake(true)
+                setKeepAwakeScreen(true)
+            }
+            else {
+                setKeepAwake(false)
+                setKeepAwakeScreen(false)
+                console.log(keepAwake)
+            }
+        }).catch((err: any) => {
+            console.log(err)
+        })
+
+    }, [])
 
     useEffect(() => {
         if (remainingSecs === 0) BackgroundTimer.stopBackgroundTimer()
@@ -487,20 +485,6 @@ export const AddWorkoutScreen = (props: any) => {
     }, [secondsLeft]);
 
     useEffect(() => {
-        AsyncStorage.getItem('keepScreenEnabled').then((result: any) => {
-            let data = JSON.parse(result)
-            if ( data !== null && data.toString() == 'true'){
-                setKeepAwake(true)
-                setKeepAwakeScreen(true)
-            }
-            else {
-                setKeepAwake(false)
-                setKeepAwakeScreen(false)
-            console.log(keepAwake)
-        }
-        }).catch((err: any) => {
-            console.log(err)
-        })
 
         if (isActive) startTimer();
         else BackgroundTimer.stopBackgroundTimer();
@@ -510,15 +494,15 @@ export const AddWorkoutScreen = (props: any) => {
     }, [isActive])
 
 
-/*     const saveData = async (data: any) => {
-        AsyncStorage.getItem('workout')
-            .then((workouts) => {
-                const c = workouts ? JSON.parse(workouts) : [];
-                c.push(data);
-                AsyncStorage.setItem('workout', JSON.stringify(c));
-            });
-    }
- */
+    /*     const saveData = async (data: any) => {
+            AsyncStorage.getItem('workout')
+                .then((workouts) => {
+                    const c = workouts ? JSON.parse(workouts) : [];
+                    c.push(data);
+                    AsyncStorage.setItem('workout', JSON.stringify(c));
+                });
+        }
+     */
 
     const storeData = async (data: any) => {
         try {
@@ -528,10 +512,10 @@ export const AddWorkoutScreen = (props: any) => {
                 console.log('nopooooooo es nullllll')
                 const jsonParse = JSON.parse(jsonValue)
                 let newArray = [...jsonParse, data]
-               /*  console.log('El Json',jsonParse) */
-                await AsyncStorage.setItem('workout',JSON.stringify(newArray));
-            }else{
-                let datos=[]
+                /*  console.log('El Json',jsonParse) */
+                await AsyncStorage.setItem('workout', JSON.stringify(newArray));
+            } else {
+                let datos = []
                 datos.push(data)
                 const jsonValue2 = JSON.stringify(datos)
                 await AsyncStorage.setItem('workout', jsonValue2)
@@ -542,23 +526,23 @@ export const AddWorkoutScreen = (props: any) => {
     }
 
 
-   /*  const getDataStorage = async () => {
-        try {
-            const jsonValue = await AsyncStorage.getItem('workout')
-            return jsonValue != null ? JSON.parse(jsonValue) : null;
-        } catch (e) {
-            return null;
-        }
-    } */
-   
+    /*  const getDataStorage = async () => {
+         try {
+             const jsonValue = await AsyncStorage.getItem('workout')
+             return jsonValue != null ? JSON.parse(jsonValue) : null;
+         } catch (e) {
+             return null;
+         }
+     } */
+
     const getDataStorage2 = (): any => {
-       
+
         AsyncStorage.getItem('workout').then((result: any) => {
-         /*    console.log('resultad', result) */
+            /*    console.log('resultad', result) */
             let data = JSON.parse(result)
             setWorkouts(data)
             return data;
-         
+
         }).catch((err: any) => {
             console.log(err)
         })
@@ -600,7 +584,7 @@ export const AddWorkoutScreen = (props: any) => {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <ScrollView style={styles.view}>
-           {keepAwakeScreen &&  <KeepAwake />}
+                {keepAwakeScreen && <KeepAwake />}
                 <View style={{ marginVertical: 10 }}>
                     <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold' }}>Añade un nuevo entrenamiento</Text>
                 </View>
@@ -609,7 +593,7 @@ export const AddWorkoutScreen = (props: any) => {
                         <Text style={{ fontSize: 20, color: 'white', fontWeight: 'bold', marginBottom: 6 }}>{hora > 12 && hora < 18 ? 'Entrenamiento de tarde' : hora > 18 && hora < 24 ? 'Entrenamiento de noche' : 'Entrenamiento de mañana'}</Text>
                         <View style={{ marginVertical: 6 }}>
                             <TextInput placeholderTextColor='white' placeholder={'Notas del entrenamiento'} value={notes} style={styles.input} maxLength={40}
-                             onChangeText={(text) => setNotes(text)}
+                                onChangeText={(text) => setNotes(text)}
                             />
                         </View>
                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -636,13 +620,13 @@ export const AddWorkoutScreen = (props: any) => {
                             </View>
                             <View style={{ marginBottom: 20, width: '100%' }}>
 
-                                {exercisesData !== undefined && exercisesData.map((inputsData: any, index:number) => (
+                                {exercisesData !== undefined && exercisesData.map((inputsData: any, index: number) => (
                                     <View key={inputsData.key} style={{ display: 'flex' }}>
                                         <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>{exercises.filter((exercise: Exercise) => exercise.id === inputsData.key)[0].nombre}</Text>
                                         {inputsData !== undefined && renderInput(inputsData.inputsData)}
-                                        {error.length>0 && error[0].exerciseId ===inputsData.inputsData[0].exerciseId && (
+                                        {error.length > 0 && error[0].exerciseId === inputsData.inputsData[0].exerciseId && (
                                             <View>
-                                                 {/*  console.log('El input',inputsData.inputsData[0].inputsData[0].exerciseId) */}
+                                                {/*  console.log('El input',inputsData.inputsData[0].inputsData[0].exerciseId) */}
                                                 <Text style={{ color: 'red' }}>Error: Inserta todos los datos de la serie</Text>
                                             </View>
                                         )}
@@ -658,7 +642,7 @@ export const AddWorkoutScreen = (props: any) => {
                                 <Text style={{ color: 'white', fontWeight: 'bold' }}>Terminar entrenamiento</Text>
                             </TouchableOpacity>
                             {/*            DEBUG           */}
-                    {/*         <Button
+                            {/*         <Button
 
                                 title="Guardar entrenamiento"
                                 onPress={() => {
