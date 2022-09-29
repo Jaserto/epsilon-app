@@ -114,7 +114,7 @@ export const SettingsScreen = ({ navigation }: any) => {
         }).catch((err: any) => {
             console.log(err)
         })
-
+        getWorkoutData()
     }, [])
 
     const refreshControl = () => {
@@ -133,6 +133,19 @@ export const SettingsScreen = ({ navigation }: any) => {
             />
         );
     };
+
+
+
+    const getWorkoutData = () => {
+        const data = []
+        AsyncStorage.getItem('pr')
+        .then((result: any) => {
+            let dataPR = JSON.parse(result)
+            console.log(dataPR)
+        })
+        .catch(error => console.log(error))
+    }
+
 
    const downloadCSV = () => {
         setVisibleToast(true)
@@ -156,8 +169,6 @@ export const SettingsScreen = ({ navigation }: any) => {
             .then(() => {
               console.log(`wrote file ${pathToWrite}`);
               // wrote file /storage/emulated/0/Download/data.csv
-           
-              
             })
             .catch(error => console.error(error));
     }

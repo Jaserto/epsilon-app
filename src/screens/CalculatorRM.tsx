@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Table, Row, Rows } from 'react-native-table-component';
 import { StyleSheet, Text, View, SafeAreaView, Dimensions, TextInput, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -50,8 +50,8 @@ export const CalculatorRM = () => {
     }
 
     
-    const mathFunction = (rep:number, max:string | number) => Number(max) / (1.0278 - 0.0278 * Number(rep));
-    const mathFunctionReverse = (rep:number, max:string | number) => Number(max) * (1.0278 - 0.0278 * Number(rep));
+   // const mathFunction = (rep:number, max:string | number) => Number(max) / (1.0278 - 0.0278 * Number(rep));
+    const mathFunctionReverse = useCallback((rep:number, max:string | number) => Number(max) * (1.0278 - 0.0278 * Number(rep)),[]);
 
 
     return (

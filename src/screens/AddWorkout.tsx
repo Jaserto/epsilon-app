@@ -73,6 +73,37 @@ export const AddWorkoutScreen = (props: any) => {
         };
     }, []);
 
+    
+
+    const deletePR = async() => {
+        try {
+
+            await AsyncStorage.removeItem('pr');
+            console.log('borrado')
+            return true;
+        }
+        catch(exception) {
+            console.log(exception)
+            return false;
+        }
+    }
+
+    const mostrarPR = async() => {
+        try {
+
+            const response = await AsyncStorage.getItem('pr');
+            console.log(response)
+            console.log('mostrado')
+            return true;
+        }
+        catch(exception) {
+            console.log(exception)
+            return false;
+        }
+    }
+
+
+
     const finalizeWorkout = () => {
         const _exerciseBlock: any = [...exercisesData]
 
@@ -143,11 +174,12 @@ export const AddWorkoutScreen = (props: any) => {
             let prStorage: any = [];
             let storagePr: any = [];
             let storagePr2: any = [];
+            let menores: any = []
             AsyncStorage.getItem('pr').then((result: any) => {
                 let dataPR = JSON.parse(result)
                 console.log('daaataaaPR', dataPR)
 
-                //No data async storage
+                //data async storage
                 if (dataPR !== null) {
                     console.log('---------------------------------', dataPR)
                     storagePr = dataPR
@@ -160,6 +192,7 @@ export const AddWorkoutScreen = (props: any) => {
                                 weight: exercisesData[j].inputsData[k].value
                             }
                             prStorage.push(pr)
+                            console.log('prStorage en los inputs', prStorage)
                         }
                     }
                     let result = prStorage.filter((item: any, index: any) => {
@@ -175,14 +208,25 @@ export const AddWorkoutScreen = (props: any) => {
                             console.log('El pr storageeee', prStorage[i])
 
                             if (storagePr[p].exerciseId === prStorage[i].exerciseId) {
+                                console.log('comparandoooo')
+                                console.log('ENTRO EL STOPRAGEEE2', Number(prStorage[i].weight));
+                                    console.log('ENTRO EL STOPRAGEEE2', Number(storagePr[p].weight));
                                 if (Number(prStorage[i].weight) > Number(storagePr[p].weight)) {
+                                    console.log('ENTRO EL STOPRAGEEE', Number(prStorage[i].weight), prStorage[i].exerciseId);
+                                    console.log('ENTRO EL STOPRAGEEE', Number(storagePr[p].weight));
                                     storagePr2.push(pr)
+                                }else{
+                                    console.log('no es igual',prStorage[i].weight, Number(storagePr[p].weight))
+                                    menores.push(prStorage[i])
+                                 /*    storagePr2 = storagePr2.filter((item:any) => item.exerciseId !== storagePr[p].exerciseId) */
+                                    console.log('storagepr2 despues',storagePr2)
                                 }
                             } else {
                                 if (storagePr2.some((element: any) => element.exerciseId === prStorage[i].exerciseId)) {
                                     // let object = storagePr2.find((element:any) => element.exerciseId === prStorage[i].exerciseId)
                                     let index = storagePr2.findIndex((x: any) => x.exerciseId === prStorage[i].exerciseId);
                                     storagePr2.splice(index, 1);
+                                    console.log('iiiiii')
                                     storagePr2.push(pr)
                                 } else {
                                     storagePr2.push(pr)
@@ -191,6 +235,12 @@ export const AddWorkoutScreen = (props: any) => {
                         }
                     }
                     console.log('------------------------------------------')
+                    console.log('Los menores', menores)
+
+                    const idsNoPermitidos = menores.map((doc:any) => doc.exerciseId);
+                    const datosFiltrados = storagePr2.filter((doc:any) => !idsNoPermitidos.includes(doc.exerciseId))
+                    storagePr2 = datosFiltrados;
+                    console.log('datos filtrados------------',datosFiltrados)
                     console.log(storagePr)
                     console.log(storagePr2)
                     let sinRepetidos = storagePr2.filter((valorActual: any, indiceActual: any, arreglo: any) => {
@@ -212,7 +262,6 @@ export const AddWorkoutScreen = (props: any) => {
                     }
 
                     console.log('El pr delicioso', pr)
-
                     const data: any = {
                         id: uuid.v4(),
                         dia: new Date().getDate(),
@@ -227,9 +276,17 @@ export const AddWorkoutScreen = (props: any) => {
                         exercises: exercisesInfo
                     }
 
-                    storeData(data)
-                    props.navigation.replace('NewPr', { storagePr })
+                    console.log('storageeeee',storagePr2)
+                    storeData(data);
 
+                    let mergeArrayPR = [...dataPR];
+                    console.log('mergeee', mergeArrayPR)
+                    AsyncStorage.setItem('pr', JSON.stringify(mergeArrayPR)).then((resultado: any) => console.log(resultado)).catch((err:any) => console.log(err));
+                    if(storagePr.length > 0){
+                        props.navigation.replace('NewPr', { storagePr })
+                    }else{
+                        props.navigation.replace('InicioScreen')
+                    }
 
                     //No existen records en el async storage
                 } else {
@@ -237,8 +294,7 @@ export const AddWorkoutScreen = (props: any) => {
                     let storagePr:any = []
                     for (let j = 0; j < exercisesData.length; j++) {
                         for (let k = 0; k < exercisesData[j].inputsData.length; k++) {
-                            //cuando hay varias series de un ejercicio controlar que setea el maximo.
-                            console.log('INPUTSSSS CON INFO ', exercisesData[j].inputsData[k])
+                            console.log('INPUTS CON INFO ', exercisesData[j].inputsData[k])
                             let pr = {
                                 exerciseId: exercisesData[j].inputsData[k].exerciseId,
                                 weight: exercisesData[j].inputsData[k].value
@@ -249,9 +305,6 @@ export const AddWorkoutScreen = (props: any) => {
                                     console.log('El prStorage mid ', newRecords)
                                     if (dup.exerciseId === exercisesData[j].inputsData[k].exerciseId) {
                                         console.log('El exerciseId esta presente ', dup.exerciseId )
-                                     //   let prStorageMatch = newRecords.filter((item: any) => item.exerciseId === exercisesData[j].inputsData[k].exerciseId)[0]
-                                       console.log('VALUE1---- ',exercisesData[j].inputsData[k].value)
-                                       console.log('VALUE2---- ', dup.weight)
                                      if (Number(exercisesData[j].inputsData[k].value) > Number(dup.weight)) {
                                             console.log(exercisesData[j].inputsData[k].value, '>', dup.weight)
                                             let prStorageMatch1 = {
@@ -272,21 +325,15 @@ export const AddWorkoutScreen = (props: any) => {
                                     }
                                 }
                                 console.log('no lo incluye, pero ya esta')
-                                //        prStorage.push(pr)
                             } else {
-                                console.log('no lo incluye >0')
                                 newRecords.push(pr)
                             }
-
-
-                            /*   AsyncStorage.setItem('pr', pr).then((resultado: any) => console.log(resultado) */
-
                         }
                     }
 
-                    let result = newRecords.filter((item: any, index: any) => {
+                /*     let result = newRecords.filter((item: any, index: any) => {
                         return newRecords.indexOf(item) === index;
-                    })
+                    }) */
            /*          const tabla = {} as any;
                     const unicos = result.filter((indice: any) => {
                         return tabla.hasOwnProperty(indice) ? false : (tabla[indice] = true);
@@ -311,6 +358,9 @@ export const AddWorkoutScreen = (props: any) => {
                     /* storagePr */
                     /*    setInputsData([]) */
                     storagePr = newRecords;
+
+                    AsyncStorage.setItem('pr', JSON.stringify(storagePr)).then((resultado: any) => console.log(resultado)).catch((err:any) => console.log(err));
+
                     storeData(data)
                         props.navigation.replace('NewPr', { storagePr })
                 }
@@ -631,7 +681,7 @@ export const AddWorkoutScreen = (props: any) => {
                                 <Text style={{ color: 'white', fontWeight: 'bold' }}>Terminar entrenamiento</Text>
                             </TouchableOpacity>
                             {/*            DEBUG           */}
-                            {/*         <Button
+                   {/*                  <Button
 
                                 title="Guardar entrenamiento"
                                 onPress={() => {
@@ -653,7 +703,7 @@ export const AddWorkoutScreen = (props: any) => {
                                         title="Set PR"
                                         onPress={() => {
                                           putPr()
-                                        }} />
+                                        }} /> */}
                                <Button
                                         title="Show PR"
                                         onPress={() => {
@@ -663,7 +713,7 @@ export const AddWorkoutScreen = (props: any) => {
                                         title="Delete PR"
                                         onPress={() => {
                                           deletePR()
-                                        }} /> */}
+                                        }} />
                         </View>
                     </View>
                 </View>

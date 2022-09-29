@@ -3,13 +3,10 @@ import {
     View,
     StyleSheet,
     Text,
-    Dimensions,
     TouchableOpacity,
   } from 'react-native';
+
 export const  Exercise = ({item, onPress, selected }:any ) =>  {
-
-    
-
   return (
     <TouchableOpacity
     onPress={onPress}

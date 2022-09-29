@@ -22,6 +22,7 @@ export const InicioScreen = ({ navigation }: any) => {
     const [workouts, setWorkouts] = useState<Array<Workout>>([])
     const [workoutsFilter, setWorkoutsFilter] = useState<Array<Workout>>([])
     const [dates, setDates] = useState<Array<Date>>([])
+    const [noData, setNoData] = useState<boolean>(false)
     const [day, setDay] = useState<number>(new Date().getDate())
     const [lastWorkouts, setLastWorkouts] = useState<boolean>(true)
 
@@ -81,6 +82,7 @@ export const InicioScreen = ({ navigation }: any) => {
     const getWorkoutsData = () => {
         AsyncStorage.getItem('workout').then((result: any) => {
             let data = JSON.parse(result)
+            if(data === null)setNoData(true)
             setWorkouts(data.reverse())
             setWorkoutsFilter(data)
             setIsLoading(false)
@@ -261,7 +263,7 @@ export const InicioScreen = ({ navigation }: any) => {
             }
 
             <View>
-                {workoutsFilter !== null ? workoutsFilter.map((workout: Workout, index: number) => (
+                {workoutsFilter !== null && !noData ? workoutsFilter.map((workout: Workout, index: number) => (
                     <View key={index}
                         style={{
                             backgroundColor: 'white', width: '100%', borderTopWidth:6, borderTopColor:'purple',
